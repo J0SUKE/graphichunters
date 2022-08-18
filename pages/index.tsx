@@ -1,7 +1,21 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useState } from 'react'
+import styled from "styled-components"
 
 const Home: NextPage = () => {
+
+  const [started,setStarted] = useState(false);
+
+  const Button = styled.button`
+    padding: 1rem 2rem;
+    border: 1px solid red;
+    color: ${started ? 'red' : 'white'};
+    background: ${started ? 'white' : 'red'};
+    cursor: pointer;
+  `
+  
+
   return (
     <div>
       <Head>
@@ -10,8 +24,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div><h1>hello next</h1></div>
-      
+      <div><h1>hello next js</h1></div>
+      <Button onClick={()=>setStarted(start=>!start)}>start</Button>
+
     </div>
   )
 }
