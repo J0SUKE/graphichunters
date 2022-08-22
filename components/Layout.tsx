@@ -2,6 +2,7 @@ import React from 'react'
 import RightRibbon from './RightRibbon'
 import styled from 'styled-components'
 import Image from 'next/image'
+import ScrollWrapper from './ScrollWrapper'
 
 export default function Layout() {
   
@@ -31,6 +32,20 @@ export default function Layout() {
         <Img>
           <Image
             src={'/images/porsche.jpg'}
+            alt=''
+            layout='fill'
+          />
+        </Img>
+        <Img>
+          <Image
+            src={'/images/otw.jpg'}
+            alt=''
+            layout='fill'
+          />
+        </Img>
+        <Img>
+          <Image
+            src={'/images/mural.jpg'}
             alt=''
             layout='fill'
           />
