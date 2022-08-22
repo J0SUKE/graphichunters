@@ -1,57 +1,50 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import RightRibbon from './RightRibbon'
 import styled from 'styled-components'
-import Image from 'next/image'
-import ScrollWrapper from './ScrollWrapper'
+import Hero from './Hero'
+import Header from './Header'
 
 export default function Layout() {
-  
-  const Content = styled.div`
-    position: absolute;
-    width: 92vw;
-    left: 0;
-    overflow: hidden;
-  `
-  
-  const Img = styled.div`
-    width: 100%;
-    position: relative;
-    height: 100vh;
-  ` 
-  
+
+  const sliderImages = 
+  [
+    '/images/shoe.jpg',
+    '/images/mural.jpg',
+    '/images/porsche.jpg',
+    '/images/fnatic.jpg',
+    '/images/otw.jpg'
+  ];
+
+  const [index,setIndex] = useState(0);
+
+    useEffect(()=>{
+      const interval = setInterval(()=>{        
+        setIndex(index=>{
+          if (index==sliderImages.length-1) return 0;
+          else return index+1;
+        });         
+      },5000)
+
+      return ()=>{
+        clearInterval(interval)
+      };
+    },[]);
+
   return (
     <>
+      <Header/>
       <Content>
-        <Img>
-          <Image
-            src={'/images/shoe.jpg'}
-            alt=''
-            layout='fill'
-          />
-        </Img>
-        <Img>
-          <Image
-            src={'/images/porsche.jpg'}
-            alt=''
-            layout='fill'
-          />
-        </Img>
-        <Img>
-          <Image
-            src={'/images/otw.jpg'}
-            alt=''
-            layout='fill'
-          />
-        </Img>
-        <Img>
-          <Image
-            src={'/images/mural.jpg'}
-            alt=''
-            layout='fill'
-          />
-        </Img>
+        <Hero index={index}/>        
       </Content>
       <RightRibbon/>
+
     </>
   )
 }
+
+var Content = styled.div`
+    position: absolute;
+    width: 92vw;
+    left: 0;
+    overflow: hidden; 
+  `
