@@ -4,13 +4,16 @@ import Image from 'next/image';
 import {slideShowContext} from '../context/SlideShowContext';
 import Link from 'next/link';
 import { throttle } from 'lodash';
+import gsap from 'gsap';
 
 export default function Hero() 
 {
   
   const LayerRef = useRef<HTMLDivElement>(null);
+  const HeroTitle = useRef<HTMLDivElement>(null);
+  const BottomnRef = useRef<HTMLDivElement>(null);
 
-  useEffect(()=>{
+  function ChangeLayerOpacityOnScroll() {
     window.addEventListener('scroll',throttle(()=>{
       const {scrollTop,clientHeight} = document.documentElement;
 
@@ -20,6 +23,35 @@ export default function Hero()
       }      
 
     },10))
+  }
+
+  useEffect(()=>{
+        
+    const tl = gsap.timeline();
+
+    if (!HeroTitle.current || !BottomnRef.current) return;
+
+    tl.fromTo(HeroTitle.current.querySelectorAll('p'),{
+      rotate: 4,
+      yPercent:100,
+      transformOrigin:'top left',
+    },{
+      rotate: 0,
+      yPercent:0,
+      duration:.8,
+      stagger:-.08
+    }).fromTo(BottomnRef.current.querySelectorAll('p'),{
+      y:'3rem',
+    },{
+      y:0,
+      duration:.8,
+      stagger:-0.1
+    },'<')
+    
+  },[])
+
+  useEffect(()=>{
+    ChangeLayerOpacityOnScroll();
   },[])
 
   const HeroStyled = styled.div`
@@ -47,17 +79,6 @@ export default function Hero()
       padding: 2rem 2.5rem;
       text-transform: uppercase;
       font-size: .9rem;
-      p{
-        transform: translateY(3rem);
-        animation: animateP .7s forwards;
-      }
-      @keyframes animateP {
-        from{
-          transform: translateY(3rem);
-        }to{
-          transform: translateY(0);
-        }
-      }
     }
     .title{
       font-size: 10vw;
@@ -67,18 +88,6 @@ export default function Hero()
       text-transform: uppercase;
       div{
         overflow: hidden;
-      }
-      p{
-        transform: translateY(50%) rotate(4deg);
-        animation: animateTitle .8s forwards;
-      }
-
-      @keyframes animateTitle {
-        from{
-          transform: translateY(100%) rotate(4deg);
-        }to{
-          transform: translateY(0%) rotate(0deg);
-        }
       }
     }
 
@@ -121,12 +130,12 @@ export default function Hero()
         <Layer ref={LayerRef}/>
         <HeroContent>
           <div className='home'>
-            <div className='title'>
+            <div className='title' ref={HeroTitle}>
               <div><p>24/7</p></div>
               <div><p>hunting</p></div>
               <div><p>the next</p></div>
             </div>
-            <div className='bottom'>
+            <div className='bottom' ref={BottomnRef}>
               <Timer/>
               <p>The creative studio focused on sports</p>
               <p>based in the netherlands</p>
