@@ -1,35 +1,16 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef,RefObject } from 'react'
 import styled from 'styled-components'
 
-export default function RightRibbon() {
+export default function RightRibbon({RibbonRef}:{RibbonRef:RefObject<HTMLLIElement>}) {
   
-
-    const lastScrollValue = useRef(0);
-    let translateValue = useRef(0);
-    const RibbonRef = useRef<HTMLUListElement>(null);
-
-    useEffect(()=>{
-        window.addEventListener('scroll',()=>{
-            const {scrollTop} = document.documentElement;
-            const deltaScroll = scrollTop-lastScrollValue.current;
-        
-        })
-    },[])
-
     return (
     <RigthRibbon>
-        <ul ref={RibbonRef}>
-            <li>
+        <ul>
+            <li ref={RibbonRef}>
                 <span>GraphicHunters</span>
                 <span>©</span>
                 <span>GraphicHunters</span>
-                <span>©</span>                
-            </li>
-            <li>
-                <span>GraphicHunters</span>
-                <span>©</span>
-                <span>GraphicHunters</span>
-                <span>©</span>                
+                <span>©</span>                   
             </li>
         </ul>    
     </RigthRibbon>
@@ -64,7 +45,7 @@ var RigthRibbon = styled.div`
             span{
                 display: block;
             }
-            animation: ribbon 15s infinite linear;
+            //animation: ribbon 15s infinite linear;
 
             @keyframes ribbon {
                 from{

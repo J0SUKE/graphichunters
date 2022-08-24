@@ -5,6 +5,7 @@ import {slideShowContext} from '../context/SlideShowContext';
 import Link from 'next/link';
 import { throttle } from 'lodash';
 import gsap from 'gsap';
+import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 
 export default function Hero() 
 {
@@ -12,6 +13,8 @@ export default function Hero()
   const LayerRef = useRef<HTMLDivElement>(null);
   const HeroTitle = useRef<HTMLDivElement>(null);
   const BottomnRef = useRef<HTMLDivElement>(null);
+  const Hunting = useRef<HTMLDivElement>(null);
+  const Present = useRef<HTMLDivElement>(null);
 
   function ChangeLayerOpacityOnScroll() {
     window.addEventListener('scroll',throttle(()=>{
@@ -19,14 +22,14 @@ export default function Hero()
 
       let ratio = scrollTop/clientHeight;
       if (LayerRef.current) {
-        LayerRef.current.style.opacity = `${ratio*1.5}`;  
+        LayerRef.current.style.opacity = `${ratio}`;  
       }      
 
     },10))
   }
 
-  useEffect(()=>{
-        
+
+  useEffect(()=>{        
     const tl = gsap.timeline();
 
     if (!HeroTitle.current || !BottomnRef.current) return;
@@ -47,7 +50,32 @@ export default function Hero()
       duration:.8,
       stagger:-0.1
     },'<')
+
+
+    if (!Hunting.current || !Present.current) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
     
+    gsap.to(Hunting.current,{
+      scrollTrigger:{
+        trigger:'.presentation',
+        start:'top bottom',
+        scrub:1,
+      },
+      xPercent:10,
+      duration:1
+    })
+    
+    gsap.to(HeroTitle.current,{
+      scrollTrigger:{
+        trigger:'.presentation',
+        start:'top bottom',
+        scrub:1,
+      },
+      yPercent:-50,
+      duration:1
+    })
   },[])
 
   useEffect(()=>{
@@ -64,6 +92,8 @@ export default function Hero()
     color: white;
     top: 0;
     z-index: 3;
+    overflow: hidden;
+    box-shadow: 19px -23px 73px 0px #000 inset;
     
     .home
     {
@@ -132,7 +162,7 @@ export default function Hero()
           <div className='home'>
             <div className='title' ref={HeroTitle}>
               <div><p>24/7</p></div>
-              <div><p>hunting</p></div>
+              <div ref={Hunting}><p>hunting</p></div>
               <div><p>the next</p></div>
             </div>
             <div className='bottom' ref={BottomnRef}>
@@ -141,7 +171,7 @@ export default function Hero()
               <p>based in the netherlands</p>
             </div>
           </div>
-          <div className='presentation'>
+          <div className='presentation' ref={Present}>
             <h4>GRAPHICHUNTERS DEVELOPS DISTINCTIVE BRAND AND CAMPAIGN STYLES, DELIVERING NEXT LEVEL VISUAL CONTENT.</h4>
             <Link href={'/studio'}>
               <a>
@@ -157,8 +187,17 @@ export default function Hero()
 
 function SlideShow() {        
     
-    const slideshowContext = useContext(slideShowContext);
-    if (!slideshowContext) return null;
+    // const slideshowContext = useContext(slideShowContext);
+    // if (!slideshowContext) return null;
+    const sliderImages = 
+    [
+        '/images/shoe.jpg',
+        '/images/mural.jpg',
+        '/images/porsche.jpg',
+        '/images/fnatic.jpg',
+        '/images/otw.jpg'
+    ];
+
     
     const SlideShowStyle = styled.div`
       position: fixed;
@@ -168,7 +207,9 @@ function SlideShow() {
       inset: 0;
     `
     return <SlideShowStyle>
-      <SlideImage url={slideshowContext.sliderImages[slideshowContext.index]}/>
+      {
+        sliderImages.map(img=><SlideImage key={img} url={img}/> )
+      }
     </SlideShowStyle>
 }
 
@@ -183,7 +224,7 @@ function SlideImage({url}:{url:string}) {
       img{
         position: absolute;
         inset: 0;
-        animation: imgGrow 7s , imgAppear 1.5s; 
+        animation: imgGrow 7s forwards , imgAppear 1.5s; 
       }
 
       @keyframes imgAppear {
