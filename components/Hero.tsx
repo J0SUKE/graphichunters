@@ -109,6 +109,15 @@ export default function Hero()
       padding: 2rem 2.5rem;
       text-transform: uppercase;
       font-size: .9rem;
+
+      @media screen and (max-width:750px)
+      {
+        p:first-of-type,p:last-of-type
+        {
+          display: none;
+        }
+      }
+
     }
     .title{
       font-size: 10vw;
@@ -152,6 +161,10 @@ export default function Hero()
     background: black;
     opacity: 0;
     inset: 0;
+    @media screen and (max-width:1024px)
+    {
+      width: 100%;
+    }
   `
 
   return (
@@ -206,6 +219,10 @@ function SlideShow() {
       height: 100%;
       z-index: 1;
       inset: 0;
+      @media screen and (max-width:1024px)
+      {
+        width: 100%;
+      }
     ` 
 
     useEffect(()=>{

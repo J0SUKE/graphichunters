@@ -31,6 +31,11 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
         a{
             display: block;            
         }
+
+        @media screen and (max-width:1024px)
+        {
+            right: 2vw;
+        }
     `
 
     return (
@@ -78,7 +83,7 @@ function NavLink({link}:{link:string}) {
         a{
             display: block;
             transition: transform .6s cubic-bezier( 0.52, 0.26, 0.05, 0.9 ) ;
-        }        
+        }      
     `
     
     return <AnimatedLink>

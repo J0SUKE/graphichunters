@@ -59,4 +59,8 @@ var Content = styled.div`
     width: 92vw;
     top: 0;
     left: 0;
+    @media screen and (max-width:1024px)
+    {
+        width: 100%;
+    }
   `
