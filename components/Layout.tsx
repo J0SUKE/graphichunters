@@ -3,19 +3,19 @@ import RightRibbon from './RightRibbon'
 import styled from 'styled-components'
 import Hero from './Hero'
 import Header from './Header'
-import SlideShowContext from '../context/SlideShowContext'
 import Footer from './Footer'
 import gsap from 'gsap';
-import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 
 export default function Layout() {
 
   const FooterRef = useRef<HTMLElement>(null);
   const RibbonRef = useRef<HTMLLIElement>(null);  
+  const LogoRef = useRef<HTMLAnchorElement>(null);
+  const NavLinksRef = useRef<HTMLElement>(null);
 
   useEffect(()=>{
     
-    if (!RibbonRef.current || !FooterRef.current) return;
+    if (!RibbonRef.current || !FooterRef.current || !LogoRef.current || !NavLinksRef.current) return;
 
     gsap.to(RibbonRef.current,{
       scrollTrigger:{
@@ -28,18 +28,28 @@ export default function Layout() {
       xPercent:-50,
       duration:15
     })
+
+    gsap.to([LogoRef.current,NavLinksRef.current],{
+      scrollTrigger:{
+        trigger:'.presentation',
+        start:'50% bottom',
+        toggleActions:'play pause pasue reverse'
+      },
+      scale: 0.8,
+      duration:.5,
+      ease: "power3.out"
+    })
+
   },[])
 
   return (
     <>
-      <SlideShowContext>
-        <Header/>
+        <Header logoRef={LogoRef} NavLinksRef={NavLinksRef}/>
         <Content>
           <Hero/>        
           <Footer FooterRef={FooterRef}/>
         </Content>
         <RightRibbon RibbonRef={RibbonRef}/>
-      </SlideShowContext>
     </>    
   )
 }

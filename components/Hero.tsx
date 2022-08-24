@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image';
-import {slideShowContext} from '../context/SlideShowContext';
 import Link from 'next/link';
 import { throttle } from 'lodash';
 import gsap from 'gsap';
@@ -74,7 +73,8 @@ export default function Hero()
         scrub:1,
       },
       yPercent:-50,
-      duration:1
+      duration:1,
+      opacity: .2,
     })
   },[])
 
@@ -186,9 +186,9 @@ export default function Hero()
 
 
 function SlideShow() {        
-    
-    // const slideshowContext = useContext(slideShowContext);
-    // if (!slideshowContext) return null;
+
+    const index = useRef(0);
+
     const sliderImages = 
     [
         '/images/shoe.jpg',
@@ -198,6 +198,7 @@ function SlideShow() {
         '/images/otw.jpg'
     ];
 
+    const imagesRefs = useRef<HTMLDivElement>(null);
     
     const SlideShowStyle = styled.div`
       position: fixed;
@@ -205,8 +206,43 @@ function SlideShow() {
       height: 100%;
       z-index: 1;
       inset: 0;
-    `
-    return <SlideShowStyle>
+    ` 
+
+    useEffect(()=>{
+      
+      if (!imagesRefs.current) return;
+
+      imagesRefs.current.querySelectorAll('.imgslide')[0].classList.add('active');
+
+      const interval = setInterval(()=>{
+
+        if (!imagesRefs.current) return;
+
+        imagesRefs.current.querySelectorAll('.imgslide')[index.current].classList.remove('active');
+        imagesRefs.current.querySelectorAll('.imgslide')[index.current].classList.add('end');
+
+        if (index.current==sliderImages.length-1) index.current=0;
+        else index.current++;
+        
+
+        imagesRefs.current.querySelectorAll('.imgslide')[index.current].classList.add('active');
+        setTimeout(()=>{
+          
+          if (index.current==0){
+            imagesRefs.current?.querySelectorAll('.imgslide')[sliderImages.length-1].classList.remove('end');
+          }
+          else imagesRefs.current?.querySelectorAll('.imgslide')[index.current-1].classList.remove('end');;
+          
+        },2000);
+
+      },5000)
+
+      return ()=>clearInterval(interval);
+
+
+    },[])
+
+    return <SlideShowStyle ref={imagesRefs}>
       {
         sliderImages.map(img=><SlideImage key={img} url={img}/> )
       }
@@ -218,14 +254,33 @@ function SlideImage({url}:{url:string}) {
     
     var Slide = styled.div`
       height: 100vh;
-      position: relative;
-      box-shadow: 0px 0px 42px 0px #000 inset;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
 
       img{
         position: absolute;
-        inset: 0;
-        animation: imgGrow 7s forwards , imgAppear 1.5s; 
+        inset: 0;        
       }
+      z-index: 1;
+      &.end
+      {
+        z-index: 2;
+        opacity: 1;
+        img{
+          transform: scale(1.1 );
+        }
+      }
+      &.active
+      {
+        z-index: 3;
+        opacity: 1;
+        img{
+          animation: imgGrow 7s forwards , imgAppear 1.5s forwards; 
+        }
+        
+      }
+
 
       @keyframes imgAppear {
         from{
@@ -239,20 +294,19 @@ function SlideImage({url}:{url:string}) {
         from{
           transform: scale(1);
         }to{
-          transform: scale(1.05 );
+          transform: scale(1.1 );
         }
       }
     `  
-    return <div>
-        <Slide>
+    return <Slide className='imgslide'> 
           <Image
             src={url}
             alt={''}
             layout={'fill'}
             objectFit='cover'
+            priority={true}
           />
         </Slide>
-    </div>
 }
 
 

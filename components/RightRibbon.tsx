@@ -45,7 +45,6 @@ var RigthRibbon = styled.div`
             span{
                 display: block;
             }
-            //animation: ribbon 15s infinite linear;
 
             @keyframes ribbon {
                 from{
