@@ -85,6 +85,7 @@ export default function Hero()
   const HeroStyled = styled.div`
   background: black;
   position: relative;
+  box-shadow: 16px 4px 56px 0px #000 inset;
 `
   const HeroContent = styled.div`
     position: relative;
@@ -93,7 +94,6 @@ export default function Hero()
     top: 0;
     z-index: 3;
     overflow: hidden;
-    box-shadow: 19px -23px 73px 0px #000 inset;
     
     .home
     {
@@ -120,8 +120,8 @@ export default function Hero()
 
     }
     .title{
-      font-size: 10vw;
-      line-height: 9vw;
+      font-size: 10vmax;
+      line-height: 9vmax;
       font-weight: 400;
       padding: 0 2rem;
       text-transform: uppercase;

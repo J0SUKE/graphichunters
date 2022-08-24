@@ -9,6 +9,7 @@
   margin: 0;
   font-family: 'Roboto';
   scrollbar-color: transparent transparent;
+  list-style-type: none;
 }
 a {
   color: inherit;

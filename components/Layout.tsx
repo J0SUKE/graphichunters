@@ -4,7 +4,9 @@ import styled from 'styled-components'
 import Hero from './Hero'
 import Header from './Header'
 import Footer from './Footer'
+import WorkGrid from './WorkGrid'
 import gsap from 'gsap';
+
 
 export default function Layout() {
 
@@ -46,7 +48,8 @@ export default function Layout() {
     <>
         <Header logoRef={LogoRef} NavLinksRef={NavLinksRef}/>
         <Content>
-          <Hero/>        
+          <Hero/>
+          <WorkGrid/>
           <Footer FooterRef={FooterRef}/>
         </Content>
         <RightRibbon RibbonRef={RibbonRef}/>
