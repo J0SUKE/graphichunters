@@ -46,18 +46,18 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
             </Logo>
         </Link>
         <HeaderLinks ref={NavLinksRef}>
-            <NavLink link='work'/>
-            <NavLink link='studio'/>
-            <NavLink link='archive'/>
-            <NavLink link='jobs'/>
-            <NavLink link='contact'/>
+            <NavLink link='work' value='work'/>
+            <NavLink link='studio' value='studio'/>
+            <NavLink link='archive' value='archive'/>
+            <NavLink link='jobs' value='jobs'/>
+            <NavLink link='contact' value='contact'/>
         </HeaderLinks>
     </>
   )
 }
 
 
-function NavLink({link}:{link:string}) {
+export function NavLink({link,value}:{link:string,value:string}) {
     
     const AnimatedLink = styled.div`
         display: block;
@@ -87,7 +87,7 @@ function NavLink({link}:{link:string}) {
     `
     
     return <AnimatedLink>
-            <Link href={`/${link}`}><a>{link}</a></Link>
-            <Link href={`/${link}`}><a>{link}</a></Link>
+            <Link href={`/${link}`}><a>{value}</a></Link>
+            <Link href={`/${link}`}><a>{value}</a></Link>
         </AnimatedLink>
 }

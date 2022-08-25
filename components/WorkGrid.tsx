@@ -16,6 +16,10 @@ export default function WorkGrid() {
             display: grid;
             grid-template-columns: repeat(2,1fr);
             grid-gap: 3rem;
+            @media screen and (max-width:720px)
+            {
+                grid-template-columns: 1fr;
+            }
         }        
         border-bottom: 1px solid #a9a9a956;
     `

@@ -5,6 +5,7 @@ import Hero from './Hero'
 import Header from './Header'
 import Footer from './Footer'
 import WorkGrid from './WorkGrid'
+import HomeBrands from './HomeBrands'
 import gsap from 'gsap';
 
 
@@ -50,6 +51,7 @@ export default function Layout() {
         <Content>
           <Hero/>
           <WorkGrid/>
+          <HomeBrands/>
           <Footer FooterRef={FooterRef}/>
         </Content>
         <RightRibbon RibbonRef={RibbonRef}/>
