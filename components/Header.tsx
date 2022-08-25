@@ -5,8 +5,10 @@ import Link from 'next/link'
 export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HTMLAnchorElement>,NavLinksRef:React.RefObject<HTMLElement>}) {
     
     const Logo = styled.a`
-        width: 6vw;
-        height: 6vw;
+        width: 6vmax;
+        min-width: 80px;
+        min-height: 80px;
+        height: 6vmax;
         position: fixed;
         display: block;
         z-index: 99;
@@ -14,7 +16,6 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
         left: 3vw;
         background: transparent;
         svg{
-            mix-blend-mode: difference;
         }
         svg,path{
             width: 100%;
@@ -28,6 +29,7 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
         top: 2vw;
         right: 10vw;
         padding-right: 2rem;
+        mix-blend-mode: difference;
         a{
             display: block;            
         }

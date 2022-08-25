@@ -11,6 +11,10 @@ export default function RightRibbon({RibbonRef}:{RibbonRef:RefObject<HTMLLIEleme
                 <span>©</span>
                 <span>GraphicHunters</span>
                 <span>©</span>                   
+                <span>GraphicHunters</span>
+                <span>©</span>                   
+                <span>GraphicHunters</span>
+                <span>©</span>                   
             </li>
         </ul>    
     </RigthRibbon>
@@ -19,6 +23,7 @@ export default function RightRibbon({RibbonRef}:{RibbonRef:RefObject<HTMLLIEleme
 
 var RigthRibbon = styled.div`
         position: fixed;
+        z-index: 99;
         top: 0;
         right: 0;
         width: 100vh;

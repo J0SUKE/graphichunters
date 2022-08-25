@@ -6,7 +6,10 @@ import Header from './Header'
 import Footer from './Footer'
 import WorkGrid from './WorkGrid'
 import HomeBrands from './HomeBrands'
+import Services from './Services'
 import gsap from 'gsap';
+import { throttle } from 'lodash'
+
 
 
 export default function Layout() {
@@ -15,6 +18,8 @@ export default function Layout() {
   const RibbonRef = useRef<HTMLLIElement>(null);  
   const LogoRef = useRef<HTMLAnchorElement>(null);
   const NavLinksRef = useRef<HTMLElement>(null);
+  const ServicesRef = useRef<HTMLDivElement>(null);
+  const MarqueeRef = useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
     
@@ -37,7 +42,7 @@ export default function Layout() {
         trigger:'.presentation',
         start:'50% bottom',
         toggleActions:'play pause pasue reverse'
-      },
+      },      
       scale: 0.8,
       duration:.5,
       ease: "power3.out"
@@ -45,13 +50,34 @@ export default function Layout() {
 
   },[])
 
+  useEffect(()=>{
+    window.addEventListener('scroll',throttle(()=>{
+      
+      const bottom = MarqueeRef.current?.querySelector('ul')?.getBoundingClientRect().bottom;
+      if (!bottom || !LogoRef.current || !NavLinksRef.current) return;
+
+      if (bottom<=0) {
+        LogoRef.current.style.mixBlendMode = 'difference'
+        NavLinksRef.current.style.mixBlendMode = 'difference'
+      }
+      else
+      {
+        LogoRef.current.style.mixBlendMode = 'unset'
+        NavLinksRef.current.style.mixBlendMode = 'unset'
+      }          
+    },100))
+    
+
+  },[]);
+
   return (
     <>
         <Header logoRef={LogoRef} NavLinksRef={NavLinksRef}/>
         <Content>
           <Hero/>
           <WorkGrid/>
-          <HomeBrands/>
+          <HomeBrands MarqueeRef={MarqueeRef}/>
+          <Services ServicesRef={ServicesRef}/>
           <Footer FooterRef={FooterRef}/>
         </Content>
         <RightRibbon RibbonRef={RibbonRef}/>

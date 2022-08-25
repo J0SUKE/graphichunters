@@ -3,6 +3,11 @@
   src: url('../public/fonts/Roboto/Roboto-Regular.ttf')
 }
 
+@font-face {
+  font-family: 'Serif4';
+  src: url('../public/fonts/Source_Serif_4/SourceSerif4-VariableFont_opsz\,wght.ttf')
+}
+
 *,*::before,*::after {
   box-sizing: border-box;
   padding: 0;
