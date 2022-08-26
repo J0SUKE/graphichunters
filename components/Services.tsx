@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import gsap from 'gsap';
+import HoverMenu from './HoverMenu';
 
 export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTMLDivElement>}) {
     
@@ -18,7 +19,7 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
         scrollTrigger:{
           trigger:ServicesRef.current,
           start:'top bottom',
-          scrub:true,
+          scrub:1,
         },
         xPercent:0,
         duration:2,        
@@ -33,7 +34,7 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
         scrollTrigger:{
           trigger:TheParallaxRef.current,
           start:'top bottom',
-          scrub:true,
+          scrub:1,
         },
         xPercent:0,
         duration:8,        
@@ -47,7 +48,7 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
         position: relative;
         z-index: 3;
         background: #EEEEEE;
-        height: 200vh;
+        padding-bottom: 8vw;
         .top{
           justify-content: space-between;
           align-items: center;
@@ -99,6 +100,7 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
           <span id='services' ref={ServiceParallaxRef}>services</span>
         </div>
       </div>
+      <HoverMenu/>
     </Services>
   )
 }
