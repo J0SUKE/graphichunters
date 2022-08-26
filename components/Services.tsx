@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import gsap from 'gsap';
 import HoverMenu from './HoverMenu';
+import Link from 'next/link';
 
 export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTMLDivElement>}) {
     
@@ -48,7 +49,6 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
         position: relative;
         z-index: 3;
         background: #EEEEEE;
-        padding-bottom: 8vw;
         .top{
           justify-content: space-between;
           align-items: center;
@@ -86,6 +86,32 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
             }
           }
         }
+        .video-section
+        {
+          background: white;
+          position: relative;
+          margin-top: 10vw;
+          .video-container
+          {
+            filter: brightness(1.2) invert(1) saturate(1.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 45vw;
+            video{
+              height: 100%;
+
+            }
+          }
+          a{
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+
+            background: rgba(30, 30, 30, .15);
+          }
+        }
     `
   
     return (
@@ -101,6 +127,15 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
         </div>
       </div>
       <HoverMenu/>
+      <div className='video-section'>
+        <div className="video-container">
+          <video autoPlay loop muted src="/video/rotate-g.mp4"></video>
+        </div>
+        <Link href={'/archive'}>
+          <a>
+          </a>
+        </Link>
+      </div>
     </Services>
   )
 }

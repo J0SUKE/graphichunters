@@ -3,12 +3,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image';
 import { throttle } from 'lodash';
+import { log } from 'console';
 
 export default function HoverMenu() {
     
     const MenuRef = useRef<HTMLDivElement>(null)
     const ImageBox = useRef<HTMLDivElement>(null);
     const ImageBoxContainer = useRef<HTMLDivElement>(null);
+    const mouseOverMenu = useRef(false);
 
     const BoxPosition = useRef({x:0,y:0});
 
@@ -24,16 +26,15 @@ export default function HoverMenu() {
             top: 0;
             left: 45%;
             z-index: 2;
-            width: 27%;
-            aspect-ratio: 1/1;
+            width: 25vw;
+            height: 0;
             transform-origin: center center;
-            transform: scaleY(0);
-            transition: transform .7s;
+            transition: height .7s;
             pointer-events: none;
 
             &.active
             {
-                transform: scaleY(1);
+                height: 25vw;
             }            
         }
         .img-container
@@ -55,6 +56,7 @@ export default function HoverMenu() {
             
             if(!ImageBox.current) return;
             
+            mouseOverMenu.current=true;
             ImageBox.current.classList.add('active');
         })
         
@@ -62,6 +64,7 @@ export default function HoverMenu() {
             
             if(!ImageBox.current) return;
             
+            mouseOverMenu.current=false;
             ImageBox.current.classList.remove('active');
         })
 
@@ -84,13 +87,24 @@ export default function HoverMenu() {
 
             const Boxheight = ImageBox.current.getBoundingClientRect().height;            
 
-            BoxPosition.current.x = lerp(BoxPosition.current.x,offsetX,0.3);
-            BoxPosition.current.y = lerp(BoxPosition.current.y,offsetY-Boxheight/2,0.3);
+            if (offsetX < 2) return;            
+
+            BoxPosition.current.x = Math.log2(offsetX+40)*4 + 25;
             
-            ImageBox.current.style.left = `${BoxPosition.current.x}px`;
+            BoxPosition.current.y = lerp(BoxPosition.current.y,offsetY-Boxheight/2,0.1);
+            
+            ImageBox.current.style.left = `${BoxPosition.current.x}%`;
             ImageBox.current.style.top = `${BoxPosition.current.y}px`;
             
         },10))
+
+        window.addEventListener('scroll',(e)=>{
+            if (!mouseOverMenu.current) return;
+            console.log('is inside the ');
+            
+        })
+
+
 
     },[])
   
