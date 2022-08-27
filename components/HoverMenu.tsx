@@ -11,6 +11,7 @@ export default function HoverMenu() {
     const ImageBox = useRef<HTMLDivElement>(null);
     const ImageBoxContainer = useRef<HTMLDivElement>(null);
     const mouseOverMenu = useRef(false);
+    const lastSCroll = useRef(0);
 
     const BoxPosition = useRef({x:0,y:0});
 
@@ -49,7 +50,7 @@ export default function HoverMenu() {
 
     `
 
-    useEffect(()=>{
+    useEffect(()=>{ 
         if (!MenuRef.current) return;
         
         MenuRef.current.addEventListener('mouseenter',()=>{
@@ -58,6 +59,11 @@ export default function HoverMenu() {
             
             mouseOverMenu.current=true;
             ImageBox.current.classList.add('active');
+
+
+            const {scrollTop} = document.documentElement;
+            lastSCroll.current = scrollTop;
+
         })
         
         MenuRef.current.addEventListener('mouseleave',()=>{
@@ -66,6 +72,9 @@ export default function HoverMenu() {
             
             mouseOverMenu.current=false;
             ImageBox.current.classList.remove('active');
+
+            const {scrollTop} = document.documentElement;
+            lastSCroll.current = scrollTop;
         })
 
         MenuRef.current.addEventListener('mousemove',throttle((e)=>{
@@ -95,19 +104,33 @@ export default function HoverMenu() {
             
             ImageBox.current.style.left = `${BoxPosition.current.x}%`;
             ImageBox.current.style.top = `${BoxPosition.current.y}px`;
-            
+
+            // update the scrollTop
+            const {scrollTop} = document.documentElement;
+            lastSCroll.current = scrollTop;
         },10))
-
-        window.addEventListener('scroll',(e)=>{
-            if (!mouseOverMenu.current) return;
-            console.log('is inside the ');
-            
-        })
-
 
 
     },[])
   
+    useEffect(()=>{
+        window.addEventListener('scroll',throttle(()=>{
+            if (!mouseOverMenu.current || !MenuRef.current || !ImageBox.current) return;
+
+            // je scroll au dessus du menu ==> je dois ajouter la distance scrollée à ImageBox.current.y            
+            const {scrollTop} = document.documentElement;
+            let deltaScroll = scrollTop - lastSCroll.current ;
+            lastSCroll.current = scrollTop;
+            
+            //console.log(deltaScroll);
+            const Boxheight = ImageBox.current.getBoundingClientRect().height;        
+
+            BoxPosition.current.y += deltaScroll;
+            ImageBox.current.style.top = `${BoxPosition.current.y}px`;
+
+        },10));
+    },[])
+
     return (
     <HoverMenu ref={MenuRef}>
         <div className="img-box" ref={ImageBox}>
