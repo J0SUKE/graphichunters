@@ -117,12 +117,11 @@ export default function HoverMenu() {
         window.addEventListener('scroll',throttle(()=>{
             if (!mouseOverMenu.current || !MenuRef.current || !ImageBox.current) return;
 
-            // je scroll au dessus du menu ==> je dois ajouter la distance scrollée à ImageBox.current.y            
+            // scroll au dessus du menu ==> ajouter la distance scrollée à ImageBox.current.y            
             const {scrollTop} = document.documentElement;
             let deltaScroll = scrollTop - lastSCroll.current ;
             lastSCroll.current = scrollTop;
             
-            //console.log(deltaScroll);
             const Boxheight = ImageBox.current.getBoundingClientRect().height;        
 
             BoxPosition.current.y += deltaScroll;

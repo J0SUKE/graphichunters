@@ -332,7 +332,7 @@ function SlideImage({url}:{url:string}) {
 
 
 
-function Timer() {
+export function Timer() {
   const [time,setTime] = useState<any>();
   
   useEffect(()=>{
