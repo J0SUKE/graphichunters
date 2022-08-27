@@ -7,7 +7,9 @@ import Footer from './Footer'
 import WorkGrid from './WorkGrid'
 import HomeBrands from './HomeBrands'
 import Services from './Services'
+import Cursor from './Cursor'
 import gsap from 'gsap';
+import Link from 'next/link'
 import { throttle } from 'lodash'
 
 
@@ -72,6 +74,7 @@ export default function Layout() {
 
   return (
     <>
+        <Cursor/>
         <Header logoRef={LogoRef} NavLinksRef={NavLinksRef}/>
         <Content>
           <Hero/>

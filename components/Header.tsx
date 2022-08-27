@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import { cursorContext } from '../context/CursorContext'
+import NavLink from './NavLink'
+
 
 export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HTMLAnchorElement>,NavLinksRef:React.RefObject<HTMLElement>}) {
     
@@ -56,40 +59,4 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
         </HeaderLinks>
     </>
   )
-}
-
-
-export function NavLink({link,value}:{link:string,value:string}) {
-    
-    const AnimatedLink = styled.div`
-        display: block;
-        text-transform: uppercase;
-        color: white;
-        font-size: 1.3rem;
-        height: 1.3rem;
-        overflow-y: hidden;
-        margin: .5rem 0;
-        cursor: pointer;
-        &:hover
-        {
-            a:last-of-type
-            {
-                transform: translateY(-120%);
-                color: #9BFA00;
-            }
-            a:first-of-type
-            {
-                transform: translateY(-100%);
-            }
-        }
-        a{
-            display: block;
-            transition: transform .6s cubic-bezier( 0.52, 0.26, 0.05, 0.9 ) ;
-        }      
-    `
-    
-    return <AnimatedLink>
-            <Link href={`/${link}`}><a>{value}</a></Link>
-            <Link href={`/${link}`}><a>{value}</a></Link>
-        </AnimatedLink>
 }

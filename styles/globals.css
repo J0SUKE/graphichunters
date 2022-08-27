@@ -15,6 +15,7 @@
   font-family: 'Roboto';
   scrollbar-color: transparent transparent;
   list-style-type: none;
+  scroll-behavior: smooth;
 }
 a {
   color: inherit;

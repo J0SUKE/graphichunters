@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import { cursorContext } from '../context/CursorContext'
 import Image from 'next/image'
 import gsap from 'gsap'
+import InfoLink from './InfoLink'
 
 export default function HomeBrands({MarqueeRef}:{MarqueeRef:React.RefObject<HTMLDivElement>}) {
   
@@ -24,6 +26,23 @@ export default function HomeBrands({MarqueeRef}:{MarqueeRef:React.RefObject<HTML
                 width: 45%;
                 font-size: 4vmin;
             }
+            @media screen and (max-width:750px){
+                flex-direction: column;
+                align-items: flex-start;
+                h2{
+                width: 90%;
+                font-size: 5vw;
+                margin-bottom: 1rem;
+                }
+                div{
+                    padding-bottom:.1rem;
+                }
+                div,a{
+                    font-size: 1rem;
+                    height: 1rem;
+                    line-height: 1rem;
+                }
+            }
         }
 
         .marquee
@@ -36,31 +55,18 @@ export default function HomeBrands({MarqueeRef}:{MarqueeRef:React.RefObject<HTML
             display: flex;
             gap: 3vw;
             padding-right: 3vw;
+            animation: animateMarquee 17s linear infinite;
+            transform: translateX(-100%);
         }        
+
+        @keyframes animateMarquee {
+            from{
+                transform: translateX(-100%);
+            }to{
+                transform: translateX(0%);
+            }
+        }
     `
-
-    useEffect(()=>{
-        if (!MarqueeRef.current) return;
-        gsap.fromTo(
-            MarqueeRef.current.querySelectorAll('ul'),
-            {
-                xPercent:-100,
-                repeat:-1,                
-            },
-            {
-                scrollTrigger:{
-                    trigger:MarqueeRef.current,
-                    start:'top bottom',            
-                    // end:'top center',
-                    // toggleActions:'play reverse play reverse',
-                },
-                xPercent:0,
-                duration:17,
-                ease: "none",
-                repeat:-1,
-            })
-    },[]);
-
     return (
     <HomeBrands>
         <div className='works'>
@@ -96,8 +102,8 @@ function MarqueeItem({imgLink}:{imgLink:string})
 {   
     
     const MarqueeItem = styled.div`
-        width: 15vw;
-        height: 15vw;
+        width: 15vmax;
+        height: 15vmax;
         border: 1px solid rgba(255, 255, 255, .3);
         position: relative;
         display: flex;
@@ -129,42 +135,3 @@ function MarqueeItem({imgLink}:{imgLink:string})
 }
 
 
-export function InfoLink({value,link}:{value:string,link:string}) {
-    
-    const InfoLink = styled.div`
-        text-transform: uppercase;
-        padding-bottom: .3rem;
-        box-sizing: content-box;
-        border-bottom: 1px solid white;
-        display: inline-block;
-        transition: border-bottom .5s;
-        color: white;
-        font-size: 1.3rem;
-        height: 1.3rem;
-        overflow-y: hidden;
-        margin: .5rem 0;
-        cursor: pointer;
-        &:hover
-        {
-            border-bottom: 1px solid #9BFA00;
-            a:last-of-type
-            {
-                transform: translateY(-100%);
-                color: #9BFA00;
-            }
-            a:first-of-type
-            {
-                transform: translateY(-120%);
-            }
-        }
-        a{
-            display: block;
-            transition: transform .6s cubic-bezier( 0.52, 0.26, 0.05, 0.9 ) ;
-        }      
-    `;
-    
-    return <InfoLink>
-        <Link href={`${link}`}><a>{value}</a></Link>
-        <Link href={`${link}`}><a>{value}</a></Link>
-    </InfoLink>
-}

@@ -1,6 +1,6 @@
 import React, { RefObject, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { InfoLink } from './HomeBrands'
+import InfoLink from './InfoLink'
 import { Timer } from './Hero'
 import gsap from 'gsap'
 
@@ -12,7 +12,7 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
     const FooterStyled = styled.footer`
         position: relative;
         height: 100vh;
-        z-index: 2;
+        z-index: 3;
         background: black;
         color: white;
 
@@ -42,9 +42,25 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
               font-weight: 400;
             }
           }
+
+          @media screen and (max-width:550px)
+          {
+            flex-direction: column;
+            align-items: flex-start;
+            h2{
+              font-size: 5vmax;
+              line-height: 5vmax;
+              span
+              {
+                height: 5vmax;
+                line-height: 5vmax;
+                font-weight: 400;
+              }
+            }
+          }
         }
         .footer{
-          padding-top: 7vw;
+          padding-top: 5vw;
         }
         .footer-content
         {
@@ -65,6 +81,7 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
               font-size: 3vmax;
               height: 3vmax;
               line-height: 3vmax;
+              padding-bottom: .2vw;
               margin-top: 1rem;
             }
             a{
@@ -132,6 +149,14 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
                 } 
               }
             }
+            @media screen and (max-width:550px) {
+              flex-direction: column;
+              &__right
+              {
+                margin-top: 3rem;
+                align-items: flex-start;
+              }
+            }
           }
         }
 
@@ -147,6 +172,13 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
           padding-bottom: 2rem;
           p{
             text-transform: uppercase;
+          }
+          @media screen and (max-width:550px)
+          {
+            p:nth-of-type(2)
+            {
+              display: none;
+            }
           }
         }
     `
@@ -183,7 +215,6 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
       gsap.fromTo(FooterRef.current,
       {
         yPercent:-30,
-        opacity: .4,
       },
       { 
         scrollTrigger:{
@@ -192,8 +223,7 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
           scrub:1,
         },        
         yPercent:0,
-        duration:3,
-        opacity: 1,
+        duration:2,
       })
 
 

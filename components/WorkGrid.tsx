@@ -25,7 +25,7 @@ export default function WorkGrid() {
     `
   
     return (
-    <WorkGridStyled>
+    <WorkGridStyled id='workgrid'>
         <ul className='container'>
             <GridItem 
                 imgUrl='/images/mural.jpg' 

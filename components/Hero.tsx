@@ -1,19 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image';
 import Link from 'next/link';
 import { throttle } from 'lodash';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
+import NavLink from './NavLink';
+import InfoLink from './InfoLink';
+import { cursorContext } from '../context/CursorContext';
+
 
 export default function Hero() 
-{
+{  
   
   const LayerRef = useRef<HTMLDivElement>(null);
   const HeroTitle = useRef<HTMLDivElement>(null);
+  const HeroRef = useRef<HTMLDivElement>(null);
   const BottomnRef = useRef<HTMLDivElement>(null);
   const Hunting = useRef<HTMLDivElement>(null);
   const Present = useRef<HTMLDivElement>(null);
+  const CURSORCONTEXT = useContext(cursorContext);
 
   function ChangeLayerOpacityOnScroll() {
     window.addEventListener('scroll',throttle(()=>{
@@ -82,6 +88,21 @@ export default function Hero()
     ChangeLayerOpacityOnScroll();
   },[])
 
+  useEffect(()=>{
+    HeroRef.current?.addEventListener('mouseenter',()=>{
+        if (!CURSORCONTEXT?.CursorRef?.current) return;
+        
+        CURSORCONTEXT.CursorRef.current.classList.add('onScroll');
+        CURSORCONTEXT.CursorRef.current.classList.remove('onLink');
+    })
+    
+    HeroRef.current?.addEventListener('mouseleave',()=>{
+        if (!CURSORCONTEXT?.CursorRef?.current) return;
+        
+        CURSORCONTEXT.CursorRef.current.classList.remove('onScroll');
+    })
+  },[])
+
   const HeroStyled = styled.div`
   background: black;
   position: relative;
@@ -94,6 +115,9 @@ export default function Hero()
     top: 0;
     z-index: 3;
     overflow: hidden;
+    &>a{
+      display: block;
+    }
     
     .home
     {
@@ -146,12 +170,18 @@ export default function Hero()
       align-items: center;
       h4{
         width: 40%;
-        font-size: 2vw;
+        font-size: 2vmax;
       }
-      a{
-        font-size: 1.4rem;
-        text-decoration: underline;
-        text-transform: uppercase;
+
+
+      @media screen and (max-width:750px){
+        flex-direction: column;
+        align-items: flex-start;
+        h4{
+          width: 90%;
+          font-size: 5vw;
+          margin-bottom: 3rem;
+        }
       }
     }
 
@@ -172,30 +202,28 @@ export default function Hero()
   `
 
   return (
-    <HeroStyled>
+    <HeroStyled onClick={()=>{
+      document?.getElementById('workgrid')?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+    }} ref={HeroRef}>
         <SlideShow/>
-        <Layer ref={LayerRef}/>
+        <Layer ref={LayerRef}/> 
         <HeroContent>
-          <div className='home'>
-            <div className='title' ref={HeroTitle}>
-              <div><p id='tp1'>24/7</p></div>
-              <div ref={Hunting}><p>hunting</p></div>
-              <div><p>the next</p></div>
+            <div className='home'>
+              <div className='title' ref={HeroTitle}>
+                <div><p id='tp1'>24/7</p></div>
+                <div ref={Hunting}><p>hunting</p></div>
+                <div><p>the next</p></div>
+              </div>
+              <div className='bottom' ref={BottomnRef}>
+                <Timer/>
+                <p>The creative studio focused on sports</p>
+                <p>based in the netherlands</p>
+              </div>
             </div>
-            <div className='bottom' ref={BottomnRef}>
-              <Timer/>
-              <p>The creative studio focused on sports</p>
-              <p>based in the netherlands</p>
+            <div className='presentation' ref={Present}>
+              <h4>GRAPHICHUNTERS DEVELOPS DISTINCTIVE BRAND AND CAMPAIGN STYLES, DELIVERING NEXT LEVEL VISUAL CONTENT.</h4>
+              <InfoLink value='about us' link='/studio'/>
             </div>
-          </div>
-          <div className='presentation' ref={Present}>
-            <h4>GRAPHICHUNTERS DEVELOPS DISTINCTIVE BRAND AND CAMPAIGN STYLES, DELIVERING NEXT LEVEL VISUAL CONTENT.</h4>
-            <Link href={'/studio'}>
-              <a>
-                about us
-              </a>
-            </Link>
-          </div>
         </HeroContent>
     </HeroStyled>
   )

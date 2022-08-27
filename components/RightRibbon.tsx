@@ -32,6 +32,7 @@ var RigthRibbon = styled.div`
         background: white;
         transform: rotate(-90deg) translateY(-50%) translateX(4vw);
         transform-origin: center right;
+        cursor: default;
         ul{
             display: flex;
             //gap: 2vw;
