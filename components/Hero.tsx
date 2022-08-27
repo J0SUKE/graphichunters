@@ -128,6 +128,10 @@ export default function Hero()
       div{
         overflow: hidden;
       }
+      #tp1
+      {
+        font-family: 'Serif4';
+      }
     }
 
     .presentation
@@ -174,7 +178,7 @@ export default function Hero()
         <HeroContent>
           <div className='home'>
             <div className='title' ref={HeroTitle}>
-              <div><p>24/7</p></div>
+              <div><p id='tp1'>24/7</p></div>
               <div ref={Hunting}><p>hunting</p></div>
               <div><p>the next</p></div>
             </div>
