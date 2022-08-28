@@ -48,9 +48,9 @@ export default function Hero({homePreladerRef,loaderText}:{homePreladerRef:React
     },  
     {
         yPercent:0,
-        delay:.1,
         stagger:0.03,
-        duration:.5
+        delay:0.5,
+        duration:.5,
     })
     tl.to([...loaderText.current.querySelectorAll('span')].reverse(),
     {

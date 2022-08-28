@@ -32,7 +32,6 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
         top: 2vw;
         right: 10vw;
         padding-right: 2rem;
-        mix-blend-mode: difference;
         a{
             display: block;            
         }

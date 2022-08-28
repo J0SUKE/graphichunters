@@ -33,32 +33,37 @@ export default function WorkGrid() {
                 pageUrl='/work/uefa-feuro-2022' 
                 title='uefa' 
                 desc='Illustration toolkit for Futsal Euro 2022'
+                overlayColor='#257DB8'
             />
             <GridItem 
                 imgUrl='/images/logo-board.jpg' 
                 pageUrl='/work/future-goals' 
                 title='afc ajax' 
                 desc='CARIBBEAN INSPIRED DESIGN FOR FUTURE GOALS'
+                overlayColor='#A4A415'
             />
             <GridItem 
                 imgUrl='/images/thumb-2.jpg' 
                 pageUrl='/work/knvb-25-years-of-just-doing-it' 
                 title='knvb x nike' 
                 desc='CELEBRATING 25 YEARS OF JUST DOING IT'
+                overlayColor='#FF5000'
             />
             <CommingSoon 
                 imgUrl='/images/logo-mark-2.jpg' 
                 title='knvb' 
                 desc='a brand new look for TOTO KNVB Beker'
+                overlayColor='#8C8783'
             />
         </ul>
     </WorkGridStyled>
   )
 }
 
-function GridItem({imgUrl,pageUrl,title,desc}:{imgUrl:string,pageUrl:string,title:string,desc:string}) {
+function GridItem({imgUrl,pageUrl,title,desc,overlayColor}:{imgUrl:string,pageUrl:string,title:string,desc:string,overlayColor:string}) {
     
     const GridItem = styled.li`
+        position: relative;
         aspect-ratio: 1/1;
         .img-container
         {
@@ -72,10 +77,23 @@ function GridItem({imgUrl,pageUrl,title,desc}:{imgUrl:string,pageUrl:string,titl
             }
             &:hover{
                 border-radius: 50%;
-                filter: grayscale(100%);
+                img{
+                    filter: grayscale(100%);
+                }
                 img{
                     transform: scale(1.1);
                 }
+            }
+        }
+        .loader
+        {
+            position: absolute;
+            inset: 0;
+            background: ${overlayColor};
+            z-index: 2;
+            transition: transform .3s;
+            &.loaded{
+                transform: translateY(-100%);
             }
         }
 
@@ -111,18 +129,22 @@ function GridItem({imgUrl,pageUrl,title,desc}:{imgUrl:string,pageUrl:string,titl
             margin-top: .8rem;
         }
     `
-
+    const loaderRef = useRef<HTMLDivElement>(null);
     const GridRef = useCursorInteraction('onView') as React.RefObject<HTMLLIElement>;
 
     return <Link href={pageUrl}>
         <a>
             <GridItem ref={GridRef}>
                 <div className='img-container'>
+                    <div className="loader" ref={loaderRef}></div>                    
                     <Image
                         src={imgUrl}
                         layout={'fill'}
                         objectFit={'cover'}
                         alt={''}
+                        onLoad={()=>{
+                            loaderRef.current?.classList.add('loaded');
+                        }}
                     />
                 </div>
                 <h2>
@@ -136,14 +158,27 @@ function GridItem({imgUrl,pageUrl,title,desc}:{imgUrl:string,pageUrl:string,titl
 }
 
 
-function CommingSoon({imgUrl,title,desc}:{imgUrl:string,title:string,desc:string}) {
+function CommingSoon({imgUrl,title,desc,overlayColor}:{imgUrl:string,title:string,desc:string,overlayColor:string}) {
     const GridItem = styled.li`
         aspect-ratio: 1/1;
         .img-container
         {
             width: 100%;
+            overflow: hidden;
             position: relative;
             aspect-ratio: 1/1;
+        }
+
+        .loader
+        {
+            position: absolute;
+            inset: 0;
+            background: ${overlayColor};
+            z-index: 2;
+            transition: transform .3s;
+            &.loaded{
+                transform: translateY(-100%);
+            }
         }
 
         h2{
@@ -199,6 +234,7 @@ function CommingSoon({imgUrl,title,desc}:{imgUrl:string,title:string,desc:string
             }
         }
     `
+    const loaderRef = useRef<HTMLDivElement>(null);
 
     return <GridItem>
             <div className='img-container'>
@@ -222,11 +258,15 @@ function CommingSoon({imgUrl,title,desc}:{imgUrl:string,title:string,desc:string
                         </li>
                     </ul>
                 </div>
+                <div className="loader" ref={loaderRef}></div>                    
                 <Image
                     src={imgUrl}
                     layout={'fill'}
                     objectFit={'cover'}
                     alt={''}
+                    onLoad={()=>{
+                        loaderRef.current?.classList.add('loaded');
+                    }}
                 />
             </div>
             <h2>

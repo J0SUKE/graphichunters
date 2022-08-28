@@ -37,23 +37,6 @@ export default function HomePreloader({homePreladerRef,loaderText}:{homePrelader
         }
     `
 
-    useEffect(()=>{
-        
-        if (!loaderText?.current?.querySelector('span')) return;
-
-        gsap.fromTo(loaderText.current.querySelectorAll('span'),
-        {
-            yPercent:100,
-        },  
-        {
-            yPercent:0,
-            delay:1,
-            stagger:0.03,
-            duration:.5
-        })
-        
-    },[]);
-
     return (
     <>
         <HomePreloader ref={homePreladerRef}></HomePreloader>
