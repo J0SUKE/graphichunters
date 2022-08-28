@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { cursorContext } from '../context/CursorContext';
 
@@ -82,6 +82,7 @@ export default function Cursor() {
         }
     `;
 
+    const [mobile,setmobile] = useState(true);
     const Position = useRef({x:0,y:0});
     const lerpFactor = useRef(0.2);
 
@@ -91,6 +92,14 @@ export default function Cursor() {
         })
     },[]);
 
+
+    useEffect(()=>{
+        
+        if (!navigator.userAgent) return;
+        
+        if (!isMobile()) setmobile(false)
+        else setmobile(true);
+    },[])
 
     const CURSORCONTEXT = useContext(cursorContext);
     if (!CURSORCONTEXT) return null;
@@ -106,11 +115,13 @@ export default function Cursor() {
         CursorRef.current.style.left = `${Position.current.x-7}px`;
         CursorRef.current.style.top = `${Position.current.y-8}px`;
 
-    }
-  
-
+    }  
     return (
-    <Cursor ref={CursorRef}></Cursor>
+        <>
+            {
+                !mobile && <Cursor ref={CursorRef}></Cursor>
+            }
+        </>
   )
 }
 
@@ -118,3 +129,15 @@ export default function Cursor() {
 function lerp (start:number, end:number, amt:number){
     return (1-amt)*start+amt*end
   }
+
+function isMobile() 
+{    
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+        return true;
+    }
+    else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+        return true;
+    }
+    return false;
+};

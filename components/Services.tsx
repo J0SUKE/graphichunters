@@ -21,6 +21,7 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
       {
         scrollTrigger:{
           trigger:ServicesRef.current,
+          scroller: "#scroll-wrapper",
           start:'top bottom',
           scrub:1,
         },
@@ -36,6 +37,7 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
       {
         scrollTrigger:{
           trigger:TheParallaxRef.current,
+          scroller: "#scroll-wrapper",
           start:'top bottom',
           scrub:1,
         },
