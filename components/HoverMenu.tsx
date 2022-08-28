@@ -152,7 +152,7 @@ export default function HoverMenu() {
         <MenuItem 
             text='visual content' 
             index='03' 
-            imgUrl='/images/imgBox/imgBox3.jpg' 
+            imgUrl='/images/imgBox/imgbox3.jpg' 
             ImageBoxContainer={ImageBoxContainer}
         />
         <MenuItem 
