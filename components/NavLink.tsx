@@ -1,6 +1,7 @@
-import { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { cursorContext } from "../context/CursorContext";
+import useCursorInteraction from "../hooks/useCursorInteraction";
 import Link from "next/link";
 
 export default function NavLink({link,value}:{link:string,value:string}) {
@@ -32,21 +33,7 @@ export default function NavLink({link,value}:{link:string,value:string}) {
         }      
     `
     
-    const NavLinkRef = useRef<HTMLDivElement>(null);
-    const CURSORCONTEXT = useContext(cursorContext);
-
-    useEffect(()=>{
-        NavLinkRef.current?.addEventListener('mouseenter',()=>{
-            if (!CURSORCONTEXT?.CursorRef?.current) return;
-            
-            CURSORCONTEXT.CursorRef.current.classList.add('onLink');
-        })
-        NavLinkRef.current?.addEventListener('mouseleave',()=>{
-            if (!CURSORCONTEXT?.CursorRef?.current) return;
-            
-            CURSORCONTEXT.CursorRef.current.classList.remove('onLink');
-        })
-    },[])
+    const NavLinkRef = useCursorInteraction('onLink') as React.RefObject<HTMLDivElement>;    
 
     return <AnimatedLink ref={NavLinkRef}>
             <Link href={`/${link}`}><a>{value}</a></Link>

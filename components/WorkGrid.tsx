@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import Link from 'next/link'
+import useCursorInteraction from '../hooks/useCursorInteraction'
 
 export default function WorkGrid() {
     
@@ -111,9 +112,11 @@ function GridItem({imgUrl,pageUrl,title,desc}:{imgUrl:string,pageUrl:string,titl
         }
     `
 
+    const GridRef = useCursorInteraction('onView') as React.RefObject<HTMLLIElement>;
+
     return <Link href={pageUrl}>
         <a>
-            <GridItem>
+            <GridItem ref={GridRef}>
                 <div className='img-container'>
                     <Image
                         src={imgUrl}

@@ -5,8 +5,9 @@ import { cursorContext } from '../context/CursorContext';
 export default function Cursor() {
   
     const Cursor = styled.div`
-        position: absolute;
-        z-index: 999;
+        position: fixed;
+        top: 0;
+        z-index: 99999;
         height: 10px;
         width: 10px;
         border-radius: 50%;
@@ -16,7 +17,7 @@ export default function Cursor() {
         transition: transform .3s;
 
         &.onScroll{
-            transform: scale(10);
+            transform: scale(10) translateY(-0.1rem);
             &::before
             {
                 content: 'scroll';
@@ -30,7 +31,47 @@ export default function Cursor() {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                font-size: 1.3rem;
+                font-size: 1.1rem;
+                font-family: 'Serif4';
+                text-transform: uppercase;
+            }
+        }
+        &.onView{
+            transform: scale(8) translateY(-0.1rem);
+            &::before
+            {
+                content: 'view';
+                font-size: 3rem;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width:100%;
+                height: 100%;
+                transform: scale(.1);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.2rem;
+                font-family: 'Serif4';
+                text-transform: uppercase;
+            }
+        }
+        &.onArchive{
+            transform: scale(12) translateY(-0.1rem);
+            &::before
+            {
+                content: 'archive';
+                font-size: 3rem;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width:100%;
+                height: 100%;
+                transform: scale(.1);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: .9rem;
                 font-family: 'Serif4';
                 text-transform: uppercase;
             }
@@ -42,15 +83,12 @@ export default function Cursor() {
     `;
 
     const Position = useRef({x:0,y:0});
-    const lerpFactor = useRef(0.7);
-    const lastScroll = useRef(0);
-    const cursorTop = useRef(0);
+    const lerpFactor = useRef(0.2);
 
     useEffect(()=>{
         document.addEventListener("mousemove",(e)=>{
             updateCursor(e.pageX,e.pageY);
         })
-        document?.addEventListener('scroll',scroll);
     },[]);
 
 
@@ -68,20 +106,6 @@ export default function Cursor() {
         CursorRef.current.style.left = `${Position.current.x-7}px`;
         CursorRef.current.style.top = `${Position.current.y-8}px`;
 
-        cursorTop.current = Position.current.y;
-        const{scrollTop} = document.documentElement;
-        lastScroll.current=scrollTop;
-
-    }
-
-    function scroll() {
-        
-        if(!CursorRef?.current || !document) return;
-        
-        const{scrollTop} = document.documentElement;
-        let deltaScroll = scrollTop-lastScroll.current;
-        Position.current.y = cursorTop.current+deltaScroll;
-        CursorRef.current.style.top = `${Position.current.y}px`; 
     }
   
 

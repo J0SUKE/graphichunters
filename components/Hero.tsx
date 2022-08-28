@@ -1,29 +1,32 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image';
-import Link from 'next/link';
 import { throttle } from 'lodash';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
-import NavLink from './NavLink';
 import InfoLink from './InfoLink';
-import { cursorContext } from '../context/CursorContext';
-
+import useCursorInteraction from '../hooks/useCursorInteraction';
+import { scrollerWrapperContext } from '../context/ScrollWrapperContext';
 
 export default function Hero() 
 {  
   
   const LayerRef = useRef<HTMLDivElement>(null);
   const HeroTitle = useRef<HTMLDivElement>(null);
-  const HeroRef = useRef<HTMLDivElement>(null);
+  const HeroRef = useCursorInteraction('onScroll') as React.RefObject<HTMLDivElement>;
   const BottomnRef = useRef<HTMLDivElement>(null);
   const Hunting = useRef<HTMLDivElement>(null);
   const Present = useRef<HTMLDivElement>(null);
-  const CURSORCONTEXT = useContext(cursorContext);
 
   function ChangeLayerOpacityOnScroll() {
-    window.addEventListener('scroll',throttle(()=>{
-      const {scrollTop,clientHeight} = document.documentElement;
+    
+    
+    ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
+      
+      if (!ScrollerRef?.current) return;
+
+      const {clientHeight} = document.documentElement;
+      const scrollTop = ScrollerRef.current.scrollTop;
 
       let ratio = scrollTop/clientHeight;
       if (LayerRef.current) {
@@ -65,6 +68,7 @@ export default function Hero()
     gsap.to(Hunting.current,{
       scrollTrigger:{
         trigger:'.presentation',
+        scroller: "#scroll-wrapper",
         start:'top bottom',
         scrub:1,
       },
@@ -75,6 +79,7 @@ export default function Hero()
     gsap.to(HeroTitle.current,{
       scrollTrigger:{
         trigger:'.presentation',
+        scroller: "#scroll-wrapper",
         start:'top bottom',
         scrub:1,
       },
@@ -86,22 +91,12 @@ export default function Hero()
 
   useEffect(()=>{
     ChangeLayerOpacityOnScroll();
-  },[])
+  },[])  
 
-  useEffect(()=>{
-    HeroRef.current?.addEventListener('mouseenter',()=>{
-        if (!CURSORCONTEXT?.CursorRef?.current) return;
-        
-        CURSORCONTEXT.CursorRef.current.classList.add('onScroll');
-        CURSORCONTEXT.CursorRef.current.classList.remove('onLink');
-    })
-    
-    HeroRef.current?.addEventListener('mouseleave',()=>{
-        if (!CURSORCONTEXT?.CursorRef?.current) return;
-        
-        CURSORCONTEXT.CursorRef.current.classList.remove('onScroll');
-    })
-  },[])
+  const wrapperContext = useContext(scrollerWrapperContext);
+  if (!wrapperContext) return null;
+  const {ScrollerRef} = wrapperContext;
+
 
   const HeroStyled = styled.div`
   background: black;
@@ -113,7 +108,7 @@ export default function Hero()
     background: transparent;
     color: white;
     top: 0;
-    z-index: 3;
+    z-index: 1;
     overflow: hidden;
     &>a{
       display: block;
@@ -133,6 +128,7 @@ export default function Hero()
       padding: 2rem 2.5rem;
       text-transform: uppercase;
       font-size: .9rem;
+      cursor: default;
 
       @media screen and (max-width:750px)
       {
@@ -149,6 +145,7 @@ export default function Hero()
       font-weight: 400;
       padding: 0 2rem;
       text-transform: uppercase;
+      cursor: default;
       div{
         overflow: hidden;
       }
@@ -190,7 +187,7 @@ export default function Hero()
   const Layer = styled.div`
     position: fixed;
     width: 92vw;
-    z-index: 2;
+    z-index: 1;
     height: 100%;
     background: black;
     opacity: 0;
@@ -304,6 +301,7 @@ function SlideImage({url}:{url:string}) {
     var Slide = styled.div`
       height: 100vh;
       position: absolute;
+      z-index: 1;
       inset: 0;
       opacity: 0;
 

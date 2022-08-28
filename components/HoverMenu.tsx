@@ -1,12 +1,9 @@
-
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import Image from 'next/image';
 import { throttle } from 'lodash';
-import { log } from 'console';
+import { scrollerWrapperContext } from '../context/ScrollWrapperContext';
 
 export default function HoverMenu() {
-    
     const MenuRef = useRef<HTMLDivElement>(null)
     const ImageBox = useRef<HTMLDivElement>(null);
     const ImageBoxContainer = useRef<HTMLDivElement>(null);
@@ -79,7 +76,7 @@ export default function HoverMenu() {
 
         MenuRef.current.addEventListener('mousemove',throttle((e)=>{
             const width = MenuRef.current?.getBoundingClientRect().width;
-            if (!ImageBox.current || !width || !ImageBox.current) return ;
+            if (!ScrollerRef?.current || !ImageBox.current || !width || !ImageBox.current) return ;
             
             var offsetX = e.offsetX;
             var offsetY = e.offsetY;
@@ -106,7 +103,7 @@ export default function HoverMenu() {
             ImageBox.current.style.top = `${BoxPosition.current.y}px`;
 
             // update the scrollTop
-            const {scrollTop} = document.documentElement;
+            const {scrollTop} = ScrollerRef.current;
             lastSCroll.current = scrollTop;
         },10))
 
@@ -114,11 +111,11 @@ export default function HoverMenu() {
     },[])
   
     useEffect(()=>{
-        window.addEventListener('scroll',throttle(()=>{
-            if (!mouseOverMenu.current || !MenuRef.current || !ImageBox.current) return;
+        ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
+            if (!ScrollerRef?.current || !mouseOverMenu.current || !MenuRef.current || !ImageBox.current) return;
 
             // scroll au dessus du menu ==> ajouter la distance scrollée à ImageBox.current.y            
-            const {scrollTop} = document.documentElement;
+            const {scrollTop} = ScrollerRef?.current;
             let deltaScroll = scrollTop - lastSCroll.current ;
             lastSCroll.current = scrollTop;
             
@@ -129,6 +126,11 @@ export default function HoverMenu() {
 
         },10));
     },[])
+
+
+    const wrapperContext = useContext(scrollerWrapperContext);
+    if (!wrapperContext) return null;
+    const {ScrollerRef} = wrapperContext;
 
     return (
     <HoverMenu ref={MenuRef}>

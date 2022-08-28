@@ -3,12 +3,14 @@ import styled from 'styled-components'
 import gsap from 'gsap';
 import HoverMenu from './HoverMenu';
 import Link from 'next/link';
+import useCursorInteraction from '../hooks/useCursorInteraction';
 
 export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTMLDivElement>}) {
     
     const ServiceParallaxRef = useRef<HTMLSpanElement>(null);
     const TheParallaxRef = useRef<HTMLSpanElement>(null);
-    
+    const videoRef = useCursorInteraction('onArchive') as React.RefObject<HTMLDivElement>;
+
     useEffect(()=>{
       if (!ServiceParallaxRef.current || !TheParallaxRef.current || !ServicesRef.current) return;
 
@@ -127,7 +129,7 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
         </div>
       </div>
       <HoverMenu/>
-      <div className='video-section'>
+      <div className='video-section' ref={videoRef}>
         <div className="video-container">
           <video autoPlay loop muted src="/video/rotate-g.mp4"></video>
         </div>

@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { cursorContext } from "../context/CursorContext";
 import Link from "next/link";
+import useCursorInteraction from "../hooks/useCursorInteraction";
 
 
 export default function InfoLink({value,link}:{value:string,link:string}) {
@@ -38,23 +39,7 @@ export default function InfoLink({value,link}:{value:string,link:string}) {
         }      
     `;
     
-    const InfoLinkRef = useRef<HTMLDivElement>(null);
-    
-    const CURSORCONTEXT = useContext(cursorContext);
-
-    useEffect(()=>{
-        InfoLinkRef.current?.addEventListener('mouseenter',()=>{
-            if (!CURSORCONTEXT?.CursorRef?.current) return;
-            
-            CURSORCONTEXT.CursorRef.current.classList.add('onLink');
-            //CURSORCONTEXT.CursorRef.current.classList.remove('onScroll');
-        })
-        InfoLinkRef.current?.addEventListener('mouseleave',()=>{
-            if (!CURSORCONTEXT?.CursorRef?.current) return;
-            
-            CURSORCONTEXT.CursorRef.current.classList.remove('onLink');
-        })
-    },[])
+    const InfoLinkRef = useCursorInteraction('onLink') as React.RefObject<HTMLDivElement>;            
 
     return <InfoLink ref={InfoLinkRef}>
         <Link href={`${link}`}><a>{value}</a></Link>

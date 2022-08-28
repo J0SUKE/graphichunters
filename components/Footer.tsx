@@ -191,6 +191,7 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
       { 
         scrollTrigger:{
           trigger:FooterTop.current,
+          scroller: "#scroll-wrapper",
           start:'top bottom',
           scrub:1,
         },        
@@ -205,6 +206,7 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
       { 
         scrollTrigger:{
           trigger:FooterContent.current,
+          scroller: "#scroll-wrapper",
           start:'top bottom',
           scrub:1,
         },        
@@ -219,6 +221,7 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
       { 
         scrollTrigger:{
           trigger:FooterRef.current,
+          scroller: "#scroll-wrapper",
           start:'top bottom',
           scrub:1,
         },        

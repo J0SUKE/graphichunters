@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import RightRibbon from './RightRibbon'
 import styled from 'styled-components'
 import Hero from './Hero'
@@ -10,6 +10,7 @@ import Services from './Services'
 import Cursor from './Cursor'
 import gsap from 'gsap';
 import Link from 'next/link'
+import { scrollerWrapperContext } from '../context/ScrollWrapperContext'
 import { throttle } from 'lodash'
 
 
@@ -30,6 +31,7 @@ export default function Layout() {
     gsap.to(RibbonRef.current,{
       scrollTrigger:{
         trigger:'.presentation',
+        scroller: "#scroll-wrapper",
         start:'top bottom',
         endTrigger:FooterRef.current,
         end:'bottom bottom',
@@ -42,6 +44,7 @@ export default function Layout() {
     gsap.to([LogoRef.current,NavLinksRef.current],{
       scrollTrigger:{
         trigger:'.presentation',
+        scroller: "#scroll-wrapper",
         start:'50% bottom',
         toggleActions:'play pause pasue reverse'
       },      
@@ -53,7 +56,7 @@ export default function Layout() {
   },[])
 
   useEffect(()=>{
-    window.addEventListener('scroll',throttle(()=>{
+    ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
       
       const bottom = MarqueeRef.current?.querySelector('ul')?.getBoundingClientRect().bottom;
       if (!bottom || !LogoRef.current || !NavLinksRef.current) return;
@@ -72,24 +75,40 @@ export default function Layout() {
 
   },[]);
 
+  const wrapperContext = useContext(scrollerWrapperContext);
+  if (!wrapperContext) return null;
+  const {ScrollerRef} = wrapperContext;
+
+  const ScrollContainer = styled.div`
+    position: fixed;
+    top: 0;
+    min-height: 100vh;
+    max-height: 100vh;
+    width: 100%;
+    z-index: 1;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+  `
+
   return (
     <>
         <Cursor/>
         <Header logoRef={LogoRef} NavLinksRef={NavLinksRef}/>
-        <Content>
-          <Hero/>
-          <WorkGrid/>
-          <HomeBrands MarqueeRef={MarqueeRef}/>
-          <Services ServicesRef={ServicesRef}/>
-          <Footer FooterRef={FooterRef}/>
-        </Content>
-        <RightRibbon RibbonRef={RibbonRef}/>
+        <ScrollContainer id='scroll-wrapper' ref={ScrollerRef}>
+          <Content>
+            <Hero/>
+            <WorkGrid/>
+            <HomeBrands MarqueeRef={MarqueeRef}/>
+            <Services ServicesRef={ServicesRef}/>
+            <Footer FooterRef={FooterRef}/>
+          </Content>
+          <RightRibbon RibbonRef={RibbonRef}/>
+        </ScrollContainer>        
     </>    
   )
 }
 
 var Content = styled.div`
-    position: absolute;
     width: 92vw;
     top: 0;
     left: 0;
