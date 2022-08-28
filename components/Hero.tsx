@@ -8,7 +8,7 @@ import InfoLink from './InfoLink';
 import useCursorInteraction from '../hooks/useCursorInteraction';
 import { scrollerWrapperContext } from '../context/ScrollWrapperContext';
 
-export default function Hero() 
+export default function Hero({homePreladerRef,loaderText}:{homePreladerRef:React.RefObject<HTMLDivElement>,loaderText:React.RefObject<HTMLDivElement>}) 
 {  
   
   const LayerRef = useRef<HTMLDivElement>(null);
@@ -40,8 +40,36 @@ export default function Hero()
   useEffect(()=>{        
     const tl = gsap.timeline();
 
-    if (!HeroTitle.current || !BottomnRef.current) return;
-
+    if (!HeroTitle.current || !BottomnRef.current || !homePreladerRef.current || !loaderText.current) return;
+    
+    tl.fromTo(loaderText.current.querySelectorAll('span'),
+    {
+        yPercent:100,
+    },  
+    {
+        yPercent:0,
+        delay:.5,
+        stagger:0.03,
+        duration:.5
+    })
+    tl.to([...loaderText.current.querySelectorAll('span')].reverse(),
+    {
+        yPercent:-100,
+        delay:1.5,
+        stagger:0.03,
+        duration:.5,
+        ease: "power3.in"
+    })
+    tl.fromTo(homePreladerRef.current,
+    {
+      yPercent:0,
+      rotate: 0,
+    },
+    {
+      yPercent:-200,
+      rotate: -7,
+      duration:1
+    },'-=0.3')    
     tl.fromTo(HeroTitle.current.querySelectorAll('p'),{
       rotate: 4,
       yPercent:100,
@@ -51,7 +79,8 @@ export default function Hero()
       yPercent:0,
       duration:.8,
       stagger:-.08
-    }).fromTo(BottomnRef.current.querySelectorAll('p'),{
+    },"-=0.7")
+    .fromTo(BottomnRef.current.querySelectorAll('p'),{
       y:'3rem',
     },{
       y:0,

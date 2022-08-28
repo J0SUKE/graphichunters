@@ -8,11 +8,11 @@ import WorkGrid from './WorkGrid'
 import HomeBrands from './HomeBrands'
 import Services from './Services'
 import Cursor from './Cursor'
+import HomePreloader from './preloaders/HomePreloader'
 import gsap from 'gsap';
 import Link from 'next/link'
 import { scrollerWrapperContext } from '../context/ScrollWrapperContext'
 import { throttle } from 'lodash'
-
 
 
 export default function Layout() {
@@ -23,6 +23,8 @@ export default function Layout() {
   const NavLinksRef = useRef<HTMLElement>(null);
   const ServicesRef = useRef<HTMLDivElement>(null);
   const MarqueeRef = useRef<HTMLDivElement>(null);
+  const homePreladerRef = useRef<HTMLDivElement>(null);
+  const loaderText = useRef<HTMLDivElement>(null);;
 
   useEffect(()=>{
     
@@ -92,18 +94,19 @@ export default function Layout() {
 
   return (
     <>
+        <HomePreloader homePreladerRef={homePreladerRef} loaderText={loaderText}/>
         <Cursor/>
         <Header logoRef={LogoRef} NavLinksRef={NavLinksRef}/>
-        <ScrollContainer id='scroll-wrapper' ref={ScrollerRef}>
-          <Content>
-            <Hero/>
-            <WorkGrid/>
-            <HomeBrands MarqueeRef={MarqueeRef}/>
-            <Services ServicesRef={ServicesRef}/>
-            <Footer FooterRef={FooterRef}/>
-          </Content>
-          <RightRibbon RibbonRef={RibbonRef}/>
-        </ScrollContainer>        
+          <ScrollContainer data-scroll-container id='scroll-wrapper' ref={ScrollerRef}>
+            <Content>
+              <Hero homePreladerRef={homePreladerRef} loaderText={loaderText}/>
+              <WorkGrid/>
+              <HomeBrands MarqueeRef={MarqueeRef}/>
+              <Services ServicesRef={ServicesRef}/>
+              <Footer FooterRef={FooterRef}/>
+            </Content>
+            <RightRibbon RibbonRef={RibbonRef}/>
+          </ScrollContainer>        
     </>    
   )
 }
