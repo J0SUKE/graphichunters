@@ -48,7 +48,7 @@ export default function Hero({homePreladerRef,loaderText}:{homePreladerRef:React
     },  
     {
         yPercent:0,
-        delay:.5,
+        delay:.1,
         stagger:0.03,
         duration:.5
     })
@@ -58,7 +58,11 @@ export default function Hero({homePreladerRef,loaderText}:{homePreladerRef:React
         delay:1.5,
         stagger:0.03,
         duration:.5,
-        ease: "power3.in"
+        ease: "power3.in",
+        onComplete:()=>{
+          if (!loaderText.current) return;
+          loaderText.current.style.display = 'none';
+        }
     })
     tl.fromTo(homePreladerRef.current,
     {
