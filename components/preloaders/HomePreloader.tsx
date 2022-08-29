@@ -9,7 +9,7 @@ export default function HomePreloader({homePreladerRef,loaderText}:{homePrelader
         inset: 0;
         z-index: 1000000;
         background: #9BFA00;
-        box-shadow: 0px -20vh 100vh 70vh #9BFA00;        
+        box-shadow: 0px -20vh 100vmin 70vmin #9BFA00;        
     `
     const PreloaderText = styled.div`
         position: fixed;

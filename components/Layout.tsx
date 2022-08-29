@@ -9,6 +9,7 @@ import HomeBrands from './HomeBrands'
 import Services from './Services'
 import Cursor from './Cursor'
 import HomePreloader from './preloaders/HomePreloader'
+import Menu from './Menu'
 import gsap from 'gsap';
 import Link from 'next/link'
 import { scrollerWrapperContext } from '../context/ScrollWrapperContext'
@@ -78,8 +79,11 @@ export default function Layout() {
   },[]);
 
   const wrapperContext = useContext(scrollerWrapperContext);
+
   if (!wrapperContext) return null;
   const {ScrollerRef} = wrapperContext;
+
+
 
   const ScrollContainer = styled.div`
     position: fixed;
@@ -97,16 +101,17 @@ export default function Layout() {
         <HomePreloader homePreladerRef={homePreladerRef} loaderText={loaderText}/>
         <Cursor/>
         <Header logoRef={LogoRef} NavLinksRef={NavLinksRef}/>
-          <ScrollContainer data-scroll-container id='scroll-wrapper' ref={ScrollerRef}>
-            <Content>
-              <Hero homePreladerRef={homePreladerRef} loaderText={loaderText}/>
-              <WorkGrid/>
-              <HomeBrands MarqueeRef={MarqueeRef}/>
-              <Services ServicesRef={ServicesRef}/>
-              <Footer FooterRef={FooterRef}/>
-            </Content>
-            <RightRibbon RibbonRef={RibbonRef}/>
-          </ScrollContainer>        
+        <Menu/>
+        <ScrollContainer data-scroll-container id='scroll-wrapper' ref={ScrollerRef}>
+          <Content>
+            <Hero homePreladerRef={homePreladerRef} loaderText={loaderText}/>
+            <WorkGrid/>
+            <HomeBrands MarqueeRef={MarqueeRef}/>
+            <Services ServicesRef={ServicesRef}/>
+            <Footer FooterRef={FooterRef}/>
+          </Content>
+          <RightRibbon RibbonRef={RibbonRef}/>
+        </ScrollContainer>        
     </>    
   )
 }
