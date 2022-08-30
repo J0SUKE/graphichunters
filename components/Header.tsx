@@ -43,6 +43,7 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
             right: 2vw;
         }
     `
+    
 
     const [mobile,setMobile] = useState(false);
 
@@ -58,7 +59,7 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
     },[])
 
     return (
-    <>
+    <> 
         <Link href={'/'}>
             <Logo ref={logoRef}>
                 <svg height="820" viewBox="0 0 1066 820" width="1066" xmlns="http://www.w3.org/2000/svg"><path d="m532.999 546.66h-266.499v-273.32h532.196l266.504-273.34h-598.835l-466.365 478.335v341.665h333.115l399.749-409.99v409.99h266.481v-478.335h-266.481z" fill="#ffffff"></path></svg>
@@ -85,7 +86,7 @@ function MenuButton() {
         position: fixed;   
         z-index: 99;
         top: 5vw;
-        right: 2vw;
+        right: 4vw;
         height: 1.4rem;
         overflow: hidden;
         cursor: pointer;    
@@ -97,6 +98,11 @@ function MenuButton() {
             align-items: center;
             gap: .7rem;
             transition: transform .3s;
+
+            &:last-of-type p {
+                font-family: 'Serif4';
+            }
+
             span{
                 display: block;
                 width: 10px;
@@ -108,6 +114,7 @@ function MenuButton() {
                 font-size: 1.4rem;
                 text-transform: uppercase;
                 color: white;
+
             }
             &:first-of-type span
             {
@@ -125,7 +132,6 @@ function MenuButton() {
         {
             transform: rotate(10deg);
         }
-
         &.active
         {
             div:first-of-type
@@ -136,21 +142,20 @@ function MenuButton() {
             {
                 transform: translateY(-100%) rotate(0deg);
             }
-        }
-        
+        }        
     `
 
     const MenuButtonRef = useCursorInteraction('onLink') as React.RefObject<HTMLDivElement>;
 
     const MENUCONTEXT = useContext(menuContext);
     if (!MENUCONTEXT) return null;
-    const {setMenuIsOpen} = MENUCONTEXT;
+    var {openMenu,closeMenu,menuIsOpen} = MENUCONTEXT;
 
     return <MenuButtonStyled 
             ref={MenuButtonRef}
-            onClick={()=>{
-                MenuButtonRef.current?.classList.toggle('active');   
-                setMenuIsOpen(menu=>!menu);
+            onClick={()=>{                
+                if (!menuIsOpen.current) openMenu(MenuButtonRef);
+                else closeMenu(MenuButtonRef);
             }}
     >
         <div>

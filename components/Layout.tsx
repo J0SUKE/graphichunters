@@ -14,6 +14,7 @@ import gsap from 'gsap';
 import Link from 'next/link'
 import { scrollerWrapperContext } from '../context/ScrollWrapperContext'
 import { throttle } from 'lodash'
+import { log } from 'console'
 
 
 export default function Layout() {
@@ -25,7 +26,8 @@ export default function Layout() {
   const ServicesRef = useRef<HTMLDivElement>(null);
   const MarqueeRef = useRef<HTMLDivElement>(null);
   const homePreladerRef = useRef<HTMLDivElement>(null);
-  const loaderText = useRef<HTMLDivElement>(null);;
+  const loaderText = useRef<HTMLDivElement>(null);
+  const TopShadowRef = useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
     
@@ -53,25 +55,50 @@ export default function Layout() {
       },      
       scale: 0.8,
       duration:.5,
-      ease: "power3.out"
+      ease: "power3.out",
     })
 
+    gsap.to(TopShadowRef.current,{
+      scrollTrigger:{
+        trigger:'.presentation',
+        scroller: "#scroll-wrapper",
+        start:'50% bottom',
+        toggleActions:'play pause pasue reverse'
+      },      
+      opacity: 1,
+      duration:.5,
+      ease: "power3.out",
+    })    
   },[])
+   
+  
 
   useEffect(()=>{
     ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
       
-      const bottom = MarqueeRef.current?.querySelector('ul')?.getBoundingClientRect().bottom;
-      if (!bottom || !LogoRef.current || !NavLinksRef.current) return;
+      const bottom = MarqueeRef.current?.querySelector('ul')?.getBoundingClientRect().bottom;    
+
+      if (!bottom || !LogoRef.current || !NavLinksRef.current || !ScrollerRef.current) return;
 
       if (bottom<=0) {
-        LogoRef.current.style.mixBlendMode = 'difference'
-        NavLinksRef.current.style.mixBlendMode = 'difference'
+        LogoRef.current.style.mixBlendMode = 'difference';
+        NavLinksRef.current.style.mixBlendMode = 'difference';
+        gsap.to(TopShadowRef.current,{
+          opacity: 0,
+          duration:.7,
+        })
       }
       else
       {
         LogoRef.current.style.mixBlendMode = 'unset'
         NavLinksRef.current.style.mixBlendMode = 'unset'
+        
+        if (ScrollerRef.current.scrollTop > document.documentElement.clientHeight) {
+          gsap.to(TopShadowRef.current,{
+            opacity: 1,
+            duration:.7,
+          }) 
+        }        
       }          
     },100))
     
@@ -93,16 +120,30 @@ export default function Layout() {
     width: 100%;
     z-index: 1;
     overflow-y: scroll;
+    overflow-x: hidden;
     scroll-behavior: smooth;
+  `
+
+  const TopShadow = styled.div`
+    position: fixed;
+    opacity: 0;
+    z-index: 97;
+    transform: translateY(-140%);
+    width: 92vw;
+    left: 0;
+    height: 100vh;
+    background: black;
+    box-shadow: 0px -20vh 100vmin 70vmin black;        
   `
 
   return (
     <>
         <HomePreloader homePreladerRef={homePreladerRef} loaderText={loaderText}/>
         <Cursor/>
-        <Header logoRef={LogoRef} NavLinksRef={NavLinksRef}/>
-        <Menu/>
+        <Header logoRef={LogoRef} NavLinksRef={NavLinksRef} />
         <ScrollContainer data-scroll-container id='scroll-wrapper' ref={ScrollerRef}>
+          <TopShadow ref={TopShadowRef}/>
+          <Menu/>
           <Content>
             <Hero homePreladerRef={homePreladerRef} loaderText={loaderText}/>
             <WorkGrid/>
