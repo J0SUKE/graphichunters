@@ -87,8 +87,8 @@ function MenuLink({url,text}:{text:string,url:string})
     
     return <MenuLink>
         <p>
-            <Link href={`/${url}`}><a>{text}</a></Link>
-            <Link href={`/${url}`}><a>{text}</a></Link>
+            <Link href={`${url}`}><a>{text}</a></Link>
+            <Link href={`${url}`}><a>{text}</a></Link>
         </p>        
     </MenuLink>
 }

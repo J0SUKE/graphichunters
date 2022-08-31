@@ -271,10 +271,10 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
             <div className="infos__right">
               <span>socials</span>
               <ul>
-                <li><InfoLink value='linkedin' link='https://www.linkedin.com/in/jean-mazouni-214803242/'/></li>
-                <li><InfoLink value='twitter' link='https://twitter.com/Jean_mazouni'/></li>
-                <li><InfoLink value='malt' link='https://www.malt.fr/profile/jeanmazouni'/> </li>
-                <li><InfoLink value='github' link='https://github.com/J0SUKE'/> </li>
+                <li><InfoLink value='linkedin' link='https://www.linkedin.com/in/jean-mazouni-214803242/' external={true}/></li>
+                <li><InfoLink value='twitter' link='https://twitter.com/Jean_mazouni' external={true}/></li>
+                <li><InfoLink value='malt' link='https://www.malt.fr/profile/jeanmazouni' external={true}/></li>
+                <li><InfoLink value='github' link='https://github.com/J0SUKE' external={true}/></li>
               </ul>
             </div>
           </div>

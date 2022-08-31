@@ -7,10 +7,14 @@ import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import InfoLink from './InfoLink';
 import useCursorInteraction from '../hooks/useCursorInteraction';
 import { scrollerWrapperContext } from '../context/ScrollWrapperContext';
+import { log } from 'console';
 
-export default function Hero({homePreladerRef,loaderText}:{homePreladerRef:React.RefObject<HTMLDivElement>,loaderText:React.RefObject<HTMLDivElement>}) 
+export default function Hero({homePreladerRef,loaderText,images}:{homePreladerRef:React.RefObject<HTMLDivElement>,loaderText:React.RefObject<HTMLDivElement>,images:{url:string}[]}) 
 {  
   
+  //console.log(images);
+  
+
   const LayerRef = useRef<HTMLDivElement>(null);
   const HeroTitle = useRef<HTMLDivElement>(null);
   const HeroRef = useCursorInteraction('onScroll') as React.RefObject<HTMLDivElement>;
@@ -235,7 +239,7 @@ export default function Hero({homePreladerRef,loaderText}:{homePreladerRef:React
     <HeroStyled onClick={()=>{
       document?.getElementById('workgrid')?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
     }} ref={HeroRef}>
-        <SlideShow/>
+        <SlideShow images={images}/>
         <Layer ref={LayerRef}/> 
         <HeroContent>
             <div className='home'>
@@ -260,18 +264,9 @@ export default function Hero({homePreladerRef,loaderText}:{homePreladerRef:React
 }
 
 
-function SlideShow() {        
+function SlideShow({images}:{images:{url:string}[]}) {        
 
     const index = useRef(0);
-
-    const sliderImages = 
-    [
-        '/images/shoe.jpg',
-        '/images/mural.jpg',
-        '/images/porsche.jpg',
-        '/images/fnatic.jpg',
-        '/images/otw.jpg'
-    ];
 
     const imagesRefs = useRef<HTMLDivElement>(null);
     
@@ -300,7 +295,7 @@ function SlideShow() {
         imagesRefs.current.querySelectorAll('.imgslide')[index.current].classList.remove('active');
         imagesRefs.current.querySelectorAll('.imgslide')[index.current].classList.add('end');
 
-        if (index.current==sliderImages.length-1) index.current=0;
+        if (index.current==images.length-1) index.current=0;
         else index.current++;
         
 
@@ -308,7 +303,7 @@ function SlideShow() {
         setTimeout(()=>{
           
           if (index.current==0){
-            imagesRefs.current?.querySelectorAll('.imgslide')[sliderImages.length-1].classList.remove('end');
+            imagesRefs.current?.querySelectorAll('.imgslide')[images.length-1].classList.remove('end');
           }
           else imagesRefs.current?.querySelectorAll('.imgslide')[index.current-1].classList.remove('end');;
           
@@ -323,7 +318,7 @@ function SlideShow() {
 
     return <SlideShowStyle ref={imagesRefs}>
       {
-        sliderImages.map(img=><SlideImage key={img} url={img}/> )
+        images.map(img=><SlideImage key={img.url} url={img.url}/> )
       }
     </SlideShowStyle>
 }

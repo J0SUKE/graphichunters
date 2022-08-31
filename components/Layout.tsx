@@ -14,10 +14,12 @@ import gsap from 'gsap';
 import Link from 'next/link'
 import { scrollerWrapperContext } from '../context/ScrollWrapperContext'
 import { throttle } from 'lodash'
-import { log } from 'console'
 
+interface DataInterface {
+  [field:string]:any,
+}
 
-export default function Layout() {
+export default function Layout({data}:{data:DataInterface}) {
 
   const FooterRef = useRef<HTMLElement>(null);
   const RibbonRef = useRef<HTMLLIElement>(null);  
@@ -136,6 +138,9 @@ export default function Layout() {
     box-shadow: 0px -20vh 100vmin 70vmin black;        
   `
 
+  console.log(data);
+  
+
   return (
     <>
         <HomePreloader homePreladerRef={homePreladerRef} loaderText={loaderText}/>
@@ -145,8 +150,8 @@ export default function Layout() {
           <TopShadow ref={TopShadowRef}/>
           <Menu/>
           <Content>
-            <Hero homePreladerRef={homePreladerRef} loaderText={loaderText}/>
-            <WorkGrid/>
+            <Hero homePreladerRef={homePreladerRef} loaderText={loaderText} images={data.heroSlideshow.images}/>
+            <WorkGrid works={data.allWorks}/>
             <HomeBrands MarqueeRef={MarqueeRef}/>
             <Services ServicesRef={ServicesRef}/>
             <Footer FooterRef={FooterRef}/>

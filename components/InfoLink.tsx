@@ -5,7 +5,7 @@ import Link from "next/link";
 import useCursorInteraction from "../hooks/useCursorInteraction";
 
 
-export default function InfoLink({value,link}:{value:string,link:string}) {
+export default function InfoLink({value,link,external}:{value:string,link:string,external?:boolean}) {
     
     const InfoLink = styled.div`
         text-transform: uppercase;
@@ -42,7 +42,17 @@ export default function InfoLink({value,link}:{value:string,link:string}) {
     const InfoLinkRef = useCursorInteraction('onLink') as React.RefObject<HTMLDivElement>;            
 
     return <InfoLink ref={InfoLinkRef}>
-        <Link href={`${link}`}><a>{value}</a></Link>
-        <Link href={`${link}`}><a>{value}</a></Link>
+        {
+            external ?
+            <>
+                 <a href={`${link}`} target={'_blank'} rel="noreferrer">{value}</a>
+                 <a href={`${link}`} target={'_blank'} rel="noreferrer">{value}</a>
+            </>
+            :
+            <>
+                <Link href={`${link}`}><a>{value}</a></Link>
+                <Link href={`${link}`}><a>{value}</a></Link>
+            </>
+        }
     </InfoLink>
 }

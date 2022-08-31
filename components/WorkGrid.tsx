@@ -4,7 +4,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import useCursorInteraction from '../hooks/useCursorInteraction'
 
-export default function WorkGrid() {
+interface workInterface {
+    [nameField:string]:any
+}
+
+export default function WorkGrid({works}:{works:any}) {
     
     const WorkGridStyled = styled.div`
         padding: 3rem 0;
@@ -24,31 +28,22 @@ export default function WorkGrid() {
         }        
         border-bottom: 1px solid #a9a9a956;
     `
-  
+
     return (
     <WorkGridStyled id='workgrid'>
         <ul className='container'>
-            <GridItem 
-                imgUrl='/images/mural.jpg' 
-                pageUrl='/work/uefa-feuro-2022' 
-                title='uefa' 
-                desc='Illustration toolkit for Futsal Euro 2022'
-                overlayColor='#257DB8'
-            />
-            <GridItem 
-                imgUrl='/images/logo-board.jpg' 
-                pageUrl='/work/future-goals' 
-                title='afc ajax' 
-                desc='CARIBBEAN INSPIRED DESIGN FOR FUTURE GOALS'
-                overlayColor='#A4A415'
-            />
-            <GridItem 
-                imgUrl='/images/thumb-2.jpg' 
-                pageUrl='/work/knvb-25-years-of-just-doing-it' 
-                title='knvb x nike' 
-                desc='CELEBRATING 25 YEARS OF JUST DOING IT'
-                overlayColor='#FF5000'
-            />
+            {
+                works?.map((item:workInterface)=>{
+                    return <GridItem 
+                        key={item.id}
+                        imgUrl={item.image.url as string}
+                        pageUrl={item.slug as string}
+                        title={item.title as string}
+                        desc={item.desc as string}
+                        overlayColor={item.laoder.hex as string}
+                />
+                })
+            }                        
             <CommingSoon 
                 imgUrl='/images/logo-mark-2.jpg' 
                 title='knvb' 
@@ -132,7 +127,7 @@ function GridItem({imgUrl,pageUrl,title,desc,overlayColor}:{imgUrl:string,pageUr
     const loaderRef = useRef<HTMLDivElement>(null);
     const GridRef = useCursorInteraction('onView') as React.RefObject<HTMLLIElement>;
 
-    return <Link href={pageUrl}>
+    return <Link href={`/work/${pageUrl}`}>
         <a>
             <GridItem ref={GridRef}>
                 <div className='img-container'>
