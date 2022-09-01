@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import styled from 'styled-components';
 import {preloaderContext} from '../../context/PreloaderContext';
 import gsap from 'gsap';
+import { log } from 'console';
 
 export default function HomePreloader({homePreladerRef,loaderText}:{homePreladerRef:React.RefObject<HTMLDivElement>,loaderText:React.RefObject<HTMLDivElement>}) {
   
@@ -43,6 +44,9 @@ export default function HomePreloader({homePreladerRef,loaderText}:{homePrelader
     useEffect(()=>{
         if (!PreloaderContext?.preloadAnimation?.current || !loaderText.current || !homePreladerRef.current) return;
         
+        console.log('animatio should play');
+        
+
         let tl = PreloaderContext?.preloadAnimation?.current;
 
         tl.fromTo(loaderText.current.querySelectorAll('span'),
