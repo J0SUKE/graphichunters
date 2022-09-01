@@ -35,9 +35,9 @@ export default function WorkGridItem({imgUrl,pageUrl,title,desc,overlayColor}:{i
             inset: 0;
             background: ${overlayColor};
             z-index: 2;
-            transition: transform .3s;
+            transition: transform .4s;
             &.loaded{
-                transform: translateY(-100%);
+                transform: translateY(-105%);
             }
         }
 

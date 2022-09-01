@@ -56,11 +56,11 @@ export default function Home({data}:{data:DataInterface,})
     const {ScrollerRef} = wrapperContext;
 
     if (!LayoutrefsContext) return null;
-    const {LogoRef,NavLinksRef,TopShadowRef,homePreladerRef,loaderText} = LayoutrefsContext;
+    const {LogoRef,NavLinksRef,TopShadowRef,homePreladerRef,loaderText,pageTransitionRef} = LayoutrefsContext;
 
     return (
     <>        
-        <Hero homePreladerRef={homePreladerRef} loaderText={loaderText} images={data.heroSlideshow.images}/>
+        <Hero  images={data.heroSlideshow.images}/>
         <WorkGrid works={data.allWorks}/>
         <HomeBrands MarqueeRef={MarqueeRef}/>
         <Services ServicesRef={ServicesRef}/>

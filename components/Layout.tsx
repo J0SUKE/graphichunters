@@ -9,24 +9,24 @@ import Menu from './Menu'
 import gsap from 'gsap';
 import { scrollerWrapperContext } from '../context/ScrollWrapperContext'
 import {layoutRefsContext} from '../context/LayoutRefsContext';
-import { useRouter } from 'next/router'
-import { log } from 'console'
+import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
+import {historyContext} from '../context/HistoryContext'
+import PageTransition from './preloaders/PageTransition'
 
 export default function Layout({children,blackFooter,blackSide}:{children:React.ReactNode,blackFooter?:boolean,blackSide?:boolean}) {
 
-  const router = useRouter();
-  useEffect(()=>{
-    console.log(router);
-    
-  },[])
+
+  const ContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
     
-    if (!RibbonRef.current || !FooterRef.current || !LogoRef.current || !NavLinksRef.current) return;
+    if (!RibbonRef.current || !FooterRef.current || !LogoRef.current || !NavLinksRef.current || !ScrollerRef?.current) return;
+
+    gsap.registerPlugin(ScrollTrigger);
 
     gsap.to(RibbonRef.current,{
       scrollTrigger:{
-        trigger:'.presentation',
+        trigger:ContentRef.current,
         scroller: "#scroll-wrapper",
         start:'top bottom',
         endTrigger:FooterRef.current,
@@ -39,9 +39,9 @@ export default function Layout({children,blackFooter,blackSide}:{children:React.
 
     gsap.to([LogoRef.current,NavLinksRef.current],{
       scrollTrigger:{
-        trigger:'.presentation',
+        trigger:ContentRef.current,
         scroller: "#scroll-wrapper",
-        start:'50% bottom',
+        start:()=>window.innerHeight*0.7+' center',
         toggleActions:'play pause pasue reverse'
       },      
       scale: 0.8,
@@ -51,9 +51,9 @@ export default function Layout({children,blackFooter,blackSide}:{children:React.
 
     gsap.to(TopShadowRef.current,{
       scrollTrigger:{
-        trigger:'.presentation',
+        trigger:ContentRef.current,
         scroller: "#scroll-wrapper",
-        start:'50% bottom',
+        start:()=>window.innerHeight*0.7+' center',
         toggleActions:'play pause pasue reverse'
       },      
       opacity: 1,
@@ -96,13 +96,15 @@ export default function Layout({children,blackFooter,blackSide}:{children:React.
 
   const wrapperContext = useContext(scrollerWrapperContext);
   const LayoutrefsContext = useContext(layoutRefsContext);
+  const HistContext = useContext(historyContext);
+
 
   if (!wrapperContext) return null;
   const {ScrollerRef} = wrapperContext;
 
 
   if (!LayoutrefsContext) return null;
-  const {LogoRef,NavLinksRef,TopShadowRef,homePreladerRef,loaderText,RibbonRef,FooterRef} = LayoutrefsContext;
+  const {LogoRef,NavLinksRef,TopShadowRef,homePreladerRef,loaderText,RibbonRef,FooterRef,pageTransitionRef} = LayoutrefsContext;
 
   const ScrollContainer = styled.div`
     position: fixed;
@@ -128,15 +130,22 @@ export default function Layout({children,blackFooter,blackSide}:{children:React.
     box-shadow: 0px -20vh 100vmin 70vmin black;        
   `  
 
+
+
   return (
     <>
-        <HomePreloader homePreladerRef={homePreladerRef} loaderText={loaderText}/>
+        {
+          HistContext?.history?.current?.length == 0 ? // first page load
+          <HomePreloader homePreladerRef={homePreladerRef} loaderText={loaderText}/>
+          :
+          <PageTransition pageTransitionRef={pageTransitionRef}/>
+        }        
         <Cursor/>
         <Header logoRef={LogoRef} NavLinksRef={NavLinksRef} />
         <ScrollContainer data-scroll-container id='scroll-wrapper' ref={ScrollerRef}>
           <TopShadow ref={TopShadowRef}/>
           <Menu/>
-          <Content>
+          <Content ref={ContentRef} id={'content'}>
             {children}
             <Footer FooterRef={FooterRef} white={blackFooter}/>
           </Content>

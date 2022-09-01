@@ -7,14 +7,12 @@ import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import InfoLink from './InfoLink';
 import useCursorInteraction from '../hooks/useCursorInteraction';
 import { scrollerWrapperContext } from '../context/ScrollWrapperContext';
+import {preloaderContext} from '../context/PreloaderContext';
 import { log } from 'console';
 
-export default function Hero({homePreladerRef,loaderText,images}:{homePreladerRef:React.RefObject<HTMLDivElement>,loaderText:React.RefObject<HTMLDivElement>,images:{url:string}[]}) 
+export default function Hero({images}:{images:{url:string}[]}) 
 {  
-  
-  //console.log(images);
-  
-
+    
   const LayerRef = useRef<HTMLDivElement>(null);
   const HeroTitle = useRef<HTMLDivElement>(null);
   const HeroRef = useCursorInteraction('onScroll') as React.RefObject<HTMLDivElement>;
@@ -40,44 +38,16 @@ export default function Hero({homePreladerRef,loaderText,images}:{homePreladerRe
     },10))
   }
 
+  const PreloaderContext = useContext(preloaderContext);
+
 
   useEffect(()=>{        
-    const tl = gsap.timeline();
-
-    if (!HeroTitle.current || !BottomnRef.current || !homePreladerRef.current || !loaderText.current) return;
     
-    tl.fromTo(loaderText.current.querySelectorAll('span'),
-    {
-        yPercent:100,
-    },  
-    {
-        yPercent:0,
-        stagger:0.03,
-        delay:0.5,
-        duration:.5,
-    })
-    tl.to([...loaderText.current.querySelectorAll('span')].reverse(),
-    {
-        yPercent:-100,
-        delay:1.5,
-        stagger:0.03,
-        duration:.5,
-        ease: "power3.in",
-        onComplete:()=>{
-          if (!loaderText.current) return;
-          loaderText.current.style.display = 'none';
-        }
-    })
-    tl.fromTo(homePreladerRef.current,
-    {
-      yPercent:0,
-      rotate: 0,
-    },
-    {
-      yPercent:-200,
-      rotate: -7,
-      duration:1
-    },'-=0.3')    
+    const tl = PreloaderContext?.preloadAnimation?.current;
+
+    if (!HeroTitle.current || !BottomnRef.current  || !tl) return;
+      
+
     tl.fromTo(HeroTitle.current.querySelectorAll('p'),{
       rotate: 4,
       yPercent:100,
@@ -95,8 +65,9 @@ export default function Hero({homePreladerRef,loaderText,images}:{homePreladerRe
       duration:.8,
       stagger:-0.1
     },'<')
+  },[])
 
-
+  useEffect(()=>{
     if (!Hunting.current || !Present.current) return;
 
     gsap.registerPlugin(ScrollTrigger);

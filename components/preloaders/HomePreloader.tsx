@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import styled from 'styled-components';
+import {preloaderContext} from '../../context/PreloaderContext';
 import gsap from 'gsap';
 
 export default function HomePreloader({homePreladerRef,loaderText}:{homePreladerRef:React.RefObject<HTMLDivElement>,loaderText:React.RefObject<HTMLDivElement>}) {
@@ -36,6 +37,49 @@ export default function HomePreloader({homePreladerRef,loaderText}:{homePrelader
             font-family: 'Serif4';
         }
     `
+
+    const PreloaderContext = useContext(preloaderContext);
+
+    useEffect(()=>{
+        if (!PreloaderContext?.preloadAnimation?.current || !loaderText.current || !homePreladerRef.current) return;
+        
+        let tl = PreloaderContext?.preloadAnimation?.current;
+
+        tl.fromTo(loaderText.current.querySelectorAll('span'),
+        {
+            yPercent:100,
+        },  
+        {
+            yPercent:0,
+            stagger:0.03,
+            delay:0.5,
+            duration:.5,
+            })
+            tl.to([...loaderText.current.querySelectorAll('span')].reverse(),
+            {
+                yPercent:-100,
+                delay:1.5,
+                stagger:0.03,
+                duration:.5,
+                ease: "power3.in",
+                onComplete:()=>{
+                if (!loaderText.current) return;
+                loaderText.current.style.display = 'none';
+                }
+            })
+            tl.fromTo(homePreladerRef.current,
+            {
+            yPercent:0,
+            rotate: 0,
+            },
+            {
+            yPercent:-200,
+            rotate: -7,
+            duration:1
+            },'-=0.3')    
+        
+
+    },[])
 
     return (
     <>
