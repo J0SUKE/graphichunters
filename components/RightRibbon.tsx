@@ -1,27 +1,9 @@
 import React, { useEffect, useRef,RefObject } from 'react'
 import styled from 'styled-components'
 
-export default function RightRibbon({RibbonRef}:{RibbonRef:RefObject<HTMLLIElement>}) {
-  
-    return (
-    <RigthRibbon>
-        <ul>
-            <li ref={RibbonRef}>
-                <span>GraphicHunters</span>
-                <span>©</span>
-                <span>GraphicHunters</span>
-                <span>©</span>                   
-                <span>GraphicHunters</span>
-                <span>©</span>                   
-                <span>GraphicHunters</span>
-                <span>©</span>                   
-            </li>
-        </ul>    
-    </RigthRibbon>
-  )
-}
-
-var RigthRibbon = styled.div`
+export default function RightRibbon({RibbonRef,black}:{RibbonRef:RefObject<HTMLLIElement>,black?:boolean}) {
+    
+    const RigthRibbon = styled.div`
         position: fixed;
         z-index: 99;
         top: 0;
@@ -29,9 +11,10 @@ var RigthRibbon = styled.div`
         width: 100vh;
         height:8vw;
         overflow: hidden;
-        background: white;
+        background: ${black ? 'black' : 'white'};
         transform: rotate(-90deg) translateY(-50%) translateX(4vw);
         transform-origin: center right;
+
         cursor: default;
         ul{
             display: flex;
@@ -48,6 +31,7 @@ var RigthRibbon = styled.div`
             display: flex;
             align-items: center;
             gap: 2vw;
+            color: ${!black ? 'black' : 'white'};
             span{
                 display: block;
             }
@@ -66,3 +50,21 @@ var RigthRibbon = styled.div`
         }
 
     `
+
+    return (
+    <RigthRibbon>
+        <ul>
+            <li ref={RibbonRef}>
+                <span>GraphicHunters</span>
+                <span>©</span>
+                <span>GraphicHunters</span>
+                <span>©</span>                   
+                <span>GraphicHunters</span>
+                <span>©</span>                   
+                <span>GraphicHunters</span>
+                <span>©</span>                   
+            </li>
+        </ul>    
+    </RigthRibbon>
+  )
+}

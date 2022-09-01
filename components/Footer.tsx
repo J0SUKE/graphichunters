@@ -4,7 +4,7 @@ import InfoLink from './InfoLink'
 import { Timer } from './Hero'
 import gsap from 'gsap'
 
-export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
+export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElement>,white?:boolean}) {
     
     const FooterTop = useRef<HTMLDivElement>(null);
     const FooterContent = useRef<HTMLDivElement>(null);
@@ -13,14 +13,15 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
         position: relative;
         height: 100vh;
         z-index: 3;
-        background: black;
-        color: white;
+        background: ${white ? 'white' : 'black'};
+        color: ${!white ? 'white' : 'black'};
 
         .footer-top{
           display: flex;
           padding: 5vw 0;
           width: calc(100% - 4rem);
-          background: black;
+          background: ${white ? 'white' : 'black'};
+          color: ${!white ? 'white' : 'black'};
           margin: auto;
           border-bottom: 1px solid #a9a9a956;
           justify-content: space-between;
@@ -61,10 +62,12 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
         }
         .footer{
           padding-top: 5vw;
+          background: ${white ? 'white' : 'black'};
         }
         .footer-content
         {
           padding-bottom: 3vw;
+          background: ${white ? 'white' : 'black'};
           width: calc(100% - 4rem);
           margin: auto;
           position: relative;
@@ -241,14 +244,14 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
           <span>let&apos;s</span>
           <span>connect</span>
         </h2>
-        <InfoLink value='contact us' link='/contact'/>
+        <InfoLink value='contact us' link='/contact' black={white} />
       </div>
       
       <div  className='footer' ref={FooterContent}>
         <div className="footer-content">
           <div className="email">
             <span>send me an email</span>    
-            <InfoLink value='jeanmazouni@gmail.com' link='mailto:jeanmazouni@gmail.com'/>
+            <InfoLink value='jeanmazouni@gmail.com' link='mailto:jeanmazouni@gmail.com' black={white}/>
           </div>
           <div className="infos">
             <div className="infos__left">
@@ -271,10 +274,10 @@ export default function Footer({FooterRef}:{FooterRef:RefObject<HTMLElement>}) {
             <div className="infos__right">
               <span>socials</span>
               <ul>
-                <li><InfoLink value='linkedin' link='https://www.linkedin.com/in/jean-mazouni-214803242/' external={true}/></li>
-                <li><InfoLink value='twitter' link='https://twitter.com/Jean_mazouni' external={true}/></li>
-                <li><InfoLink value='malt' link='https://www.malt.fr/profile/jeanmazouni' external={true}/></li>
-                <li><InfoLink value='github' link='https://github.com/J0SUKE' external={true}/></li>
+                <li><InfoLink value='linkedin' link='https://www.linkedin.com/in/jean-mazouni-214803242/' external={true} black={white}/></li>
+                <li><InfoLink value='twitter' link='https://twitter.com/Jean_mazouni' external={true} black={white}/></li>
+                <li><InfoLink value='malt' link='https://www.malt.fr/profile/jeanmazouni' external={true} black={white}/></li>
+                <li><InfoLink value='github' link='https://github.com/J0SUKE' external={true} black={white}/></li>
               </ul>
             </div>
           </div>

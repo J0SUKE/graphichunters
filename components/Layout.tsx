@@ -1,35 +1,24 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import RightRibbon from './RightRibbon'
 import styled from 'styled-components'
-import Hero from './Hero'
 import Header from './Header'
 import Footer from './Footer'
-import WorkGrid from './WorkGrid'
-import HomeBrands from './HomeBrands'
-import Services from './Services'
 import Cursor from './Cursor'
 import HomePreloader from './preloaders/HomePreloader'
 import Menu from './Menu'
 import gsap from 'gsap';
-import Link from 'next/link'
 import { scrollerWrapperContext } from '../context/ScrollWrapperContext'
-import { throttle } from 'lodash'
+import {layoutRefsContext} from '../context/LayoutRefsContext';
+import { useRouter } from 'next/router'
+import { log } from 'console'
 
-interface DataInterface {
-  [field:string]:any,
-}
+export default function Layout({children,blackFooter,blackSide}:{children:React.ReactNode,blackFooter?:boolean,blackSide?:boolean}) {
 
-export default function Layout({data}:{data:DataInterface}) {
-
-  const FooterRef = useRef<HTMLElement>(null);
-  const RibbonRef = useRef<HTMLLIElement>(null);  
-  const LogoRef = useRef<HTMLAnchorElement>(null);
-  const NavLinksRef = useRef<HTMLElement>(null);
-  const ServicesRef = useRef<HTMLDivElement>(null);
-  const MarqueeRef = useRef<HTMLDivElement>(null);
-  const homePreladerRef = useRef<HTMLDivElement>(null);
-  const loaderText = useRef<HTMLDivElement>(null);
-  const TopShadowRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  useEffect(()=>{
+    console.log(router);
+    
+  },[])
 
   useEffect(()=>{
     
@@ -73,46 +62,47 @@ export default function Layout({data}:{data:DataInterface}) {
     })    
   },[])
    
-  
 
-  useEffect(()=>{
-    ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
+  //   ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
       
-      const bottom = MarqueeRef.current?.querySelector('ul')?.getBoundingClientRect().bottom;    
+  //     const bottom = MarqueeRef.current?.querySelector('ul')?.getBoundingClientRect().bottom;    
 
-      if (!bottom || !LogoRef.current || !NavLinksRef.current || !ScrollerRef.current) return;
+  //     if (!bottom || !LogoRef.current || !NavLinksRef.current || !ScrollerRef.current) return;
 
-      if (bottom<=0) {
-        LogoRef.current.style.mixBlendMode = 'difference';
-        NavLinksRef.current.style.mixBlendMode = 'difference';
-        gsap.to(TopShadowRef.current,{
-          opacity: 0,
-          duration:.7,
-        })
-      }
-      else
-      {
-        LogoRef.current.style.mixBlendMode = 'unset'
-        NavLinksRef.current.style.mixBlendMode = 'unset'
+  //     if (bottom<=0) {
+  //       LogoRef.current.style.mixBlendMode = 'difference';
+  //       NavLinksRef.current.style.mixBlendMode = 'difference';
+  //       gsap.to(TopShadowRef.current,{
+  //         opacity: 0,
+  //         duration:.7,
+  //       })
+  //     }
+  //     else
+  //     {
+  //       LogoRef.current.style.mixBlendMode = 'unset'
+  //       NavLinksRef.current.style.mixBlendMode = 'unset'
         
-        if (ScrollerRef.current.scrollTop > document.documentElement.clientHeight) {
-          gsap.to(TopShadowRef.current,{
-            opacity: 1,
-            duration:.7,
-          }) 
-        }        
-      }          
-    },100))
+  //       if (ScrollerRef.current.scrollTop > document.documentElement.clientHeight) {
+  //         gsap.to(TopShadowRef.current,{
+  //           opacity: 1,
+  //           duration:.7,
+  //         }) 
+  //       }        
+  //     }          
+  //   },100))
     
 
-  },[]);
+  // },[]);
 
   const wrapperContext = useContext(scrollerWrapperContext);
+  const LayoutrefsContext = useContext(layoutRefsContext);
 
   if (!wrapperContext) return null;
   const {ScrollerRef} = wrapperContext;
 
 
+  if (!LayoutrefsContext) return null;
+  const {LogoRef,NavLinksRef,TopShadowRef,homePreladerRef,loaderText,RibbonRef,FooterRef} = LayoutrefsContext;
 
   const ScrollContainer = styled.div`
     position: fixed;
@@ -136,10 +126,7 @@ export default function Layout({data}:{data:DataInterface}) {
     height: 100vh;
     background: black;
     box-shadow: 0px -20vh 100vmin 70vmin black;        
-  `
-
-  console.log(data);
-  
+  `  
 
   return (
     <>
@@ -150,13 +137,10 @@ export default function Layout({data}:{data:DataInterface}) {
           <TopShadow ref={TopShadowRef}/>
           <Menu/>
           <Content>
-            <Hero homePreladerRef={homePreladerRef} loaderText={loaderText} images={data.heroSlideshow.images}/>
-            <WorkGrid works={data.allWorks}/>
-            <HomeBrands MarqueeRef={MarqueeRef}/>
-            <Services ServicesRef={ServicesRef}/>
-            <Footer FooterRef={FooterRef}/>
+            {children}
+            <Footer FooterRef={FooterRef} white={blackFooter}/>
           </Content>
-          <RightRibbon RibbonRef={RibbonRef}/>
+          <RightRibbon RibbonRef={RibbonRef} black={blackSide}/>
         </ScrollContainer>        
     </>    
   )
