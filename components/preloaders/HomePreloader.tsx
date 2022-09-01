@@ -27,6 +27,7 @@ export default function HomePreloader({homePreladerRef,loaderText}:{homePrelader
         overflow: hidden;
         span{
             display: block;
+            //transform: translateY(100%);
         }
         p{
             display: flex;
@@ -42,15 +43,10 @@ export default function HomePreloader({homePreladerRef,loaderText}:{homePrelader
     const PreloaderContext = useContext(preloaderContext);
 
     useEffect(()=>{
-        console.log('PreloaderContext?.preloadAnimation?.current : ',PreloaderContext?.preloadAnimation?.current);
-        console.log('loaderText.current : ',loaderText.current);
-        console.log('homePreladerRef.current.current : ',homePreladerRef.current);
         
 
         if (!PreloaderContext?.preloadAnimation?.current || !loaderText.current || !homePreladerRef.current) return;
-        
-        console.log('animation should play');
-        
+                
 
         let tl = PreloaderContext?.preloadAnimation?.current;
 
