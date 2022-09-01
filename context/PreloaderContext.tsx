@@ -9,13 +9,8 @@ export const preloaderContext = React.createContext<preloaderContextInterface | 
 
 export default function PreloaderContext({children}:{children:React.ReactNode}) {
     
-    const preloadAnimation = useRef<gsap.core.Timeline>();
+    const preloadAnimation = useRef<gsap.core.Timeline>(gsap.timeline());
     
-    useEffect(()=>{
-        const tl = gsap.timeline();
-        preloadAnimation.current = tl;        
-    },[]);
-
     return (
     <preloaderContext.Provider value={{preloadAnimation}}>
         {children}
