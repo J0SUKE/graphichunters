@@ -136,7 +136,8 @@ export default function Layout({children,blackFooter,blackSide}:{children:React.
     <>
         {
           HistContext?.history?.current?.length == 0 ? // first time the page load
-          <HomePreloader homePreladerRef={homePreladerRef} loaderText={loaderText}/>
+          //<HomePreloader homePreladerRef={homePreladerRef} loaderText={loaderText}/>
+          null
           :
           <PageTransition pageTransitionRef={pageTransitionRef}/>
         }        
