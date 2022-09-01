@@ -11,7 +11,7 @@ export default function InfoLink({value,link,external,black}:{value:string,link:
         text-transform: uppercase;
         padding-bottom: .3rem;
         box-sizing: content-box;
-        border-bottom: 1px solid ${black ? 'black' : 'white'};
+        border-bottom: 1px solid white;
         display: inline-block;
         transition: border-bottom .5s;
         font-size: 1.3rem;
