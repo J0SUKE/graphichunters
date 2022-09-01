@@ -1,9 +1,13 @@
 import { log } from 'console'
-import React from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import DataInterface from '../../types/DataInterface'
 import WorkGridItem from '../WorkGridItem'
 import {CommingSoon} from '../WorkGridItem';
+import gsap from 'gsap'
+import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
+import {preloaderContext} from '../../context/PreloaderContext';
+
 
 interface workInterface {
   [nameField:string]:any
@@ -11,10 +15,15 @@ interface workInterface {
 
 export default function Work({data}:{data:DataInterface}) {
   
+  const PreloaderContext = useContext(preloaderContext);
   
+  const HeroTitle = useRef<HTMLDivElement>(null);
+  const BottomnRef = useRef<HTMLDivElement>(null);
+  const LooakAtRef = useRef<HTMLParagraphElement>(null);
+  const inches16Ref = useRef<HTMLSpanElement>(null);
+
   const Work = styled.div`
     background: black;
-    padding: 3rem 0;
     position: relative;
     z-index: 4;    
     .container{
@@ -26,11 +35,142 @@ export default function Work({data}:{data:DataInterface}) {
       padding-top: 3rem;
       grid-gap: 3rem;
       padding-bottom: 6vmax;
+
+      @media screen and (max-width:720px)
+      {
+          grid-template-columns: 1fr;
+      }
+
+    }
+
+    .hero{
+      height: calc(100vh - 3rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 2rem 6rem 2rem;
+      color: white;
+
+
+      &__main
+      {
+        font-size: 7.7vmax;
+        line-height: 7.7vmax;
+        margin-bottom: 2rem;
+
+        div{
+          display: flex;
+          justify-content: space-between;
+          height: 7.2vmax;
+          text-transform: uppercase;
+          overflow: hidden;
+          @media screen and (max-width:500px)
+          {
+            flex-direction: column;
+            flex-flow: column-reverse;
+          }
+        }
+        span{
+          display: block;
+          font-family: 'Serif4';
+          font-size: 8.8vmax;
+        }
+        #in16
+        {
+          transform: translateX(-10vmax);
+        }
+      }
     }
   `
+  
+  useEffect(()=>{        
+    
+    const tl = PreloaderContext?.preloadAnimation?.current;
+
+    if (!HeroTitle.current || !BottomnRef.current  || !tl) return;
+      
+
+    tl.fromTo([...HeroTitle.current.querySelectorAll('p'),...HeroTitle.current.querySelectorAll('span')],
+    {
+      rotate: 4,
+      yPercent:100,
+      transformOrigin:'top left',
+    },{
+      rotate: 0,
+      yPercent:0,
+      duration:.8,
+      stagger:-.08
+    },"-=0.7")
+    .fromTo(BottomnRef.current,{
+      y:'3rem',
+    },{
+      y:0,
+      duration:.8,
+      stagger:-0.1
+    },'<')
+  },[])
  
+  useEffect(()=>{
+    if (!LooakAtRef.current || !inches16Ref.current) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    
+    gsap.to(LooakAtRef.current,{
+      scrollTrigger:{
+        trigger:'.container',
+        scroller: "#scroll-wrapper",
+        start:'top bottom',
+        scrub:1,
+      },
+      x:'30vmax',
+      duration:1
+    })
+    
+    gsap.to(inches16Ref.current,{
+      scrollTrigger:{
+        trigger:'.container',
+        scroller: "#scroll-wrapper",
+        start:'top bottom',
+        scrub:1,
+      },
+      x:'-30vmax',
+      duration:1
+    })
+    
+    gsap.to(HeroTitle.current,{
+      scrollTrigger:{
+        trigger:'.container',
+        scroller: "#scroll-wrapper",
+        start:'top bottom',
+        scrub:1,
+      },
+      yPercent:-80,
+      duration:1,
+      opacity: .2,
+    })
+  },[])
+
   return (
     <Work>
+      <div className='hero'>
+        <div className="hero__main" ref={HeroTitle}>
+          <div>
+            <p>take a</p>
+            <span ref={inches16Ref} id='in16'>16’</span>
+          </div>
+          <div>
+            <p ref={LooakAtRef}>look at</p>
+            <span>22’</span>
+          </div>
+          <div>
+            <span>our work</span>
+          </div>
+        </div>
+        <div className="hero__bottom" ref={BottomnRef}>
+          <p>GraphicHunters develops distinctive brand and campaign styles.</p>
+        </div>
+      </div>
       <div className="container">
       {
         data.allWorks.map((item:workInterface)=>{
