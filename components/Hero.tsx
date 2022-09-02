@@ -40,7 +40,7 @@ export default function Hero({images}:{images:{url:string}[]})
 
   const PreloaderContext = useContext(preloaderContext);
 
-
+  // load animation
   useEffect(()=>{        
     
     const tl = PreloaderContext?.preloadAnimation?.current;
@@ -67,6 +67,7 @@ export default function Hero({images}:{images:{url:string}[]})
     },'<')
   },[])
 
+  // hero parallax
   useEffect(()=>{
     if (!Hunting.current || !Present.current) return;
 
@@ -93,10 +94,10 @@ export default function Hero({images}:{images:{url:string}[]})
       },
       yPercent:-50,
       duration:1,
-      opacity: .2,
     })
   },[])
 
+  // layer opacity
   useEffect(()=>{
     ChangeLayerOpacityOnScroll();
   },[])  

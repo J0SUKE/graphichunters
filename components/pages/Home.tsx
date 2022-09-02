@@ -19,11 +19,12 @@ export default function Home({data}:{data:DataInterface,})
     useEffect(()=>{
         ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
           
-        const bottom = MarqueeRef.current?.querySelector('ul')?.getBoundingClientRect().bottom;    
+        const Marqueebottom = MarqueeRef.current?.querySelector('ul')?.getBoundingClientRect().bottom;    
+        const ServicesBottom = ServicesRef.current?.getBoundingClientRect().bottom;
 
-        if (!bottom || !LogoRef.current || !NavLinksRef.current || !ScrollerRef.current) return;
+        if (!Marqueebottom || !LogoRef.current || !NavLinksRef.current || !ScrollerRef.current  || !ServicesBottom) return;
 
-        if (bottom<=0) {
+        if (Marqueebottom<=0 && ServicesBottom>100) {
         LogoRef.current.style.mixBlendMode = 'difference';
         NavLinksRef.current.style.mixBlendMode = 'difference';
         gsap.to(TopShadowRef.current,{
