@@ -60,7 +60,7 @@ export function Marquee({MarqueeRef}:{MarqueeRef?:React.RefObject<HTMLDivElement
     
     const Marquee = styled.div`
         display: flex;
-        //padding-bottom: 10vw;
+        padding-bottom: 10vw;
         overflow: hidden;
         ul
         {

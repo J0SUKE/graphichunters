@@ -9,7 +9,6 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
     
     const ServiceParallaxRef = useRef<HTMLSpanElement>(null);
     const TheParallaxRef = useRef<HTMLSpanElement>(null);
-    const videoRef = useCursorInteraction('onArchive') as React.RefObject<HTMLDivElement>;
 
     useEffect(()=>{
       if (!ServiceParallaxRef.current || !TheParallaxRef.current || !ServicesRef.current) return;
@@ -90,32 +89,6 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
             }
           }
         }
-        .video-section
-        {
-          background: white;
-          position: relative;
-          margin-top: 10vw;
-          .video-container
-          {
-            filter: brightness(1.2) invert(1) saturate(1.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 45vw;
-            video{
-              height: 100%;
-
-            }
-          }
-          a{
-            position: absolute;
-            inset: 0;
-            display: block;
-            width: 100%;
-
-            background: rgba(30, 30, 30, .15);
-          }
-        }
     `
   
     return (
@@ -131,15 +104,50 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
         </div>
       </div>
       <HoverMenu/>
-      <div className='video-section' ref={videoRef}>
-        <div className="video-container">
-          <video autoPlay loop muted src="/video/rotate-g.mp4"></video>
-        </div>
-        <Link href={'/archive'}>
-          <a>
-          </a>
-        </Link>
-      </div>
+      <LogoVideo/>
     </Services>
+  )
+}
+
+export function LogoVideo() {
+  
+  const videoRef = useCursorInteraction('onArchive') as React.RefObject<HTMLDivElement>;
+  
+  const LogoVideo = styled.div`
+      background: white;
+      position: relative;
+      margin-top: 10vw;
+      .video-container
+      {
+        filter: brightness(1.2) invert(1) saturate(1.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 45vw;
+        video{
+          height: 100%;
+
+        }
+      }
+      a{
+        position: absolute;
+        inset: 0;
+        display: block;
+        width: 100%;
+
+        background: rgba(30, 30, 30, .15);
+      }
+  `
+
+  return (
+    <LogoVideo ref={videoRef}>
+      <div className="video-container">
+        <video autoPlay loop muted src="/video/rotate-g.mp4"></video>
+      </div>
+      <Link href={'/archive'}>
+        <a>
+        </a>
+      </Link>
+    </LogoVideo>
   )
 }

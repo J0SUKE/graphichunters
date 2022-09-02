@@ -7,7 +7,9 @@ import {layoutRefsContext} from '../../context/LayoutRefsContext'
 import useCursorInteraction from '../../hooks/useCursorInteraction';
 import { scrollerWrapperContext } from '../../context/ScrollWrapperContext'
 import {Marquee} from '../HomeBrands';
+import KeyValues from '../Studio/KeyValues';
 import Image from 'next/image';
+import { LogoVideo } from '../Services';
 
 export default function Studio() {
   
@@ -56,15 +58,15 @@ export default function Studio() {
           &__right
           {
             width: 65%;
-            height: 110vh;
+            aspect-ratio: 1/1;
             overflow: hidden;
-            //border: 1px solid black;
+            background: darkgray;
             pointer-events: none;
             &__img-container
             {
               width: 100%;
               pointer-events: none;
-              height: 140vh;
+              height: 140%;
               position: relative;
             }
           }  
@@ -75,8 +77,22 @@ export default function Studio() {
             font-size: 1.5vmax;
             h2{
               font-weight: 300;
+            }            
+          }
+
+          @media screen and (max-width:730px){
+            flex-direction: column;
+            &__right,&__left{
+              width: 100%;
             }
-            
+            &__left
+            {
+              font-size: 3.5vmax;
+            }
+            &__right
+            {
+              margin-top: 10vmax;
+            }
           }
 
         }
@@ -84,7 +100,7 @@ export default function Studio() {
         {
           background: black;
           color: white;
-          padding: 8vmax 0;
+          padding-top: 8vmax;
           h2{
             width: calc(100% - 4rem);
             margin: auto;
@@ -141,7 +157,7 @@ export default function Studio() {
 
         gsap.fromTo(ImageParallaxRef.current,
           {
-            y:'-30vh'
+            yPercent:'-25'
           },
           {
           scrollTrigger:{
@@ -150,9 +166,9 @@ export default function Studio() {
             start:'top bottom',
             endTrigger:'.presentation__right',
             end:'bottom top',
-            scrub:true,
+            scrub:1,
           },
-          y:'10vh',
+          yPercent:'-5',
           duration:1,
         })
 
@@ -220,7 +236,8 @@ export default function Studio() {
                 src={'/images/office-image.jpg'}
                 alt={''}
                 layout={'fill'}
-                objectFit={'cover'}
+                objectFit={'contain'}
+                priority={true}
               />
             </div>
         </div>
@@ -231,6 +248,8 @@ export default function Studio() {
             <p>BRANDS IN THE WORLD OF SPORTS.</p>
           </h2>
           <Marquee/>
+          <KeyValues/>
+          <LogoVideo/>
       </div>
     </Studio>
   )
