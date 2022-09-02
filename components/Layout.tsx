@@ -16,8 +16,6 @@ import PageTransition from './preloaders/PageTransition'
 export default function Layout({children,blackFooter,blackSide}:{children:React.ReactNode,blackFooter?:boolean,blackSide?:boolean}) {
 
 
-  const ContentRef = useRef<HTMLDivElement>(null);
-
   useEffect(()=>{
     
     if (!RibbonRef.current || !FooterRef.current || !LogoRef.current || !NavLinksRef.current || !ScrollerRef?.current) return;
@@ -49,17 +47,17 @@ export default function Layout({children,blackFooter,blackSide}:{children:React.
       ease: "power3.out",
     })
 
-    gsap.to(TopShadowRef.current,{
-      scrollTrigger:{
-        trigger:ContentRef.current,
-        scroller: "#scroll-wrapper",
-        start:()=>window.innerHeight*0.7+' center',
-        toggleActions:'play pause pasue reverse'
-      },      
-      opacity: 1,
-      duration:.5,
-      ease: "power3.out",
-    })    
+    // gsap.to(TopShadowRef.current,{
+    //   scrollTrigger:{
+    //     trigger:ContentRef.current,
+    //     scroller: "#scroll-wrapper",
+    //     start:()=>window.innerHeight*0.7+' center',
+    //     toggleActions:'play pause pasue reverse'
+    //   },      
+    //   opacity: 1,
+    //   duration:.5,
+    //   ease: "power3.out",
+    // })    
   },[])
    
 
@@ -104,7 +102,7 @@ export default function Layout({children,blackFooter,blackSide}:{children:React.
 
 
   if (!LayoutrefsContext) return null;
-  const {LogoRef,NavLinksRef,TopShadowRef,homePreladerRef,loaderText,RibbonRef,FooterRef,pageTransitionRef} = LayoutrefsContext;
+  const {LogoRef,NavLinksRef,TopShadowRef,homePreladerRef,loaderText,RibbonRef,FooterRef,pageTransitionRef,ContentRef} = LayoutrefsContext;
 
   const ScrollContainer = styled.div`
     position: fixed;

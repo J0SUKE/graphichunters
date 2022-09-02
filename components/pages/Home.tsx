@@ -44,10 +44,23 @@ export default function Home({data}:{data:DataInterface,})
         }        
         }          
     },100))
-        
-    
-      },[]);
+            
+    },[]);
 
+
+    useEffect(()=>{
+        gsap.to(TopShadowRef.current,{
+        scrollTrigger:{
+            trigger:ContentRef.current,
+            scroller: "#scroll-wrapper",
+            start:()=>window.innerHeight*0.7+' center',
+            toggleActions:'play pause pasue reverse'
+        },      
+        opacity: 1,
+        duration:.5,
+        ease: "power3.out",
+        })    
+    },[])
     
     const wrapperContext = useContext(scrollerWrapperContext);
     const LayoutrefsContext = useContext(layoutRefsContext);
@@ -56,7 +69,7 @@ export default function Home({data}:{data:DataInterface,})
     const {ScrollerRef} = wrapperContext;
 
     if (!LayoutrefsContext) return null;
-    const {LogoRef,NavLinksRef,TopShadowRef,homePreladerRef,loaderText,pageTransitionRef} = LayoutrefsContext;
+    const {LogoRef,NavLinksRef,TopShadowRef,ContentRef} = LayoutrefsContext;
 
     return (
     <>        

@@ -16,10 +16,11 @@ export default function LayoutRefsContext({children}:{children:React.ReactNode})
     const pageTransitionRef = useRef<HTMLDivElement>(null);
     const loaderText = useRef<HTMLDivElement>(null);
     const TopShadowRef = useRef<HTMLDivElement>(null);
+    const ContentRef = useRef<HTMLDivElement>(null);
     
     return (
     <layoutRefsContext.Provider 
-        value={{FooterRef,RibbonRef,LogoRef,NavLinksRef,homePreladerRef,loaderText,TopShadowRef,pageTransitionRef}}
+        value={{FooterRef,RibbonRef,LogoRef,NavLinksRef,homePreladerRef,loaderText,TopShadowRef,pageTransitionRef,ContentRef}}
     >
         {children}
     </layoutRefsContext.Provider>

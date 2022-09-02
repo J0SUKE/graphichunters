@@ -7,6 +7,9 @@ import {CommingSoon} from '../WorkGridItem';
 import gsap from 'gsap'
 import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import {preloaderContext} from '../../context/PreloaderContext';
+import {layoutRefsContext} from '../../context/LayoutRefsContext';
+import { throttle } from 'lodash'
+import {scrollerWrapperContext} from '../../context/ScrollWrapperContext';
 
 
 interface workInterface {
@@ -21,6 +24,7 @@ export default function Work({data}:{data:DataInterface}) {
   const BottomnRef = useRef<HTMLDivElement>(null);
   const LooakAtRef = useRef<HTMLParagraphElement>(null);
   const inches16Ref = useRef<HTMLSpanElement>(null);
+  const workRef = useRef<HTMLDivElement>(null);
 
   const Work = styled.div`
     background: black;
@@ -82,7 +86,7 @@ export default function Work({data}:{data:DataInterface}) {
       }
     }
   `
-  
+  // load animation
   useEffect(()=>{        
     
     const tl = PreloaderContext?.preloadAnimation?.current;
@@ -109,7 +113,8 @@ export default function Work({data}:{data:DataInterface}) {
       stagger:-0.1
     },'<')
   },[])
- 
+  
+  // hero parallax
   useEffect(()=>{
     if (!LooakAtRef.current || !inches16Ref.current) return;
 
@@ -148,11 +153,71 @@ export default function Work({data}:{data:DataInterface}) {
       yPercent:-80,
       duration:1,
       opacity: .2,
-    })
+    })    
   },[])
 
+  // top shadow and header
+  useEffect(()=>{
+    
+    // top shadow
+    gsap.to(TopShadowRef.current,{
+    scrollTrigger:{
+        trigger:ContentRef.current,
+        scroller: "#scroll-wrapper",
+        start:()=>window.innerHeight*0.7+' center',
+        toggleActions:'play pause pasue reverse'
+    },      
+    opacity: 1,
+    duration:.5,
+    ease: "power3.out",
+    })    
+
+    // header
+    ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
+      // if the bottom - 3rem is in top of the viewport ==> header.mixBlend = differnce + shadow opacity = 0
+      if (!workRef.current || !ScrollerRef.current) return;
+
+      const bottom = workRef.current.getBoundingClientRect().bottom;
+      let bottomPadding = parseFloat(window.getComputedStyle(workRef.current.querySelector('.container') as HTMLElement).getPropertyValue('padding-bottom'));
+
+      if (bottom - bottomPadding <= 0 ) 
+      {
+        LogoRef.current.style.mixBlendMode = 'difference';
+        NavLinksRef.current.style.mixBlendMode = 'difference';
+        gsap.to(TopShadowRef.current,{
+            opacity: 0,
+            duration:.7,
+        })        
+      }   
+      else
+      {
+        LogoRef.current.style.mixBlendMode = 'unset'
+        NavLinksRef.current.style.mixBlendMode = 'unset'
+        
+        if (ScrollerRef.current.scrollTop > document.documentElement.clientHeight) {
+            gsap.to(TopShadowRef.current,{
+            opacity: 1,
+            duration:.7,
+            }) 
+        }        
+      }               
+
+    },100))
+
+
+  },[])
+
+  const wrapperContext = useContext(scrollerWrapperContext);
+  const LayoutrefsContext = useContext(layoutRefsContext);
+
+  if (!LayoutrefsContext) return null;
+  const {TopShadowRef,ContentRef,LogoRef,NavLinksRef} = LayoutrefsContext;
+
+  if (!wrapperContext) return null;
+  const {ScrollerRef} = wrapperContext;
+
   return (
-    <Work>
+    <Work ref={workRef}>
       <div className='hero'>
         <div className="hero__main" ref={HeroTitle}>
           <div>

@@ -13,14 +13,14 @@ export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElemen
         position: relative;
         height: 100vh;
         z-index: 3;
-        background: ${white ? 'white' : 'black'};
+        background: ${white ? '#EEEEEE' : 'black'};
         color: ${!white ? 'white' : 'black'};
 
         .footer-top{
           display: flex;
           padding: 5vw 0;
           width: calc(100% - 4rem);
-          background: ${white ? 'white' : 'black'};
+          background: ${white ? '#EEEEEE' : 'black'};
           color: ${!white ? 'white' : 'black'};
           margin: auto;
           border-bottom: 1px solid #a9a9a956;
@@ -62,12 +62,12 @@ export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElemen
         }
         .footer{
           padding-top: 5vw;
-          background: ${white ? 'white' : 'black'};
+          background: ${white ? '#EEEEEE' : 'black'};
         }
         .footer-content
         {
           padding-bottom: 3vw;
-          background: ${white ? 'white' : 'black'};
+          background: ${white ? '#EEEEEE' : 'black'};
           width: calc(100% - 4rem);
           margin: auto;
           position: relative;

@@ -8,6 +8,8 @@ export default function Studio() {
         background: white;
     `
 
+    
+
     return (
     <Studio>
 
