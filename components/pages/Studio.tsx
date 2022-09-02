@@ -10,6 +10,8 @@ import {Marquee} from '../HomeBrands';
 import KeyValues from '../Studio/KeyValues';
 import Image from 'next/image';
 import { LogoVideo } from '../Services';
+import { log } from 'console';
+import { throttle } from 'lodash';
 
 export default function Studio() {
   
@@ -117,6 +119,8 @@ export default function Studio() {
     const creativeRef = useRef<HTMLParagraphElement>(null);
     const youngRef = useRef<HTMLSpanElement>(null);
     const ImageParallaxRef = useRef<HTMLDivElement>(null);
+    const midSectionRef = useRef<HTMLDivElement>(null);
+    const keyValuesRef = useRef<HTMLDivElement>(null);
         
     // hero parallax
     useEffect(()=>{
@@ -177,7 +181,42 @@ export default function Studio() {
     // header and top shadow
     useEffect(()=>{
       LogoRef.current.style.mixBlendMode = 'difference';
-      NavLinksRef.current.style.mixBlendMode = 'difference';    
+      NavLinksRef.current.style.mixBlendMode = 'difference';  
+      
+      
+      ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
+        
+        if (!midSectionRef.current || !ScrollerRef?.current || !keyValuesRef.current) return; 
+        
+        const midRefTop = midSectionRef.current.getBoundingClientRect().top;
+        const midRefBottom = keyValuesRef.current.getBoundingClientRect().bottom;        
+
+        if (midRefTop<=0 && midRefBottom>=0) 
+        {
+          LogoRef.current.style.mixBlendMode = 'unset';
+          NavLinksRef.current.style.mixBlendMode = 'unset';  
+          
+          if (midRefBottom>=0) {
+            gsap.to(TopShadowRef.current,{
+              opacity: 1,
+              duration:.5,
+              ease: "power3.out",
+              })        
+          }          
+        }
+        else{
+          LogoRef.current.style.mixBlendMode = 'difference';
+          NavLinksRef.current.style.mixBlendMode = 'difference';  
+          gsap.to(TopShadowRef.current,{
+            opacity: 0,
+            duration:.5,
+            ease: "power3.out",
+            })       
+        }
+
+      },100))
+      
+
     },[])
 
     // load animation
@@ -242,13 +281,13 @@ export default function Studio() {
             </div>
         </div>
       </div>
-      <div className="middle-section">
+      <div className="middle-section" ref={midSectionRef}>
           <h2>
             <p>WE CREATE FOR THE BIGGEST</p>
             <p>BRANDS IN THE WORLD OF SPORTS.</p>
           </h2>
           <Marquee/>
-          <KeyValues/>
+          <KeyValues keyValuesRef={keyValuesRef}/>
           <LogoVideo/>
       </div>
     </Studio>

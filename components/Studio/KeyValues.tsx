@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import gsap from 'gsap';
 
-export default function KeyValues() {
+export default function KeyValues({keyValuesRef}:{keyValuesRef:React.RefObject<HTMLDivElement>}) {
   
     const KeyValues = styled.div`
         border-top: 1px solid #a9a9a956;
@@ -31,7 +31,6 @@ export default function KeyValues() {
     `
     
     const westandforRef = useRef<HTMLParagraphElement>(null);
-    const keyValuesRef = useRef<HTMLDivElement>(null);
         
     useEffect(()=>{
         gsap.fromTo(westandforRef.current,

@@ -199,7 +199,7 @@ export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElemen
           scrub:true,
         },        
         yPercent:0,
-        duration:3,
+        duration:1,
       })
       
       gsap.fromTo(FooterContent.current,
@@ -216,23 +216,6 @@ export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElemen
         yPercent:0,
         duration:3,
       })
-
-      gsap.fromTo(FooterRef.current,
-      {
-        yPercent:-30,
-      },
-      { 
-        scrollTrigger:{
-          trigger:FooterRef.current,
-          scroller: "#scroll-wrapper",
-          start:'top bottom',
-          scrub:1,
-        },        
-        yPercent:0,
-        duration:2,
-      })
-
-
 
     },[])
 
