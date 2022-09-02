@@ -27,7 +27,6 @@ export default function HomePreloader({homePreladerRef,loaderText}:{homePrelader
         overflow: hidden;
         span{
             display: block;
-            //transform: translateY(100%);
         }
         p{
             display: flex;
@@ -57,7 +56,7 @@ export default function HomePreloader({homePreladerRef,loaderText}:{homePrelader
         {
             yPercent:0,
             stagger:0.03,
-            delay:0.5,
+            delay:1,
             duration:.5,
             })
             tl.to([...loaderText.current.querySelectorAll('span')].reverse(),

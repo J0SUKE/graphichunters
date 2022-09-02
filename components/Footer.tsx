@@ -196,7 +196,7 @@ export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElemen
           trigger:FooterTop.current,
           scroller: "#scroll-wrapper",
           start:'top bottom',
-          scrub:true,
+          scrub:1,
         },        
         yPercent:0,
         duration:1,
