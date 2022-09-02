@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { cursorContext } from '../context/CursorContext'
 import useCursorInteraction from '../hooks/useCursorInteraction'
 import NavLink from './NavLink'
+import {layoutRefsContext} from '../context/LayoutRefsContext'
 import {menuContext} from '../context/MenuContext'
 
 
@@ -40,23 +41,9 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
 
         @media screen and (max-width:1024px)
         {
-            right: 2vw;
+            display: none;
         }
-    `
-    
-
-    const [mobile,setMobile] = useState(false);
-
-    useEffect(()=>{
-        if (window.innerWidth<=1024) setMobile(true);
-        else setMobile(false);
-
-        window.addEventListener('resize',()=>{
-            if (window.innerWidth<=1024) setMobile(true);
-            else setMobile(false);
-        })
-
-    },[])
+    `    
 
     return (
     <> 
@@ -65,24 +52,21 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
                 <svg height="820" viewBox="0 0 1066 820" width="1066" xmlns="http://www.w3.org/2000/svg"><path d="m532.999 546.66h-266.499v-273.32h532.196l266.504-273.34h-598.835l-466.365 478.335v341.665h333.115l399.749-409.99v409.99h266.481v-478.335h-266.481z" fill="#ffffff"></path></svg>
             </Logo>
         </Link>
-        {
-            mobile ?
-            <MenuButton/>
-            :
-            <HeaderLinks ref={NavLinksRef}>
-                <NavLink link='work' value='work'/>
-                <NavLink link='studio' value='studio'/>
-                <NavLink link='archive' value='archive'/>
-                <NavLink link='jobs' value='jobs'/>
-                <NavLink link='contact' value='contact'/>
-            </HeaderLinks>        
-        }        
+        <HeaderLinks ref={NavLinksRef}>
+            <NavLink link='work' value='work'/>
+            <NavLink link='studio' value='studio'/>
+            <NavLink link='archive' value='archive'/>
+            <NavLink link='jobs' value='jobs'/>
+            <NavLink link='contact' value='contact'/>
+        </HeaderLinks>             
+        <MenuButton/>
     </>
   )
 }
 
 function MenuButton() {
     const MenuButtonStyled = styled.div`
+        display: none;
         position: fixed;   
         z-index: 99;
         top: 5vw;
@@ -143,13 +127,22 @@ function MenuButton() {
                 transform: translateY(-100%) rotate(0deg);
             }
         }        
+
+        @media screen and (max-width:1024px)
+        {
+            display: unset;
+        }
+
     `
 
-    const MenuButtonRef = useCursorInteraction('onLink') as React.RefObject<HTMLDivElement>;
+    const LayoutrefsContext = useContext(layoutRefsContext);    
 
     const MENUCONTEXT = useContext(menuContext);
     if (!MENUCONTEXT) return null;
     var {openMenu,closeMenu,menuIsOpen} = MENUCONTEXT;
+
+    if (!LayoutrefsContext) return null;
+    const {MenuButtonRef} = LayoutrefsContext;
 
     return <MenuButtonStyled 
             ref={MenuButtonRef}

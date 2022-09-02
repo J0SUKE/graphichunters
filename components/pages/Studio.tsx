@@ -4,14 +4,15 @@ import gsap from 'gsap'
 import {preloaderContext} from '../../context/PreloaderContext';
 import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import {layoutRefsContext} from '../../context/LayoutRefsContext'
-
+import useCursorInteraction from '../../hooks/useCursorInteraction';
 import { scrollerWrapperContext } from '../../context/ScrollWrapperContext'
+import {Marquee} from '../HomeBrands';
+import Image from 'next/image';
 
 export default function Studio() {
   
     const Studio = styled.div`
-        height: 200vh;
-        background: white;
+        background: #EEEEEE;
         position: relative;
         z-index: 4;
         .hero
@@ -45,16 +46,62 @@ export default function Studio() {
         }
         .presentation
         {
-          height: 100vh;
+          width: calc(100% - 4rem);
+          margin: auto;
+          background: #EEEEEE;
+          padding-top: 3rem;
+          padding-bottom: 8vmax;
+          display: flex;
+          justify-content: space-between;
+          &__right
+          {
+            width: 65%;
+            height: 110vh;
+            overflow: hidden;
+            //border: 1px solid black;
+            pointer-events: none;
+            &__img-container
+            {
+              width: 100%;
+              pointer-events: none;
+              height: 140vh;
+              position: relative;
+            }
+          }  
+          
+          &__left
+          {
+            width: 35%;
+            font-size: 1.5vmax;
+            h2{
+              font-weight: 300;
+            }
+            
+          }
+
+        }
+        .middle-section
+        {
+          background: black;
+          color: white;
+          padding: 8vmax 0;
+          h2{
+            width: calc(100% - 4rem);
+            margin: auto;
+            font-size: 2.5vmax;
+            font-weight: 400;
+            padding-bottom: 6vmax;
+          }
         }
 
     `
 
+    const StudioRef = useCursorInteraction('blend') as React.RefObject<HTMLDivElement>;
     const HeroTitle = useRef<HTMLDivElement>(null);
     const creativeRef = useRef<HTMLParagraphElement>(null);
     const youngRef = useRef<HTMLSpanElement>(null);
-    
-    
+    const ImageParallaxRef = useRef<HTMLDivElement>(null);
+        
     // hero parallax
     useEffect(()=>{
         gsap.registerPlugin(ScrollTrigger);
@@ -92,12 +139,29 @@ export default function Studio() {
           duration:1
         })
 
+        gsap.fromTo(ImageParallaxRef.current,
+          {
+            y:'-30vh'
+          },
+          {
+          scrollTrigger:{
+            trigger:'.presentation',
+            scroller: "#scroll-wrapper",
+            start:'top bottom',
+            endTrigger:'.presentation__right',
+            end:'bottom top',
+            scrub:true,
+          },
+          y:'10vh',
+          duration:1,
+        })
+
     },[])
 
     // header and top shadow
     useEffect(()=>{
       LogoRef.current.style.mixBlendMode = 'difference';
-      NavLinksRef.current.style.mixBlendMode = 'difference';
+      NavLinksRef.current.style.mixBlendMode = 'difference';    
     },[])
 
     // load animation
@@ -131,7 +195,7 @@ export default function Studio() {
     const {ScrollerRef} = wrapperContext;
 
     return (
-    <Studio>
+    <Studio ref={StudioRef}>
       <div className='hero'>
         <div className="hero__title" ref={HeroTitle}>
           <div>
@@ -147,7 +211,26 @@ export default function Studio() {
         </div>
       </div>
       <div className="presentation">
-
+        <div className="presentation__left">
+          <h2>GRAPHICHUNTERS DEVELOPS DISTINCTIVE BRAND AND CAMPAIGN STYLES, DELIVERING NEXT LEVEL VISUAL CONTENT.</h2>
+        </div>        
+        <div className="presentation__right">
+            <div className="presentation__right__img-container" ref={ImageParallaxRef}>
+              <Image
+                src={'/images/office-image.jpg'}
+                alt={''}
+                layout={'fill'}
+                objectFit={'cover'}
+              />
+            </div>
+        </div>
+      </div>
+      <div className="middle-section">
+          <h2>
+            <p>WE CREATE FOR THE BIGGEST</p>
+            <p>BRANDS IN THE WORLD OF SPORTS.</p>
+          </h2>
+          <Marquee/>
       </div>
     </Studio>
   )

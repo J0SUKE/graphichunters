@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import useCursorInteraction from '../hooks/useCursorInteraction';
 
 interface layoutRefsContextInterface {
     [keyName:string]:any
@@ -17,10 +18,11 @@ export default function LayoutRefsContext({children}:{children:React.ReactNode})
     const loaderText = useRef<HTMLDivElement>(null);
     const TopShadowRef = useRef<HTMLDivElement>(null);
     const ContentRef = useRef<HTMLDivElement>(null);
+    const MenuButtonRef = useCursorInteraction('onLink') as React.RefObject<HTMLDivElement>;
     
     return (
     <layoutRefsContext.Provider 
-        value={{FooterRef,RibbonRef,LogoRef,NavLinksRef,homePreladerRef,loaderText,TopShadowRef,pageTransitionRef,ContentRef}}
+        value={{FooterRef,RibbonRef,LogoRef,NavLinksRef,homePreladerRef,loaderText,TopShadowRef,pageTransitionRef,ContentRef,MenuButtonRef}}
     >
         {children}
     </layoutRefsContext.Provider>

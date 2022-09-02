@@ -43,15 +43,27 @@ export default function HomeBrands({MarqueeRef}:{MarqueeRef:React.RefObject<HTML
                     line-height: 1rem;
                 }
             }
-        }
+        }         
+    `
+    return (
+    <HomeBrands>
+        <div className='works'>
+            <h2>WE CREATE FOR THE BIGGEST BRANDS IN THE WORLD OF SPORTS.</h2>
+            <InfoLink value='more work (6)' link='/work'/>
+        </div>
+        <Marquee MarqueeRef={MarqueeRef}/>
+    </HomeBrands>
+  )
+}
 
-        .marquee
+export function Marquee({MarqueeRef}:{MarqueeRef?:React.RefObject<HTMLDivElement>}) {
+    
+    const Marquee = styled.div`
+        display: flex;
+        //padding-bottom: 10vw;
+        overflow: hidden;
+        ul
         {
-            display: flex;
-            padding-bottom: 10vw;
-            overflow: hidden;
-        }
-        ul{
             display: flex;
             gap: 3vw;
             padding-right: 3vw;
@@ -67,13 +79,9 @@ export default function HomeBrands({MarqueeRef}:{MarqueeRef:React.RefObject<HTML
             }
         }
     `
-    return (
-    <HomeBrands>
-        <div className='works'>
-            <h2>WE CREATE FOR THE BIGGEST BRANDS IN THE WORLD OF SPORTS.</h2>
-            <InfoLink value='more work (6)' link='/work'/>
-        </div>
-        <div className="marquee" ref={MarqueeRef}>
+    
+    return  (
+        <Marquee className="marquee" ref={MarqueeRef}>
             <ul>
                 <MarqueeItem imgLink='/images/brands/zggo.svg'/>
                 <MarqueeItem imgLink='/images/brands/mercedes.svg'/>
@@ -92,9 +100,8 @@ export default function HomeBrands({MarqueeRef}:{MarqueeRef:React.RefObject<HTML
                 <MarqueeItem imgLink='/images/brands/knvb.svg'/>
                 <MarqueeItem imgLink='/images/brands/ldc.svg'/>
             </ul>
-        </div>
-    </HomeBrands>
-  )
+        </Marquee>
+    )
 }
 
 

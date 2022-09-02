@@ -35,6 +35,11 @@ export default function RightRibbon({RibbonRef,black}:{RibbonRef:RefObject<HTMLL
             span{
                 display: block;
             }
+            span:nth-of-type(2n)
+            {
+                font-family: 'Serif4';
+                font-weight: 600;
+            }   
 
             @keyframes ribbon {
                 from{

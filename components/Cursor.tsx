@@ -80,6 +80,9 @@ export default function Cursor() {
         {
             transform: scale(0.6);
         }
+        &.blend{
+            background: rgb(100, 5, 255);
+        }
     `;
 
     const [mobile,setmobile] = useState(true);
