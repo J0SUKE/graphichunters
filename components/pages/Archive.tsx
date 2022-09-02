@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import DataInterface from '../../types/DataInterface';
 import styled from 'styled-components'
 import Image from 'next/image';
@@ -28,6 +28,8 @@ export default function Archive({data}:{data:DataInterface}) {
             grid-template-columns: repeat(2,1fr);
         }
     `
+
+    const archiveRef = useRef<HTMLDivElement>(null);
     
     const [mobile,setMobile] = useState<boolean | null>(null);
     const [images,setImages] = useState<any>([]);
@@ -57,7 +59,7 @@ export default function Archive({data}:{data:DataInterface}) {
     useEffect(()=>{
         setMobile(window.innerWidth<=700 ? true : false);
 
-        window.addEventListener('resize',throttle(()=>{
+        window.addEventListener('resize',throttle(()=>{                    
             if (window.innerWidth<=700){
                 setMobile(true)                
             };
@@ -65,6 +67,10 @@ export default function Archive({data}:{data:DataInterface}) {
                 setMobile(false)
             };
         },100))
+
+        if (!archiveRef.current) return;
+        console.log(window.getComputedStyle(archiveRef.current).getPropertyValue('height'));
+        
 
     },[])
 
@@ -113,7 +119,7 @@ export default function Archive({data}:{data:DataInterface}) {
     },[mobile])
 
     return (
-    <Archive>
+    <Archive ref={archiveRef}>
         {
             mobile!=null && images.map((item:any)=>{
                 return <GalleryColumn images={item} key={Math.random()*100}/>        
@@ -131,15 +137,22 @@ function GalleryColumn({images}:{images:imgData[]})
         gap: 1.5rem;
     `
 
-    return <GalleryColumn>
+    const GalleryColumnRef = useRef<HTMLUListElement>(null);
+
+    return <GalleryColumn ref={GalleryColumnRef}>
         {
             images.map((item:imgData)=>{
-                return <GallertItem key={item.url} width={item.width} height={item.height} >
+                return <GallertItem 
+                        key={item.url} 
+                        width={item.width} 
+                        height={item.height} 
+                    >
                     <Image 
                     src={item.url}
                     layout={'fill'}
                     objectFit={'contain'}
                     alt={''}
+                    priority={true}
                 />
                 </GallertItem>
             })
@@ -151,9 +164,9 @@ function GalleryColumn({images}:{images:imgData[]})
 function GallertItem({children,height,width}:{children:React.ReactNode,height:number,width:number}) 
 {   
     
+
     const GallertItem = styled.li`
         aspect-ratio: ${width}/${height};
-        
         .img-container
         {
             position: relative;
