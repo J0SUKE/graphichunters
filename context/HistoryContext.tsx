@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router';
+import { log } from 'console';
 
 interface historyContextInterface {
     [name:string]:any
@@ -13,8 +14,10 @@ export default function HistoryContext({children}:{children:React.ReactNode})
     const history = useRef<string[]>([]);
 
     useEffect(()=>{
-        //console.log(router);   
-        history.current.push(router.asPath);     
+        //console.log(router);
+        if (history.current.length ==0) {
+            history.current.push(router.asPath);     
+        }
     },[router])
   
     return (

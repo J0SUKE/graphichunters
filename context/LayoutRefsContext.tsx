@@ -11,7 +11,7 @@ export default function LayoutRefsContext({children}:{children:React.ReactNode})
 {    
     const FooterRef = useRef<HTMLElement>(null);
     const RibbonRef = useRef<HTMLLIElement>(null);  
-    const LogoRef = useRef<HTMLAnchorElement>(null);
+    const LogoRef = useCursorInteraction('onLink') as React.RefObject<HTMLDivElement>;
     const NavLinksRef = useRef<HTMLElement>(null);
     const homePreladerRef = useRef<HTMLDivElement>(null);
     const pageTransitionRef = useRef<HTMLDivElement>(null);

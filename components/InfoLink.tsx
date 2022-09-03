@@ -51,8 +51,8 @@ export default function InfoLink({value,link,external,black}:{value:string,link:
             </>
             :
             <>
-                <Link href={`${link}`}><a>{value}</a></Link>
-                <Link href={`${link}`}><a>{value}</a></Link>
+                <Link href={`${link}`} passHref><a>{value}</a></Link>
+                <Link href={`${link}`} passHref><a>{value}</a></Link>
             </>
         }
     </InfoLink>

@@ -1,3 +1,4 @@
+import { log } from 'console';
 import React, { useContext, useEffect, useRef } from 'react'
 import styled from 'styled-components';
 import {preloaderContext} from '../../context/PreloaderContext';
@@ -14,11 +15,15 @@ export default function PageTransition({pageTransitionRef}:{pageTransitionRef:Re
 
     const PreloaderContext = useContext(preloaderContext);
 
-    useEffect(()=>{
-        if (!PreloaderContext?.preloadAnimation?.current || !pageTransitionRef.current) return;
+    useEffect(()=>{                
         
+        console.log((PreloaderContext?.preloadAnimation?.current ? true : false),(pageTransitionRef.current ? true : false));
+        
+        if (!PreloaderContext?.preloadAnimation?.current || !pageTransitionRef.current) return;
+                
         let tl = PreloaderContext?.preloadAnimation?.current as gsap.core.Timeline;
         tl.clear();
+
         
         tl.fromTo(pageTransitionRef.current,
         {
@@ -29,9 +34,7 @@ export default function PageTransition({pageTransitionRef}:{pageTransitionRef:Re
             yPercent:-200,
             rotate: -7,
             duration:1
-        })    
-        
-
+        })            
     },[])
 
     return (
