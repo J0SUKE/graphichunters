@@ -87,7 +87,7 @@ export default function Cursor() {
 
     const [mobile,setmobile] = useState(true);
     const Position = useRef({x:0,y:0});
-    const lerpFactor = useRef(0.2);
+    const lerpFactor = useRef(0.3);
 
     useEffect(()=>{
         document.addEventListener("mousemove",(e)=>{
