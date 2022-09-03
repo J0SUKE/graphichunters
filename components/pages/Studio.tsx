@@ -180,6 +180,8 @@ export default function Studio() {
 
     // header and top shadow
     useEffect(()=>{
+
+      //if (!LogoRef?.current ||  !NavLinksRef?.current) return;
       LogoRef.current.style.mixBlendMode = 'difference';
       NavLinksRef.current.style.mixBlendMode = 'difference';  
       
@@ -244,7 +246,7 @@ export default function Studio() {
     const PreloaderContext = useContext(preloaderContext);
 
     if (!LayoutrefsContext) return null;
-    const {TopShadowRef,ContentRef,LogoRef,NavLinksRef} = LayoutrefsContext;
+    const {TopShadowRef,LogoRef,NavLinksRef} = LayoutrefsContext;
 
     if (!wrapperContext) return null;
     const {ScrollerRef} = wrapperContext;

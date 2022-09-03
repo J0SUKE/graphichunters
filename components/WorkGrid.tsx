@@ -32,7 +32,7 @@ export default function WorkGrid({works}:{works:any}) {
     <WorkGridStyled id='workgrid'>
         <ul className='container'>
             {
-                works?.map((item:workInterface)=>{
+                works?.slice(0,3).map((item:workInterface)=>{                    
                     return <WorkGridItem 
                         key={item.id}
                         imgUrl={item.image.url as string}

@@ -9,6 +9,7 @@ import gsap from 'gsap';
 import { scrollerWrapperContext } from '../context/ScrollWrapperContext'
 import {layoutRefsContext} from '../context/LayoutRefsContext';
 import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
+import { log } from 'console'
 
 export default function Layout({children,blackFooter,blackSide}:{children:React.ReactNode,blackFooter?:boolean,blackSide?:boolean}) {
 
@@ -31,13 +32,14 @@ export default function Layout({children,blackFooter,blackSide}:{children:React.
       xPercent:-50,
       duration:15
     })
-
+    
     gsap.to([LogoRef.current,NavLinksRef.current],{
       scrollTrigger:{
         trigger:ContentRef.current,
         scroller: "#scroll-wrapper",
         start:()=>window.innerHeight*0.7+' center',
         toggleActions:'play pause pasue reverse'
+        
       },      
       scale: 0.8,
       duration:.5,

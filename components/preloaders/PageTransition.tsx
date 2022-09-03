@@ -15,9 +15,7 @@ export default function PageTransition({pageTransitionRef}:{pageTransitionRef:Re
 
     const PreloaderContext = useContext(preloaderContext);
 
-    useEffect(()=>{                
-        
-        console.log((PreloaderContext?.preloadAnimation?.current ? true : false),(pageTransitionRef.current ? true : false));
+    useEffect(()=>{                        
         
         if (!PreloaderContext?.preloadAnimation?.current || !pageTransitionRef.current) return;
                 

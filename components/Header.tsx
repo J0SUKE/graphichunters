@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { cursorContext } from '../context/CursorContext'
 import useCursorInteraction from '../hooks/useCursorInteraction'
 import NavLink from './NavLink'
+import gsap from 'gsap';
+import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import {layoutRefsContext} from '../context/LayoutRefsContext'
 import {menuContext} from '../context/MenuContext'
 import { useRouter } from 'next/router'
@@ -11,7 +13,7 @@ import { useRouter } from 'next/router'
 
 export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HTMLDivElement>,NavLinksRef:React.RefObject<HTMLElement>}) {
     
-    const Logo = styled.a`
+    const Logo = styled.div`
         width: 6vmax;
         min-width: 80px;
         min-height: 80px;
@@ -27,6 +29,9 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
         svg,path{
             width: 100%;
             height: 100%;
+        }
+        a{
+            display: block;
         }
     `
 
@@ -48,7 +53,7 @@ export default function Header({logoRef,NavLinksRef}:{logoRef:React.RefObject<HT
 
     return (
     <> 
-        <HeaderLogo logoRef={logoRef}/>
+        <HeaderLogo logoRef={logoRef}/>        
         <HeaderLinks ref={NavLinksRef}>
             <NavLink link='work' value='work'/>
             <NavLink link='studio' value='studio'/>
@@ -161,7 +166,6 @@ function MenuButton() {
 
 function HeaderLogo({logoRef}:{logoRef:React.RefObject<HTMLDivElement>}) {
     const router = useRouter();
-    const [isHome,setIsHome] = useState<boolean | null>(null);
 
     const Logo = styled.div`
         width: 6vmax;
@@ -169,11 +173,11 @@ function HeaderLogo({logoRef}:{logoRef:React.RefObject<HTMLDivElement>}) {
         min-height: 80px;
         height: 6vmax;
         position: fixed;
+        display: block;
         z-index: 99;
         top: 2vw;
         left: 3vw;
         background: transparent;
-        cursor: pointer;
         svg{
         }
         svg,path{
@@ -182,36 +186,17 @@ function HeaderLogo({logoRef}:{logoRef:React.RefObject<HTMLDivElement>}) {
         }
     `
 
-
-    useEffect(()=>{
-        if (router.asPath=='/') setIsHome(true);
-        else setIsHome(false)
-        
-    },[])
-
-    return <>
+    return <Logo ref={logoRef}>
         {
-            isHome === true ?
-            <Logo  
-                ref={logoRef} 
-                onClick={()=>{
-                    router.reload();
-                }}
-            >
-                <svg height="820" viewBox="0 0 1066 820" width="1066" xmlns="http://www.w3.org/2000/svg"><path d="m532.999 546.66h-266.499v-273.32h532.196l266.504-273.34h-598.835l-466.365 478.335v341.665h333.115l399.749-409.99v409.99h266.481v-478.335h-266.481z" fill="#ffffff"></path></svg>
-            </Logo>
+            router.asPath === '/' ?
+            <svg onClick={()=>{router.reload();}} height="820" viewBox="0 0 1066 820" width="1066" xmlns="http://www.w3.org/2000/svg"><path d="m532.999 546.66h-266.499v-273.32h532.196l266.504-273.34h-598.835l-466.365 478.335v341.665h333.115l399.749-409.99v409.99h266.481v-478.335h-266.481z" fill="#ffffff"></path></svg>
             :
-            isHome === false ?
             <Link href={'/'} passHref>
                 <a>
-                    <Logo ref={logoRef}>
-                        <svg height="820" viewBox="0 0 1066 820" width="1066" xmlns="http://www.w3.org/2000/svg"><path d="m532.999 546.66h-266.499v-273.32h532.196l266.504-273.34h-598.835l-466.365 478.335v341.665h333.115l399.749-409.99v409.99h266.481v-478.335h-266.481z" fill="#ffffff"></path></svg>
-                    </Logo>
+                    <svg height="820" viewBox="0 0 1066 820" width="1066" xmlns="http://www.w3.org/2000/svg"><path d="m532.999 546.66h-266.499v-273.32h532.196l266.504-273.34h-598.835l-466.365 478.335v341.665h333.115l399.749-409.99v409.99h266.481v-478.335h-266.481z" fill="#ffffff"></path></svg>
                 </a>                
             </Link>
-            :
-            null
         }
-    </>
+    </Logo>
 
 }

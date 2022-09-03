@@ -238,7 +238,8 @@ export default function Work({data}:{data:DataInterface}) {
       </div>
       <div className="container">
       {
-        data.allWorks.map((item:workInterface)=>{
+        data.allWorks.map((item:workInterface,index:number)=>{
+                    
           return  <WorkGridItem 
                       key={item.id}
                       imgUrl={item.image.url as string}
@@ -254,20 +255,6 @@ export default function Work({data}:{data:DataInterface}) {
             title='knvb' 
             desc='a brand new look for TOTO KNVB Beker'
             overlayColor='#8C8783'
-        />
-        <WorkGridItem 
-            imgUrl={'/images/thumb-3.jpg'}
-            pageUrl={'eredivisie-one-to-watch'}
-            title={'Eredivisie'}
-            desc={'A NEW SEASON OF ONE TO WATCH'}
-            overlayColor={'#DEF4E3'}
-        />
-        <WorkGridItem 
-            imgUrl={'/images/thumb-4.jpg'}
-            pageUrl={'easports-fgs22'}
-            title={'EA Sports'}
-            desc={'ARTWORK FOR FIFA GLOBAL SERIES \'22'}
-            overlayColor={'#F36329'}
         />
       </div>      
     </Work>
