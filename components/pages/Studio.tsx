@@ -183,6 +183,7 @@ export default function Studio() {
 
       LogoRef.current.style.mixBlendMode = 'difference';
       NavLinksRef.current.style.mixBlendMode = 'difference';  
+      (MenuButtonRef.current as HTMLDivElement).classList.add('dark');
       
       
       ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
@@ -245,7 +246,7 @@ export default function Studio() {
     const PreloaderContext = useContext(preloaderContext);
 
     if (!LayoutrefsContext) return null;
-    const {TopShadowRef,LogoRef,NavLinksRef} = LayoutrefsContext;
+    const {TopShadowRef,LogoRef,NavLinksRef,MenuButtonRef} = LayoutrefsContext;
 
     if (!wrapperContext) return null;
     const {ScrollerRef} = wrapperContext;

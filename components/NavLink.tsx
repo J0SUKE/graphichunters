@@ -25,7 +25,7 @@ export default function NavLink({link,value}:{link:string,value:string}) {
         {
             a:last-of-type
             {
-                transform: translateY(-120%);
+                transform: translateY(-100%);
                 color: #9BFA00;
             }
             a:first-of-type
@@ -35,7 +35,7 @@ export default function NavLink({link,value}:{link:string,value:string}) {
         }
         a{
             display: block;
-            transition: transform .6s cubic-bezier( 0.52, 0.26, 0.05, 0.9 ) ;
+            transition: transform .5s cubic-bezier( 0.52, 0.26, 0.05, 0.9 ) ;
         }     
     `
     const CurrentLink = styled.div`

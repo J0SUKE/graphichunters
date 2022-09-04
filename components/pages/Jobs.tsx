@@ -114,6 +114,7 @@ export default function Jobs({works}:{works:DataInterface})
 
     LogoRef.current.style.mixBlendMode = 'difference';
     NavLinksRef.current.style.mixBlendMode = 'difference';  
+    (MenuButtonRef.current as HTMLDivElement).classList.add('dark');
     
     
     ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
@@ -203,7 +204,7 @@ export default function Jobs({works}:{works:DataInterface})
   const PreloaderContext = useContext(preloaderContext);
   
   if (!LayoutrefsContext) return null;
-  const {TopShadowRef,LogoRef,NavLinksRef,FooterRef} = LayoutrefsContext;
+  const {TopShadowRef,LogoRef,NavLinksRef,FooterRef,MenuButtonRef} = LayoutrefsContext;
 
   if (!wrapperContext) return null;
   const {ScrollerRef} = wrapperContext;

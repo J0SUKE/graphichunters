@@ -130,6 +130,13 @@ function MenuButton() {
             }
         }        
 
+        &.dark{
+            div:first-of-type{
+                p{color:black}
+                span{background:rgb(100, 5, 255)};
+            }
+        }
+
         @media screen and (max-width:1024px)
         {
             display: unset;

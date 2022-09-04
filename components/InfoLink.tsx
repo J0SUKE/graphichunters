@@ -5,7 +5,7 @@ import Link from "next/link";
 import useCursorInteraction from "../hooks/useCursorInteraction";
 
 
-export default function InfoLink({value,link,external,black}:{value:string,link:string,external?:boolean,black?:boolean}) {
+export default function InfoLink({value,link,external,black,fake}:{value:string,link:string,external?:boolean,black?:boolean,fake?:true}) {
     
     const InfoLink = styled.div`
         text-transform: uppercase;
@@ -23,17 +23,17 @@ export default function InfoLink({value,link,external,black}:{value:string,link:
         &:hover
         {
             border-bottom: 1px solid #9BFA00;
-            a:last-of-type
+            a:last-of-type,p:last-of-type
             {
                 transform: translateY(-100%);
                 color: #9BFA00;
             }
-            a:first-of-type
+            p:first-of-type,p:first-of-type
             {
                 transform: translateY(-120%);
             }
         }
-        a{
+        a,p{
             color: white;
             display: block;
             transition: transform .6s cubic-bezier( 0.52, 0.26, 0.05, 0.9 ) ;
@@ -44,6 +44,12 @@ export default function InfoLink({value,link,external,black}:{value:string,link:
 
     return <InfoLink ref={InfoLinkRef}>
         {
+            fake?
+            <>
+                <p>{value}</p>
+                <p>{value}</p>
+            </>
+            :
             external ?
             <>
                  <a href={`${link}`} target={'_blank'} rel="noreferrer">{value}</a>
