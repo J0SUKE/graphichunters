@@ -18,8 +18,16 @@ export default function WorkGridItem({imgUrl,pageUrl,title,desc,overlayColor}:{i
             overflow: hidden;
             img{
                 transition: transform 1s;
+                transform: scale(1.5);                
             }
-            &:hover{
+            &.loaded{
+                img{
+                    transform: scale(1);         
+                }                
+            }
+
+            &:hover
+            {
                 border-radius: 50%;
                 img{
                     filter: grayscale(100%);
@@ -28,6 +36,7 @@ export default function WorkGridItem({imgUrl,pageUrl,title,desc,overlayColor}:{i
                     transform: scale(1.1);
                 }
             }
+
         }
         .loader
         {
@@ -75,12 +84,13 @@ export default function WorkGridItem({imgUrl,pageUrl,title,desc,overlayColor}:{i
         }
     `
     const loaderRef = useRef<HTMLDivElement>(null);
+    const ImageRef = useRef<HTMLDivElement>(null);
     const GridRef = useCursorInteraction('onView') as React.RefObject<HTMLLIElement>;
 
     return <Link href={`/work/${pageUrl}`}>
         <a>
             <GridItem ref={GridRef}>
-                <div className='img-container'>
+                <div className='img-container' ref={ImageRef}>
                     <div className="loader" ref={loaderRef}></div>                    
                     <Image
                         src={imgUrl}
@@ -89,6 +99,7 @@ export default function WorkGridItem({imgUrl,pageUrl,title,desc,overlayColor}:{i
                         alt={''}
                         onLoad={()=>{
                             loaderRef.current?.classList.add('loaded');
+                            ImageRef.current?.classList.add('loaded');
                         }}
                     />
                 </div>
@@ -110,7 +121,24 @@ export function CommingSoon({imgUrl,title,desc,overlayColor}:{imgUrl:string,titl
             width: 100%;
             overflow: hidden;
             position: relative;
-            aspect-ratio: 1/1;
+            aspect-ratio: 1/1;            
+            img{
+                transition: transform 1s;
+                transform: scale(1.5);                
+            }            
+
+            .img
+            {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                &.loaded
+                {
+                    img{
+                        transform: scale(1);         
+                    }                
+                }
+            }
         }
 
         .loader
@@ -179,6 +207,7 @@ export function CommingSoon({imgUrl,title,desc,overlayColor}:{imgUrl:string,titl
         }
     `
     const loaderRef = useRef<HTMLDivElement>(null);
+    const ImageRef = useRef<HTMLDivElement>(null);
 
     return <GridItem>
             <div className='img-container'>
@@ -202,16 +231,19 @@ export function CommingSoon({imgUrl,title,desc,overlayColor}:{imgUrl:string,titl
                         </li>
                     </ul>
                 </div>
-                <div className="loader" ref={loaderRef}></div>                    
-                <Image
-                    src={imgUrl}
-                    layout={'fill'}
-                    objectFit={'cover'}
-                    alt={''}
-                    onLoad={()=>{
-                        loaderRef.current?.classList.add('loaded');
-                    }}
-                />
+                <div className="loader" ref={loaderRef}></div>            
+                <div className="img" ref={ImageRef}>
+                    <Image
+                        src={imgUrl}
+                        layout={'fill'}
+                        objectFit={'cover'}
+                        alt={''}
+                        onLoad={()=>{
+                            loaderRef.current?.classList.add('loaded');
+                            ImageRef.current?.classList.add('loaded');
+                        }}
+                    />
+                </div>                        
             </div>
             <h2>
                 <span>{title}</span>
