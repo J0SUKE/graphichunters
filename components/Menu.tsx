@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import {menuContext} from '../context/MenuContext';
 import Link from 'next/link';
+import Router, { useRouter } from 'next/router';
 
 export default function Menu() {
   
@@ -47,11 +48,13 @@ export default function Menu() {
 
 function MenuLink({url,text}:{text:string,url:string}) 
 {
+    const router = useRouter();
+    
     const MenuLink = styled.div`
         font-size:clamp(3rem,10vmax,4rem) ;
         color: white;        
         overflow: hidden;        
-        height:${text=='home' ? 'clamp(3.2rem,10.2vmax,4.2rem)' : 'clamp(3rem,10vmax,4rem)'} ;
+        height:clamp(3rem,10vmax,4rem);
         p{
             height:100%;
             overflow: hidden;        
@@ -63,32 +66,55 @@ function MenuLink({url,text}:{text:string,url:string})
             a{
                 transition: transform .3s;
             }
-            ${text!='home' && `
-                &:hover
+            &:hover
+            {
+                a:first-of-type
                 {
-                    a:first-of-type
-                    {
-                        transform: translateY(-100%) rotate(-5deg);
-                    }   
-                    a:last-of-type
-                    {
-                        transform: translateY(-100%) rotate(0deg);
-                    }   
-                }
-            `}            
+                    transform: translateY(-100%) rotate(-5deg);
+                }   
+                a:last-of-type
+                {
+                    transform: translateY(-100%) rotate(0deg);
+                }   
+            }      
         }
         a{
             display: block;
             text-transform: uppercase;
-            font-family: ${text=='home' ? 'Serif4':'Roboto'};
-            color: ${text=='home' ? '#747373' : 'white'};
+            color: white;
+        }
+    `
+
+    const CurrentLink = styled.div`
+        height: clamp(3.2rem,10.2vmax,4.2rem);
+        font-size:clamp(3rem,10vmax,4rem) ;
+        overflow: hidden;
+        cursor: pointer;
+        p{
+            height: 100%;
+        }
+        a{
+            color: #747373;
+            text-transform: uppercase;
+            font-family: 'Serif4';
         }
     `
     
-    return <MenuLink>
-        <p>
-            <Link href={`${url}`}><a>{text}</a></Link>
-            <Link href={`${url}`}><a>{text}</a></Link>
-        </p>        
-    </MenuLink>
+    return <>
+        {
+            router.asPath==url ?
+            <CurrentLink onClick={()=>{router.reload()}}>
+                <p>
+                    <a>{text}</a>
+                </p>
+            </CurrentLink>
+            :
+            <MenuLink>
+                <p>
+                    <Link href={`${url}`}><a>{text}</a></Link>
+                    <Link href={`${url}`}><a>{text}</a></Link>
+                </p>        
+            </MenuLink>   
+        }
+    </>
 }

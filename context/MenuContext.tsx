@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState,useEffect } from 'react'
 import gsap from 'gsap';
+import { useRouter } from 'next/router';
 
 interface menuContextInterface {
     menuIsOpen:React.MutableRefObject<boolean>,
@@ -13,14 +14,22 @@ export const menuContext = React.createContext<menuContextInterface|null>(null);
 
 export default function MenuContext({children}:{children:React.ReactNode}) {
   
+    const router = useRouter();
     const MenuRef = useRef<HTMLDivElement>(null);
     const MenuLinksRef = useRef<HTMLDivElement>(null);
     const menuIsOpen = useRef(false);
 
-    function openMenu(MenuButtonRef: React.RefObject<HTMLDivElement>) {
+
+    useEffect(() => {
+        menuIsOpen.current = false;
+        closeMenu();
+    }, [router])
+    
+
+    function openMenu(MenuButtonRef?: React.RefObject<HTMLDivElement>) {
         
         menuIsOpen.current = true;
-        MenuButtonRef.current?.classList.add('active');
+        MenuButtonRef?.current?.classList.add('active');
         
         if (!MenuRef.current || !MenuLinksRef.current) return;
         MenuRef.current.style.display = 'unset';
@@ -48,10 +57,10 @@ export default function MenuContext({children}:{children:React.ReactNode}) {
         })
     }
     
-    function closeMenu(MenuButtonRef: React.RefObject<HTMLDivElement>) 
+    function closeMenu(MenuButtonRef?: React.RefObject<HTMLDivElement>) 
     {           
         
-        MenuButtonRef.current?.classList.remove('active');
+        MenuButtonRef?.current?.classList.remove('active');
         
         gsap.to(MenuRef.current,
         {
@@ -78,6 +87,8 @@ export default function MenuContext({children}:{children:React.ReactNode}) {
             }
         })
     }
+
+    
 
     return (
     <menuContext.Provider value={{menuIsOpen,MenuRef,openMenu,closeMenu,MenuLinksRef} as menuContextInterface}>

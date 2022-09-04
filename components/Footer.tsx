@@ -176,6 +176,13 @@ export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElemen
           p{
             text-transform: uppercase;
           }
+          div{
+            font-size: .9rem;
+            line-height: .9rem;
+            height: .9rem;
+            padding-bottom: .1rem;
+            border-bottom: none;
+          }
           @media screen and (max-width:550px)
           {
             p:nth-of-type(2)
@@ -268,7 +275,7 @@ export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElemen
         <div className="footer-bottom">
           <Timer/>
           <p>ALL RIGHTS SERVED © 2022</p>
-          <p>code by jean</p>
+          <InfoLink value='code by jean' link='https://jeanmazouni.com/' external={true} black={white}/>
         </div>
       </div>      
     </FooterStyled>

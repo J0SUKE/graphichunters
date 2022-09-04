@@ -177,6 +177,7 @@ function HeaderLogo({logoRef}:{logoRef:React.RefObject<HTMLDivElement>}) {
         z-index: 99;
         top: 2vw;
         left: 3vw;
+        cursor: pointer;
         background: transparent;
         svg{
         }
