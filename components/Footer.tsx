@@ -4,14 +4,13 @@ import InfoLink from './InfoLink'
 import { Timer } from './Hero'
 import gsap from 'gsap'
 
-export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElement>,white?:boolean}) {
+export default function Footer({FooterRef,white,contact}:{FooterRef:RefObject<HTMLElement>,white?:boolean,contact?:boolean}) {
     
     const FooterTop = useRef<HTMLDivElement>(null);
     const FooterContent = useRef<HTMLDivElement>(null);
 
     const FooterStyled = styled.footer`
         position: relative;
-        height: 100vh;
         z-index: 3;
         background: ${white ? '#EEEEEE' : 'black'};
         color: ${!white ? 'white' : 'black'};
@@ -195,20 +194,6 @@ export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElemen
     `
 
     useEffect(()=>{
-      gsap.fromTo(FooterTop.current,
-      {
-        yPercent:-50,
-      },
-      { 
-        scrollTrigger:{
-          trigger:FooterTop.current,
-          scroller: "#scroll-wrapper",
-          start:'top bottom',
-          scrub:1,
-        },        
-        yPercent:0,
-        duration:1,
-      })
       
       gsap.fromTo(FooterContent.current,
       {
@@ -225,18 +210,37 @@ export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElemen
         duration:3,
       })
 
+      if (!FooterTop.current) return;
+      gsap.fromTo(FooterTop.current,
+        {
+          yPercent:-50,
+        },
+        { 
+          scrollTrigger:{
+            trigger:FooterTop.current,
+            scroller: "#scroll-wrapper",
+            start:'top bottom',
+            scrub:1,
+          },        
+          yPercent:0,
+          duration:1,
+        })
+
     },[])
 
 
     return (
     <FooterStyled ref={FooterRef}>
-      <div className="footer-top" ref={FooterTop}>
-        <h2>
-          <span>let&apos;s</span>
-          <span>connect</span>
-        </h2>
-        <InfoLink value='contact us' link='/contact' black={white} />
-      </div>
+      {
+        !contact &&
+        <div className="footer-top" ref={FooterTop}>
+          <h2>
+            <span>let&apos;s</span>
+            <span>connect</span>
+          </h2>
+          <InfoLink value='contact us' link='/contact' black={white} />
+        </div>
+      }      
       
       <div  className='footer' ref={FooterContent}>
         <div className="footer-content">

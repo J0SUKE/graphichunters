@@ -40,7 +40,8 @@ export default function NavLink({link,value}:{link:string,value:string}) {
     `
     const CurrentLink = styled.div`
         p{
-            font-family: 'Serif4';
+            font-family: 'Serif4-light';
+            font-weight: 400;
             color: white;
             font-size: 1.4rem;
             height: 1.5rem;

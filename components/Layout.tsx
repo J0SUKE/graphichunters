@@ -11,7 +11,7 @@ import {layoutRefsContext} from '../context/LayoutRefsContext';
 import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import { log } from 'console'
 
-export default function Layout({children,blackFooter,blackSide}:{children:React.ReactNode,blackFooter?:boolean,blackSide?:boolean}) {
+export default function Layout({children,blackFooter,blackSide,contact}:{children:React.ReactNode,blackFooter?:boolean,blackSide?:boolean,contact?:boolean}) {
 
   // header animation on scroll
   useEffect(()=>{
@@ -125,7 +125,7 @@ export default function Layout({children,blackFooter,blackSide}:{children:React.
           <Menu/>
           <Content ref={ContentRef} id={'content'}>
             {children}
-            <Footer FooterRef={FooterRef} white={blackFooter}/>
+            <Footer FooterRef={FooterRef} white={blackFooter} contact={contact}/>
           </Content>
           <RightRibbon RibbonRef={RibbonRef} black={blackSide}/>
         </ScrollContainer>        

@@ -17,7 +17,8 @@ export default function Jobs({works}:{works:DataInterface})
 {  
   const HeroTitle = useRef<HTMLDivElement>(null);
   const collective = useRef<HTMLSpanElement>(null);
-  
+  const JobsRef = useCursorInteraction('blend') as React.RefObject<HTMLDivElement>;
+
   const Jobs = styled.div`
     background: #EEEEEE;
     position: relative;
@@ -208,7 +209,7 @@ export default function Jobs({works}:{works:DataInterface})
   const {ScrollerRef} = wrapperContext;
   
   return (
-    <Jobs>
+    <Jobs ref={JobsRef}>
       <div className="hero">
         <div className="title" ref={HeroTitle}>
           <div>
