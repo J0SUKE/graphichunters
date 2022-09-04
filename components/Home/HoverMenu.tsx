@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { throttle } from 'lodash';
-import { scrollerWrapperContext } from '../context/ScrollWrapperContext';
+import { scrollerWrapperContext } from '../../context/ScrollWrapperContext';
 
 export default function HoverMenu() {
     const MenuRef = useRef<HTMLDivElement>(null)

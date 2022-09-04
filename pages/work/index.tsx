@@ -1,9 +1,9 @@
 import React from 'react'
-import Layout from '../components/Layout'
-import { request } from "../lib/datocms";
-import DataInterface from '../types/DataInterface';
-import Work from '../components/pages/Work';
-import PreloaderWrapper from '../components/preloaders/PreloaderWrapper';
+import Layout from '../../components/Layout';
+import { request } from "../../lib/datocms";
+import DataInterface from '../../types/DataInterface';
+import Work from '../../components/pages/Work';
+import PreloaderWrapper from '../../components/preloaders/PreloaderWrapper';
 import Head from 'next/head';
 
 
@@ -26,7 +26,7 @@ export default function WorkPage({data}:{data:DataInterface}) {
 
 
 const WORKPAGE_QUERY = `{
-    allWorks {
+    allWorks(orderBy:[createdAt_DESC]) {
       id
       title
       desc

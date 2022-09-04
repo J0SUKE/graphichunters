@@ -18,7 +18,9 @@
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-markdown": "^8.0.3",
     "react-slideshow-image": "^4.0.4",
+    "rehype-raw": "^6.1.1",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import gsap from 'gsap';
 import HoverMenu from './HoverMenu';
 import Link from 'next/link';
-import useCursorInteraction from '../hooks/useCursorInteraction';
+import useCursorInteraction from '../../hooks/useCursorInteraction';
 
 export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTMLDivElement>}) {
     

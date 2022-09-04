@@ -1,7 +1,7 @@
 import React, { RefObject, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import InfoLink from './InfoLink'
-import { Timer } from './Hero'
+import { Timer } from './Home/Hero'
 import gsap from 'gsap'
 
 export default function Footer({FooterRef,white,contact}:{FooterRef:RefObject<HTMLElement>,white?:boolean,contact?:boolean}) {

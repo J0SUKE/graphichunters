@@ -8,7 +8,7 @@ import DataInterface from '../types/DataInterface';
 import PreloaderWrapper from '../components/preloaders/PreloaderWrapper';
 
 const HOMEPAGE_QUERY = `{
-  allWorks {
+  allWorks(orderBy:[createdAt_DESC]) {
     id
     title
     desc

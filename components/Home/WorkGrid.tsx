@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import WorkGridItem from './WorkGridItem';
-import {CommingSoon} from './WorkGridItem'
+import WorkGridItem from '../WorkGridItem';
+import {CommingSoon} from '../WorkGridItem'
 
 interface workInterface {
     [nameField:string]:any

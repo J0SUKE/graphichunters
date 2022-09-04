@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import gsap from 'gsap'
-import {preloaderContext} from '../../context/PreloaderContext';
 import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
+import {preloaderContext} from '../../context/PreloaderContext';
 import {layoutRefsContext} from '../../context/LayoutRefsContext'
 import useCursorInteraction from '../../hooks/useCursorInteraction';
 import { scrollerWrapperContext } from '../../context/ScrollWrapperContext'
 import {Marquee} from '../HomeBrands';
 import KeyValues from '../Studio/KeyValues';
 import Image from 'next/image';
-import { LogoVideo } from '../Services';
+import { LogoVideo } from '../Home/Services';
 import { log } from 'console';
 import { throttle } from 'lodash';
 

@@ -4,10 +4,10 @@ import Image from 'next/image';
 import { throttle } from 'lodash';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
-import InfoLink from './InfoLink';
-import useCursorInteraction from '../hooks/useCursorInteraction';
-import { scrollerWrapperContext } from '../context/ScrollWrapperContext';
-import {preloaderContext} from '../context/PreloaderContext';
+import InfoLink from '../InfoLink';
+import useCursorInteraction from '../../hooks/useCursorInteraction';
+import { scrollerWrapperContext } from '../../context/ScrollWrapperContext';
+import {preloaderContext} from '../../context/PreloaderContext';
 import { log } from 'console';
 
 export default function Hero({images}:{images:{url:string}[]}) 
