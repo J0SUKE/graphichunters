@@ -6,12 +6,14 @@ import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import { layoutRefsContext } from '../../context/LayoutRefsContext';
 import InfoLink from '../InfoLink';
 import { preloaderContext } from '../../context/PreloaderContext';
+import useCursorInteraction from '../../hooks/useCursorInteraction';
 
 export default function Contact() {
     
   const ImageParallaxRef = useRef<HTMLDivElement>(null);
   const HeroTitle = useRef<HTMLDivElement>(null);
   const workRef = useRef<HTMLDivElement>(null);
+  const ContactRef = useCursorInteraction('blend') as React.RefObject<HTMLDivElement>;
     
     const Contact = styled.div`
         position: relative;
@@ -136,7 +138,7 @@ export default function Contact() {
 
       gsap.fromTo(ImageParallaxRef.current,
         {
-          yPercent:'-15'
+          yPercent:-15
         },
         {
         scrollTrigger:{
@@ -145,7 +147,7 @@ export default function Contact() {
           start:'top top',
           scrub:1,
         },
-        yPercent:'0',
+        yPercent:0,
         duration:1,
       })
 
@@ -173,7 +175,7 @@ export default function Contact() {
 
     },[])
 
-
+    // load animation
     useEffect(()=>{
       const tl = PreloaderContext?.preloadAnimation?.current;
 
@@ -187,10 +189,21 @@ export default function Contact() {
         transformOrigin:'top left',
       },{
         rotate: 0,
-        yPercent:0,
+        yPercent:-15,
         duration:.8,
         stagger:-.08
       },"-=0.7")
+      
+      tl.fromTo(ImageParallaxRef.current,
+      {
+        yPercent:100,
+      },{
+        yPercent:-15,
+        duration:.8,
+      },"<")
+
+
+
     },[])
 
     
@@ -200,7 +213,7 @@ export default function Contact() {
     const {LogoRef,NavLinksRef,MenuButtonRef} = LayoutrefsContext;
 
     return (
-    <Contact>
+    <Contact ref={ContactRef}>
         <div className="hero">
           <div className="hero__content">
             <div className="hero__left">

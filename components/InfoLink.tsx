@@ -28,7 +28,7 @@ export default function InfoLink({value,link,external,black,fake}:{value:string,
                 transform: translateY(-100%);
                 color: #9BFA00;
             }
-            p:first-of-type,p:first-of-type
+            a:first-of-type,p:first-of-type
             {
                 transform: translateY(-120%);
             }
@@ -44,7 +44,7 @@ export default function InfoLink({value,link,external,black,fake}:{value:string,
 
     return <InfoLink ref={InfoLinkRef}>
         {
-            fake?
+            fake ?
             <>
                 <p>{value}</p>
                 <p>{value}</p>
