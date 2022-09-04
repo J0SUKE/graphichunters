@@ -120,7 +120,7 @@ export default function Hero({herotitle,intro,services,credits}:{herotitle:any,i
           yPercent:0,
           duration:.8,
           stagger:-.08
-        },"-=0.7")
+        },"<")
       },[])
 
     const PreloaderContext = useContext(preloaderContext);

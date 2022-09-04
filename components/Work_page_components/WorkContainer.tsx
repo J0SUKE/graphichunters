@@ -11,6 +11,7 @@ export default function WorkContainer({data}:{data:DataInterface}) {
         position: relative;
         background: #EEEEEE;
         z-index: 4;
+        height: 200vh;
     `
 
     console.log(data);
