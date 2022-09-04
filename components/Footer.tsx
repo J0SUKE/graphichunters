@@ -21,6 +21,7 @@ export default function Footer({FooterRef,white}:{FooterRef:RefObject<HTMLElemen
           padding: 5vw 0;
           width: calc(100% - 4rem);
           background: ${white ? '#EEEEEE' : 'black'};
+          box-shadow: ${white ? 'unset' : '0px 2.2vh 5.1vh 0.8vh #000'};
           color: ${!white ? 'white' : 'black'};
           margin: auto;
           border-bottom: 1px solid #a9a9a956;

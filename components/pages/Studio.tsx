@@ -181,7 +181,6 @@ export default function Studio() {
     // header and top shadow
     useEffect(()=>{
 
-      //if (!LogoRef?.current ||  !NavLinksRef?.current) return;
       LogoRef.current.style.mixBlendMode = 'difference';
       NavLinksRef.current.style.mixBlendMode = 'difference';  
       

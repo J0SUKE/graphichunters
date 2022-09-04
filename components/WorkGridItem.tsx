@@ -71,6 +71,7 @@ export default function WorkGridItem({imgUrl,pageUrl,title,desc,overlayColor}:{i
             color: white;
             font-size: 1.1rem;
             margin-top: .8rem;
+            font-weight: 300;
         }
     `
     const loaderRef = useRef<HTMLDivElement>(null);
