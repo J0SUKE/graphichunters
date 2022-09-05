@@ -116,7 +116,6 @@ export function LogoVideo() {
   const LogoVideo = styled.div`
       background: white;
       position: relative;
-      margin-top: 10vw;
       .video-container
       {
         filter: brightness(1.2) invert(1) saturate(1.5);

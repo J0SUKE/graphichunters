@@ -16,7 +16,8 @@ export default function HoverMenu() {
     const HoverMenu = styled.div`
         width:calc(100% - 4rem);    
         margin: auto;
-        border-bottom: 1px solid rgba(28, 29, 32, 0.3);
+        border-top: 1px solid rgba(28, 29, 32, 0.3);
+        padding-bottom: 10vmax;
         position: relative;
         .img-box
         {
@@ -184,7 +185,7 @@ function MenuItem({text,index,imgUrl,ImageBoxContainer}:{text:string,index:strin
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid rgba(28, 29, 32, 0.3);
+            border-bottom: 1px solid rgba(28, 29, 32, 0.3);
             padding: 2vw 0;
             h1{
                 font-size: 5vmax;

@@ -2,10 +2,12 @@ import React, { RefObject, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import InfoLink from './InfoLink'
 import { Timer } from './Home/Hero'
+import useShadowHeader from '../hooks/useShadowHeader'
 import gsap from 'gsap'
 
 export default function Footer({FooterRef,white,contact}:{FooterRef:RefObject<HTMLElement>,white?:boolean,contact?:boolean}) {
     
+
     const FooterTop = useRef<HTMLDivElement>(null);
     const FooterContent = useRef<HTMLDivElement>(null);
 
@@ -227,6 +229,7 @@ export default function Footer({FooterRef,white,contact}:{FooterRef:RefObject<HT
         })
 
     },[])
+
 
 
     return (

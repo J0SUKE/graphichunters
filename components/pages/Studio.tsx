@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { LogoVideo } from '../Home/Services';
 import { log } from 'console';
 import { throttle } from 'lodash';
+import useShadowHeader from '../../hooks/useShadowHeader';
 
 export default function Studio() {
   
@@ -103,6 +104,7 @@ export default function Studio() {
           background: black;
           color: white;
           padding-top: 8vmax;
+          padding-bottom: 10vmax;
           h2{
             width: calc(100% - 4rem);
             margin: auto;
@@ -119,7 +121,7 @@ export default function Studio() {
     const creativeRef = useRef<HTMLParagraphElement>(null);
     const youngRef = useRef<HTMLSpanElement>(null);
     const ImageParallaxRef = useRef<HTMLDivElement>(null);
-    const midSectionRef = useRef<HTMLDivElement>(null);
+    const midSectionRef = useShadowHeader() as React.RefObject<HTMLDivElement>;
     const keyValuesRef = useRef<HTMLDivElement>(null);
         
     // hero parallax
@@ -183,41 +185,7 @@ export default function Studio() {
 
       LogoRef.current.style.mixBlendMode = 'difference';
       NavLinksRef.current.style.mixBlendMode = 'difference';  
-      (MenuButtonRef.current as HTMLDivElement).classList.add('dark');
-      
-      
-      ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
-        
-        if (!midSectionRef.current || !ScrollerRef?.current || !keyValuesRef.current) return; 
-        
-        const midRefTop = midSectionRef.current.getBoundingClientRect().top;
-        const midRefBottom = keyValuesRef.current.getBoundingClientRect().bottom;        
-
-        if (midRefTop<=0 && midRefBottom>=0) 
-        {
-          LogoRef.current.style.mixBlendMode = 'unset';
-          NavLinksRef.current.style.mixBlendMode = 'unset';  
-          
-          if (midRefBottom>=0) {
-            gsap.to(TopShadowRef.current,{
-              opacity: 1,
-              duration:.5,
-              ease: "power3.out",
-              })        
-          }          
-        }
-        else{
-          LogoRef.current.style.mixBlendMode = 'difference';
-          NavLinksRef.current.style.mixBlendMode = 'difference';  
-          gsap.to(TopShadowRef.current,{
-            opacity: 0,
-            duration:.5,
-            ease: "power3.out",
-            })       
-        }
-
-      },100))
-      
+      (MenuButtonRef.current as HTMLDivElement).classList.add('dark');                  
 
     },[])
 
@@ -290,8 +258,8 @@ export default function Studio() {
           </h2>
           <Marquee/>
           <KeyValues keyValuesRef={keyValuesRef}/>
-          <LogoVideo/>
       </div>
+      <LogoVideo/>
     </Studio>
   )
 }

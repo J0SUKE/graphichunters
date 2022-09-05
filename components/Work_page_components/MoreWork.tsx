@@ -1,9 +1,9 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import InfoLink from '../InfoLink'
 import { CommingSoon } from '../WorkGridItem'
 import WorkGridItem from '../WorkGridItem'
-import styled from 'styled-components'
-import { log } from 'console'
+import styled from 'styled-components';
+import useShadowHeader from '../../hooks/useShadowHeader';
 
 export default function MoreWork({works}:{works:any[]}) {
   
@@ -37,9 +37,10 @@ export default function MoreWork({works}:{works:any[]}) {
         }
     `
     
-
+    const MoreWorkRef = useShadowHeader() as React.RefObject<HTMLDivElement>;
+    
     return (
-    <MoreWork>
+    <MoreWork ref={MoreWorkRef}>
         <div className="container">
             <div className="top">
                 <h2>more work</h2>

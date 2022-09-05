@@ -5,13 +5,10 @@ import { layoutRefsContext } from '../../context/LayoutRefsContext';
 import DataInterface from '../../types/DataInterface'
 import MoreWork from './MoreWork';
 import Hero from './Hero';
+import useShadowHeader from '../../hooks/useShadowHeader';
 import useCursorInteraction from '../../hooks/useCursorInteraction';
-import ImagesGrid from './ImagesGrid';
-import ParallaxImagesGrid from './ParallaxImagesGrid';
-import VideosGrid from './VideosGrid';
-import BigSingleImage from './ImagesComponents';
+import { throttle } from 'lodash';
 import WorkTemplates from '../WorkTemplates';
-import ParallaxSection from './ParallaxSection';
 
 
 
@@ -22,14 +19,12 @@ export default function WorkContainer({data}:{data:DataInterface}) {
         position: relative;
         background: #EEEEEE;
         z-index: 4;
-    `
-        
+    `    
     useEffect(()=>{
 
         LogoRef.current.style.mixBlendMode = 'difference';
         NavLinksRef.current.style.mixBlendMode = 'difference';  
-        (MenuButtonRef.current as HTMLDivElement).classList.add('dark');
-                
+        (MenuButtonRef.current as HTMLDivElement).classList.add('dark');                      
       },[])
   
   
@@ -38,7 +33,7 @@ export default function WorkContainer({data}:{data:DataInterface}) {
     const WorkContainerRef = useCursorInteraction('blend') as React.RefObject<HTMLDivElement>;    
 
     if (!LayoutrefsContext) return null;
-    const {LogoRef,NavLinksRef,MenuButtonRef} = LayoutrefsContext;
+    const {LogoRef,NavLinksRef,MenuButtonRef,ScrollerRef} = LayoutrefsContext;
 
     return (
     <WorkContainer ref={WorkContainerRef}>
