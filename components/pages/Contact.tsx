@@ -7,12 +7,14 @@ import { layoutRefsContext } from '../../context/LayoutRefsContext';
 import InfoLink from '../InfoLink';
 import { preloaderContext } from '../../context/PreloaderContext';
 import useCursorInteraction from '../../hooks/useCursorInteraction';
+import { useRouter } from 'next/router';
 
 export default function Contact() {
     
   const ImageParallaxRef = useRef<HTMLDivElement>(null);
   const HeroTitle = useRef<HTMLDivElement>(null);
   const workRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
   const ContactRef = useCursorInteraction('blend') as React.RefObject<HTMLDivElement>;
     
     const Contact = styled.div`
@@ -239,7 +241,10 @@ export default function Contact() {
             </div>
           </div>          
         </div>
-        <div className="form-zone" >
+        <div className="form-zone" onSubmit={(e)=>{
+          e.preventDefault();
+          router.reload();
+        }}>
             <form method='post'>
               <InputField label={'WHAT\'S YOUR NAME?'} placeholder={'John Doe *'} type={'text'} index={'01'}/>
               <InputField label={'WHAT\'S YOUR EMAIL?'} placeholder={'John@Doe.com *'} type={'text'} index={'02'}/>
