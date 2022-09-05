@@ -4,10 +4,13 @@ import rehypeRaw from "rehype-raw";
 import gsap from 'gsap'
 import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import styled from 'styled-components'
+import Image from 'next/image';
 import { preloaderContext } from '../../context/PreloaderContext';
 
-export default function Hero({herotitle,intro,services,credits}:{herotitle:any,intro:string,services:string,credits:string}) {
-  
+export default function Hero({herotitle,intro,services,credits,heroImage,heroLogo}:{herotitle:any,intro:string,services:string,credits:string,heroImage:{url:string},heroLogo:{url:string}}) {
+    
+    const heroImageParallax = useRef<HTMLDivElement>(null);
+
     const Hero = styled.div`
         
         .title
@@ -70,11 +73,42 @@ export default function Hero({herotitle,intro,services,credits}:{herotitle:any,i
 
             }            
         }
+
+        .hero_image
+        {
+            padding: 6vmax 0;
+            width: calc(100% - 4rem);
+            margin: auto;
+            &__container
+            {   
+                width: 100%;
+                overflow: hidden;
+                aspect-ratio: 1.7/1;
+                position: relative;
+                .img-contaier{
+                    position: relative;
+                    z-index: 2;
+                    width: 100%;
+                    height: 130%;
+                }
+                .logo-container{
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 3;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%,-50%);
+                }
+            }
+        }
     `
     
     const HeroTitle = useRef<HTMLDivElement>(null);
     const yearRef = useRef<HTMLDivElement>(null);
 
+
+    // parallax
     useEffect(()=>{
         gsap.registerPlugin(ScrollTrigger);
 
@@ -99,7 +133,26 @@ export default function Hero({herotitle,intro,services,credits}:{herotitle:any,i
             y:'-10vmax',
             duration:1
           })
+
+
+        gsap.fromTo(heroImageParallax.current,
+            {
+                yPercent:-30,
+            },
+            {
+            scrollTrigger:{
+              trigger:'.hero_image',
+              scroller: "#scroll-wrapper",
+              start:'top bottom',
+              end:'bottom top',
+              scrub:1,
+            },
+            yPercent:0,
+            duration:1
+          })
         
+
+
     },[])
 
 
@@ -156,6 +209,27 @@ export default function Hero({herotitle,intro,services,credits}:{herotitle:any,i
                 </li>
             </ul>
         </div>     
+        <div className="hero_image">
+            <div className="hero_image__container">
+                <div className="img-contaier" ref={heroImageParallax}>
+                    <Image
+                        src={heroImage.url}
+                        layout={'fill'}
+                        objectFit={'cover'}
+                        alt=''
+                        priority={true}
+                    />
+                </div>
+                <div className="logo-container">
+                    <Image
+                        src={heroLogo.url}
+                        layout={'fill'}
+                        objectFit={'cover'}
+                        alt=''
+                    />
+                </div>
+            </div>
+        </div>
     </Hero>
   )
 }

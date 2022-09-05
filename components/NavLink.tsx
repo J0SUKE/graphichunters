@@ -52,7 +52,7 @@ export default function NavLink({link,value}:{link:string,value:string}) {
 
     useEffect(()=>{
 
-        if (`/${link}`==router.asPath) setIsLink(false)
+        if (router.asPath === `/${link}`) setIsLink(false)
         else setIsLink(true);
         
     },[]);

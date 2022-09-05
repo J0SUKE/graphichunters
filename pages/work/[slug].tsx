@@ -46,6 +46,16 @@ export async function getStaticProps({params}:{params:any}) {
       intro
       services
       credits
+      heroImage{url}
+    	heroLogo{url}
+      moreWork{
+        id
+        title
+        desc
+        slug
+        laoder {hex}
+        image {url}
+      }
     }
   }`;
 

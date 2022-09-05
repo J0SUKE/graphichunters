@@ -3,7 +3,9 @@ import React,{useEffect,useContext} from 'react'
 import styled from 'styled-components'
 import { layoutRefsContext } from '../../context/LayoutRefsContext';
 import DataInterface from '../../types/DataInterface'
+import MoreWork from './MoreWork';
 import Hero from './Hero';
+import useCursorInteraction from '../../hooks/useCursorInteraction';
 
 export default function WorkContainer({data}:{data:DataInterface}) {
   
@@ -11,9 +13,7 @@ export default function WorkContainer({data}:{data:DataInterface}) {
         position: relative;
         background: #EEEEEE;
         z-index: 4;
-        height: 200vh;
     `
-
     console.log(data);
     
     useEffect(()=>{
@@ -26,13 +26,22 @@ export default function WorkContainer({data}:{data:DataInterface}) {
   
   
     const LayoutrefsContext = useContext(layoutRefsContext);
+    const WorkContainerRef = useCursorInteraction('blend') as React.RefObject<HTMLDivElement>;    
 
     if (!LayoutrefsContext) return null;
     const {LogoRef,NavLinksRef,MenuButtonRef} = LayoutrefsContext;
 
     return (
-    <WorkContainer>
-        <Hero herotitle={data.heroTitle} intro={data.intro} services={data.services} credits={data.credits}/>
+    <WorkContainer ref={WorkContainerRef}>
+        <Hero 
+          herotitle={data.heroTitle} 
+          intro={data.intro} 
+          services={data.services} 
+          credits={data.credits}
+          heroImage={data.heroImage}
+          heroLogo={data.heroLogo}
+        />
+        <MoreWork works={data.moreWork}/>
     </WorkContainer>
   )
 }
