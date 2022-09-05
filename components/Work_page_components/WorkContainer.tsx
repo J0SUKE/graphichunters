@@ -6,6 +6,7 @@ import DataInterface from '../../types/DataInterface'
 import MoreWork from './MoreWork';
 import Hero from './Hero';
 import useCursorInteraction from '../../hooks/useCursorInteraction';
+import ParallaxSection from './ParallaxSection';
 
 export default function WorkContainer({data}:{data:DataInterface}) {
   
@@ -41,6 +42,7 @@ export default function WorkContainer({data}:{data:DataInterface}) {
           heroImage={data.heroImage}
           heroLogo={data.heroLogo}
         />
+        <ParallaxSection/>
         <MoreWork works={data.moreWork}/>
     </WorkContainer>
   )

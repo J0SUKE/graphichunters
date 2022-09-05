@@ -1,4 +1,5 @@
 import { log } from 'console';
+import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useRef } from 'react'
 import styled from 'styled-components';
 import {preloaderContext} from '../../context/PreloaderContext';
@@ -14,6 +15,7 @@ export default function PageTransition({pageTransitionRef}:{pageTransitionRef:Re
     `
 
     const PreloaderContext = useContext(preloaderContext);
+    const router = useRouter();
 
     useEffect(()=>{                        
         
@@ -33,7 +35,7 @@ export default function PageTransition({pageTransitionRef}:{pageTransitionRef:Re
             rotate: -7,
             duration:1
         })            
-    },[])
+    },[router])
 
     return (
     <>

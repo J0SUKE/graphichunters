@@ -226,6 +226,7 @@ export default function Hero({herotitle,intro,services,credits,heroImage,heroLog
                         layout={'fill'}
                         objectFit={'cover'}
                         alt=''
+                        priority={true}
                     />
                 </div>
             </div>
