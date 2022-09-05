@@ -37,8 +37,6 @@ export default function MoreWork({works}:{works:any[]}) {
         }
     `
     
-    console.log(works);
-    
 
     return (
     <MoreWork>

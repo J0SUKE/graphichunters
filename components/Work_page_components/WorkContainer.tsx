@@ -1,12 +1,20 @@
 import { log } from 'console'
-import React,{useEffect,useContext} from 'react'
+import React,{useEffect,useContext,useRef} from 'react'
 import styled from 'styled-components'
 import { layoutRefsContext } from '../../context/LayoutRefsContext';
 import DataInterface from '../../types/DataInterface'
 import MoreWork from './MoreWork';
 import Hero from './Hero';
 import useCursorInteraction from '../../hooks/useCursorInteraction';
+import ImagesGrid from './ImagesGrid';
+import ParallaxImagesGrid from './ParallaxImagesGrid';
+import VideosGrid from './VideosGrid';
+import BigSingleImage from './ImagesComponents';
+import WorkTemplates from '../WorkTemplates';
 import ParallaxSection from './ParallaxSection';
+
+
+
 
 export default function WorkContainer({data}:{data:DataInterface}) {
   
@@ -15,8 +23,7 @@ export default function WorkContainer({data}:{data:DataInterface}) {
         background: #EEEEEE;
         z-index: 4;
     `
-    console.log(data);
-    
+        
     useEffect(()=>{
 
         LogoRef.current.style.mixBlendMode = 'difference';
@@ -26,6 +33,7 @@ export default function WorkContainer({data}:{data:DataInterface}) {
       },[])
   
   
+
     const LayoutrefsContext = useContext(layoutRefsContext);
     const WorkContainerRef = useCursorInteraction('blend') as React.RefObject<HTMLDivElement>;    
 
@@ -42,8 +50,9 @@ export default function WorkContainer({data}:{data:DataInterface}) {
           heroImage={data.heroImage}
           heroLogo={data.heroLogo}
         />
-        <ParallaxSection/>
+        <WorkTemplates template={data.template} data={data}/>
         <MoreWork works={data.moreWork}/>
+
     </WorkContainer>
   )
 }

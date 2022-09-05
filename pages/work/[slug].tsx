@@ -48,6 +48,12 @@ export async function getStaticProps({params}:{params:any}) {
       credits
       heroImage{url}
     	heroLogo{url}
+      parallaxGrid{url height width}
+      template
+      parallaxGrid{url height width}
+      parallaxSection{url}
+      bigImage{url}
+      imagesGallery{url height width}    
       moreWork{
         id
         title

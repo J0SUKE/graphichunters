@@ -6,15 +6,17 @@ import styled from 'styled-components'
 
 
 
-export default function ParallaxSection() {
+export default function ParallaxSection({image}:{image:{url:string}}) {
     
     const ParallaxRef = useRef<HTMLDivElement>(null);
+    const ParallaxContent = useRef<HTMLDivElement>(null);
     const ParallaxSection = styled.div` 
         .content
         {
             width: 100%;
             aspect-ratio: 1.5/1;
             overflow: hidden;
+            background: darkgray;
             .img-container{
                 position: relative;
                 width: 100%;
@@ -32,11 +34,11 @@ export default function ParallaxSection() {
             },
             {
             scrollTrigger:{
-              trigger:'.content',
+              trigger:ParallaxContent.current,
               scroller: "#scroll-wrapper",
               start:'top bottom',
               end:'bottom top',
-              scrub:true,
+              scrub:1,
             },
             yPercent:0,
             duration:1
@@ -46,13 +48,14 @@ export default function ParallaxSection() {
   
     return (
     <ParallaxSection>
-        <div className="content">
+        <div className="content" ref={ParallaxContent}>
             <div className="img-container" ref={ParallaxRef}>
                 <Image
-                    src={'/images/parallax.jpg'}
+                    src={image.url}
                     alt={''}
                     layout={'fill'}
                     objectFit={'cover'}
+                    priority={true}
                 />
             </div>
         </div>

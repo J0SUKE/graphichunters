@@ -46,7 +46,7 @@ export default function WorkGridItem({imgUrl,pageUrl,title,desc,overlayColor}:{i
             z-index: 2;
             transition: transform .4s;
             &.loaded{
-                transform: translateY(-105%);
+                transform: translateY(-100%);
             }
         }
 
