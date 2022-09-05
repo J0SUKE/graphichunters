@@ -240,7 +240,7 @@ export default function Contact() {
           </div>          
         </div>
         <div className="form-zone" >
-            <form action='/contact' method='post'>
+            <form method='post'>
               <InputField label={'WHAT\'S YOUR NAME?'} placeholder={'John Doe *'} type={'text'} index={'01'}/>
               <InputField label={'WHAT\'S YOUR EMAIL?'} placeholder={'John@Doe.com *'} type={'text'} index={'02'}/>
               <InputField label={'WHAT\'S THE NAME OF YOUR ORGANIZATION?'} placeholder={'John & Doe ®'} type={'text'} index={'03'}/>

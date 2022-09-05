@@ -16,6 +16,14 @@ export default function Cursor() {
         position: relative;
         transition: transform .3s;
 
+
+        &.onLink
+        {
+            transform: scale(0.6);
+        }
+        &.blend{
+            background: rgb(100, 5, 255);
+        }
         &.onScroll{
             transform: scale(10) translateY(-0.1rem);
             &::before
@@ -38,6 +46,7 @@ export default function Cursor() {
         }
         &.onView{
             transform: scale(8) translateY(-0.1rem);
+            background: #9BFA00;
             &::before
             {
                 content: 'view';
@@ -58,6 +67,7 @@ export default function Cursor() {
         }
         &.onArchive{
             transform: scale(12) translateY(-0.1rem);
+            background: #9BFA00;
             &::before
             {
                 content: 'archive';
@@ -75,13 +85,6 @@ export default function Cursor() {
                 font-family: 'Serif4';
                 text-transform: uppercase;
             }
-        }
-        &.onLink
-        {
-            transform: scale(0.6);
-        }
-        &.blend{
-            background: rgb(100, 5, 255);
         }
     `;
 
