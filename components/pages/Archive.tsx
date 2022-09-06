@@ -267,8 +267,8 @@ function TitleContainer({length}:{length:number}) {
                 align-items: center;
                 gap: .5vmax;
                 //text-shadow: 0px 0px 3vmax #000000;
-                font-size:clamp(6vmax,8vw,8vmax);
-                font-size:clamp(6vmax,8vw,8vmax);
+                line-height : clamp(6vmax,8vw,8vmax);
+                height:clamp(6vmax,8vw,8vmax);
                 font-weight: 400;
             }
             p:last-of-type{
