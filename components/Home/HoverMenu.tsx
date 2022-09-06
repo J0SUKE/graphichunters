@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { throttle } from 'lodash';
 import { scrollerWrapperContext } from '../../context/ScrollWrapperContext';
+import { isMobile } from '../../utils/isMobile';
 
 export default function HoverMenu() {
     const MenuRef = useRef<HTMLDivElement>(null)
@@ -52,7 +53,7 @@ export default function HoverMenu() {
         
         MenuRef.current.addEventListener('mouseenter',()=>{
             
-            if(!ImageBox.current) return;
+            if(!ImageBox.current || isMobile()) return;
             
             mouseOverMenu.current=true;
             ImageBox.current.classList.add('active');
@@ -65,7 +66,7 @@ export default function HoverMenu() {
         
         MenuRef.current.addEventListener('mouseleave',()=>{
             
-            if(!ImageBox.current) return;
+            if(!ImageBox.current || isMobile()) return;
             
             mouseOverMenu.current=false;
             ImageBox.current.classList.remove('active');
@@ -75,6 +76,9 @@ export default function HoverMenu() {
         })
 
         MenuRef.current.addEventListener('mousemove',throttle((e)=>{
+            
+            if (isMobile()) return;
+            
             const width = MenuRef.current?.getBoundingClientRect().width;
             if (!ScrollerRef?.current || !ImageBox.current || !width || !ImageBox.current) return ;
             
@@ -187,7 +191,7 @@ function MenuItem({text,index,imgUrl,ImageBoxContainer}:{text:string,index:strin
             border-bottom: 1px solid rgba(28, 29, 32, 0.3);
             padding: 2vw 0;
             h1{
-                font-size: 5vmax;
+                font-size: clamp(3vmax,5vw,5vmax);
                 font-weight: 400;
                 text-transform: uppercase;
             }

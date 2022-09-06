@@ -59,7 +59,7 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
           margin:auto;
           padding: 9vw 0;
           p{
-            font-size: 9vmax;
+            font-size: clamp(6vmax,9vw,9vmax);
           }
           div{
             display: flex;
@@ -70,11 +70,11 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
             &:last-of-type{
               justify-content: flex-end;
             }
-            line-height: 9vmax;
+            line-height: clamp(6vmax,9vw,9vmax);
             //height: 9vmax;
             span{
               display: block;
-              font-size: 9vmax;
+              font-size: clamp(6vmax,9vw,9vmax);
               text-transform: uppercase;
             }
             #services

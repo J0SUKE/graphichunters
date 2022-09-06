@@ -149,14 +149,15 @@ export default function Hero({images}:{images:{url:string}[]})
 
     }
     .title{
-      font-size: 10vmax;
-      line-height: 9vmax;
+      font-size: clamp(7vmax,10vw,10vmax);
+      line-height: clamp(6vmax,9vw,9vmax);
       font-weight: 400;
       padding: 0 2rem;
       text-transform: uppercase;
       cursor: default;
       div{
         overflow: hidden;
+        height: clamp(6vmax,9vw,9vmax);
       }
       #tp1
       {

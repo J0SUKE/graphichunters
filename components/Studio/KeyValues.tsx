@@ -9,7 +9,7 @@ export default function KeyValues({keyValuesRef}:{keyValuesRef:React.RefObject<H
         color: white;
         .title{
             padding: 8vmax 0;
-            font-size: 8vmax;            
+            font-size: clamp(4vmax,8vw,8vmax);            
             width: calc(100% - 4rem);
             margin: auto;
             text-transform: uppercase;
@@ -20,7 +20,7 @@ export default function KeyValues({keyValuesRef}:{keyValuesRef:React.RefObject<H
             }
             p:first-of-type{
                 font-family: 'Serif4';
-                font-size: 9vmax;                       
+                font-size: clamp(5vmax,9vw,9vmax);            
             }
         }
         .values

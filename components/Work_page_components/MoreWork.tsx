@@ -17,12 +17,13 @@ export default function MoreWork({works}:{works:any[]}) {
         .top{
             display: flex;
             justify-content: space-between;
+            align-items: center;
             color: white;
             margin-bottom: 2.5vmax;
             h2{
                 text-transform: uppercase;
                 font-weight: 400;
-                font-size: 1.9rem;
+                font-size: clamp(1.2rem,3vw,1.9rem);
             }
         }
         .content

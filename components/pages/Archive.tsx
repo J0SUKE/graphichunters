@@ -253,26 +253,28 @@ function TitleContainer({length}:{length:number}) {
             z-index: 2;
             color: white;
             text-transform: uppercase;
-            font-size: 8vmax;
+            font-size:clamp(6vmax,8vw,8vmax);
             div{
                 overflow: hidden;
             }
             span{
-                font-size: 3.5vmax;
+                font-size: clamp(2vmax,3.5vw,3.5vmax);
                 display: block;    
                 font-family:'Serif4' ;
             }
             p{
                 display: flex;
+                align-items: center;
+                gap: .5vmax;
                 //text-shadow: 0px 0px 3vmax #000000;
-                line-height: 8vmax;
-                height: 8vmax;
+                font-size:clamp(6vmax,8vw,8vmax);
+                font-size:clamp(6vmax,8vw,8vmax);
                 font-weight: 400;
             }
             p:last-of-type{
                 display: inline-flex;
                 font-family:'Serif4' ;
-                font-size: 9vmax;
+                font-size:clamp(7vmax,9vw,9vmax);
             }
         }
         .shadow

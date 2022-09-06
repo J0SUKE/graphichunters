@@ -36,16 +36,16 @@ export default function Studio() {
           div{
             display: flex;
             justify-content: space-between;
-            font-size: 8.2vmax;
-            line-height: 8.2vmax;
-            height: 7.2vmax;
+            font-size: clamp(6.2vmax,8.2vw,8.2vmax);
+            line-height: clamp(6.2vmax,8.2vw,8.2vmax);
+            height: clamp(5.2vmax,7.2vw,7.2vmax);
             overflow: hidden;
             text-transform: uppercase;
             
             span{
               display: block;
               font-family: 'Serif4';
-              font-size: 8.5vmax;
+              font-size: lamp(6.5vmax,8.5vw,8.5vmax);
             }
           }
         }
@@ -76,10 +76,10 @@ export default function Studio() {
           
           &__left
           {
-            width: 35%;
-            font-size: 1.5vmax;
+            width: 30%;
             h2{
               font-weight: 300;
+              font-size: clamp(2vmax,2.5vw,2.5vmax);
             }            
           }
 
@@ -107,7 +107,7 @@ export default function Studio() {
           padding-bottom: 10vmax;
           h2{
             width: calc(100% - 4rem);
-            margin: auto;
+            margin: auto;          
             font-size: 2.5vmax;
             font-weight: 400;
             padding-bottom: 6vmax;
