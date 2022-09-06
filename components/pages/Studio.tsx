@@ -163,7 +163,7 @@ export default function Studio() {
 
         gsap.fromTo(ImageParallaxRef.current,
           {
-            yPercent:'-25'
+            yPercent:-25
           },
           {
           scrollTrigger:{
@@ -174,7 +174,8 @@ export default function Studio() {
             end:'bottom top',
             scrub:1,
           },
-          yPercent:'-5',
+          yPercent:0,
+          ease:"none",
           duration:1,
         })
 

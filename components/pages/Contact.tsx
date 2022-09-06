@@ -147,9 +147,11 @@ export default function Contact() {
           trigger:'.hero',
           scroller: "#scroll-wrapper",
           start:'top top',
+          end:"bottom top",
           scrub:1,
         },
         yPercent:0,
+        ease:"none",
         duration:1,
       })
 

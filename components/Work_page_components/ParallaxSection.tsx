@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 
 
-export default function ParallaxSection({image}:{image:{url:string}}) {
+export default function ParallaxSection({image,video}:{image?:{url:string},video?:{url:string}}) {
     
     const ParallaxRef = useRef<HTMLDivElement>(null);
     const ParallaxContent = useRef<HTMLDivElement>(null);
@@ -21,6 +21,11 @@ export default function ParallaxSection({image}:{image:{url:string}}) {
                 position: relative;
                 width: 100%;
                 height: 130%;
+                video{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
             }
         }
     `;
@@ -38,9 +43,10 @@ export default function ParallaxSection({image}:{image:{url:string}}) {
               scroller: "#scroll-wrapper",
               start:'top bottom',
               end:'bottom top',
-              scrub:1,
+              scrub:1,              
             },
             yPercent:0,
+            ease:"none",
             duration:1
           })
 
@@ -50,13 +56,21 @@ export default function ParallaxSection({image}:{image:{url:string}}) {
     <ParallaxSection>
         <div className="content" ref={ParallaxContent}>
             <div className="img-container" ref={ParallaxRef}>
-                <Image
-                    src={image.url}
-                    alt={''}
-                    layout={'fill'}
-                    objectFit={'cover'}
-                    priority={true}
-                />
+                {
+                    video ?
+                    <video src={video.url} loop autoPlay muted playsInline></video>
+                    :
+                    image?
+                    <Image
+                        src={image.url}
+                        alt={''}
+                        layout={'fill'}
+                        objectFit={'cover'}
+                        priority={true}
+                    />
+                    :
+                    null
+                }                
             </div>
         </div>
     </ParallaxSection>

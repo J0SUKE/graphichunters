@@ -105,11 +105,11 @@ function Work5({data}:{data:DataInterface})
 {
   return <>
     <ImagesGrid images={data.imagesGallery.slice(0,4)}/>
-    <ParallaxSection image={data.parallaxSection[0]}/>
+    <ParallaxSection video={{url:'/images/videos/atalanta.mp4'}}/>
     <ImagesGrid images={data.imagesGallery.slice(3,7)}/>
-    <ParallaxSection image={data.parallaxSection[1]}/>
-    <ImagesGrid images={data.imagesGallery.slice(7,9)}/>
     <ParallaxSection image={data.parallaxSection[2]}/>
+    <ImagesGrid images={data.imagesGallery.slice(7,9)}/>
+    <ParallaxSection video={{url:'/images/videos/inter.mp4'}}/>
 
   </>
 }

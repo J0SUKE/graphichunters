@@ -145,8 +145,9 @@ export default function Hero({herotitle,intro,services,credits,heroImage,heroLog
               scroller: "#scroll-wrapper",
               start:'top bottom',
               end:'bottom top',
-              scrub:1,
+              scrub:1,              
             },
+            ease:"none",
             yPercent:0,
             duration:1
           })
