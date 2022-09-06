@@ -266,7 +266,6 @@ function TitleContainer({length}:{length:number}) {
                 display: flex;
                 align-items: center;
                 gap: .5vmax;
-                //text-shadow: 0px 0px 3vmax #000000;
                 line-height : clamp(6vmax,8vw,8vmax);
                 height:clamp(6vmax,8vw,8vmax);
                 font-weight: 400;

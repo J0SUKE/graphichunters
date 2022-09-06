@@ -282,7 +282,7 @@ export default function Footer({FooterRef,white,contact}:{FooterRef:RefObject<HT
         </div>
         <div className="footer-bottom">
           <Timer/>
-          <p>ALL RIGHTS SERVED © 2022</p>
+          <p>ALL RIGHTS RESERVED © 2022</p>
           <InfoLink value='code by jean' link='https://jeanmazouni.com/' external={true} black={white}/>
         </div>
       </div>      
