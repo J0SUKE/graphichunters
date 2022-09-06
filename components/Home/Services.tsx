@@ -104,6 +104,7 @@ export default function Services({ServicesRef}:{ServicesRef:React.RefObject<HTML
         </div>
       </div>
       <HoverMenu/>
+      <div style={{height:10 + 'vmax'}}></div>
       <LogoVideo/>
     </Services>
   )

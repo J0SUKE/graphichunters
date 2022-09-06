@@ -38,7 +38,7 @@ export default function Work({data}:{data:DataInterface}) {
       border-top: 1px solid #a9a9a956;
       padding-top: 3rem;
       grid-gap: 3rem;
-      padding-bottom: 6vmax;
+      padding-bottom: 8vmax;
 
       @media screen and (max-width:720px)
       {

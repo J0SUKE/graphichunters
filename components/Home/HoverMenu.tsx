@@ -17,7 +17,6 @@ export default function HoverMenu() {
         width:calc(100% - 4rem);    
         margin: auto;
         border-top: 1px solid rgba(28, 29, 32, 0.3);
-        padding-bottom: 10vmax;
         position: relative;
         .img-box
         {

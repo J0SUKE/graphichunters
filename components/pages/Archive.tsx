@@ -7,6 +7,7 @@ import gsap from 'gsap';
 import {layoutRefsContext} from '../../context/LayoutRefsContext';
 import { throttle } from 'lodash';
 import { log } from 'console';
+import { preloaderContext } from '../../context/PreloaderContext';
 
 
 
@@ -43,27 +44,32 @@ export default function Archive({data}:{data:DataInterface}) {
     const Archive = styled.div`
         background: black;
         position: relative;
-        z-index: 4;
-        .archive_container
-        {
-            display:grid;
-            padding: 1.5rem 1.5rem 0 1.5rem;
-            grid-template-columns: repeat(3,1fr);
-            grid-gap: 1.5rem;
-            @media screen  and (max-width:700px)
-            {
-                grid-template-columns: repeat(2,1fr);
-            }
-        }        
+        z-index: 4;    
     `
+    return (
+    <Archive>
+            <Gallery data={data}/>
+            <TitleContainer length={data.archive.image.length}/>
+    </Archive>
+  )
+}
 
-    const archiveRef = useRef<HTMLDivElement>(null);
-    const titleRef = useRef<HTMLHeadingElement>(null);
+function Gallery({data}:{data:DataInterface}) {
+    
+    const Gallery = styled.div`
+        display:grid;
+        padding: 1.5rem 1.5rem 0 1.5rem;
+        grid-template-columns: repeat(3,1fr);
+        grid-gap: 1.5rem;
+        @media screen  and (max-width:700px)
+        {
+            grid-template-columns: repeat(2,1fr);
+        }
+    `
     
     const [mobile,setMobile] = useState<boolean>(false);
     const [images,setImages] = useState<any>(SerparateColumns(data));
 
-        
     useEffect(()=>{
         setMobile(window.innerWidth<=700 ? true : false);
 
@@ -135,47 +141,21 @@ export default function Archive({data}:{data:DataInterface}) {
         }
 
     },[mobile])
-    
-
-    useEffect(()=>{
-        gsap.registerPlugin(ScrollTrigger);
-            
-        gsap.to(titleRef.current,{
-            // scrollTrigger:{
-            // trigger:titleRef.current,
-            // scroller: "#scroll-wrapper",
-            // start:'top center',
-            // //scrub:1,
-            // },
-            x:'50vmax',
-            //duration:1,
-        })
-    },[])
 
     const LayoutrefsContext = useContext(layoutRefsContext);
     if (!LayoutrefsContext) return null;
     const {TopShadowRef} = LayoutrefsContext;
 
-    return (
-    <Archive ref={archiveRef}>
-            <div className='archive_container'>
-                {
-                    images.map((item:any)=>{
-                        return <GalleryColumn images={item} key={Math.random()*100}/>        
-                    })
-                }
-            </div>
-            <TitleContainer length={data.archive.image.length}/>
-            {/* <div className="title-container">
-                <h1 ref={titleRef}>
-                    <p>our</p>
-                    <p>archive<span>({data.archive.image.length})</span>
-                    </p>
-                </h1>
-            </div>     */}
-    </Archive>
-  )
+    return <Gallery>
+            {
+                images.map((item:any)=>{
+                    return <GalleryColumn images={item} key={Math.random()*100}/>        
+                })
+            }
+        </Gallery>
+
 }
+
 
 function GalleryColumn({images}:{images:imgData[]}) 
 {
@@ -186,7 +166,7 @@ function GalleryColumn({images}:{images:imgData[]})
 
     `
 
-    const GalleryColumnRef = useRef<HTMLUListElement>(null);
+    const GalleryColumnRef = useRef<HTMLUListElement>(null);    
 
     return <GalleryColumn ref={GalleryColumnRef}>
         {
@@ -256,6 +236,7 @@ function GallertItem({children,height,width}:{children:React.ReactNode,height:nu
 function TitleContainer({length}:{length:number}) {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const archiveRef = useRef<HTMLParagraphElement>(null);
+    const PreloaderContext = useContext(preloaderContext);
 
     const TitleContainer = styled.div`
         position: absolute;
@@ -273,6 +254,9 @@ function TitleContainer({length}:{length:number}) {
             color: white;
             text-transform: uppercase;
             font-size: 8vmax;
+            div{
+                overflow: hidden;
+            }
             span{
                 font-size: 3.5vmax;
                 display: block;    
@@ -304,7 +288,7 @@ function TitleContainer({length}:{length:number}) {
             background: black;
         }
     `
-
+    // title parallax
     useEffect(()=>{
         gsap.registerPlugin(ScrollTrigger);
             
@@ -331,11 +315,36 @@ function TitleContainer({length}:{length:number}) {
         })
     },[])
 
+
+    // load animation 
+    useEffect(()=>{
+        const tl = PreloaderContext?.preloadAnimation?.current;
+  
+        if (!titleRef.current || !tl) return;
+          
+  
+        tl.fromTo([...titleRef.current.querySelectorAll('p')],
+        {
+          rotate: 4,
+          yPercent:100,
+          transformOrigin:'top left',
+        },{
+          rotate: 0,
+          yPercent:0,
+          duration:.8,
+          stagger:-.08
+        },"-=0.7")
+      },[])
+
+
     return <TitleContainer className="title-container">
                 <h1 ref={titleRef}>
-                    <p>our</p>
-                    <p ref={archiveRef}>archive<span>({length})</span>
-                    </p>
+                    <div>
+                        <p>our</p>                        
+                    </div>
+                    <div>
+                        <p ref={archiveRef}>archive<span>({length})</span></p>
+                    </div>
                 </h1>
                 <div className="shadow">
 

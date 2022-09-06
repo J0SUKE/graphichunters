@@ -5,47 +5,49 @@ import gsap from 'gsap'
 import { scrollerWrapperContext } from '../context/ScrollWrapperContext';
 import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import { log } from 'console';
+import useCursorInteraction from './useCursorInteraction';
 
-export default function useShadowHeader() {
-  
+export default function useShadowHeader()
+{   
     const HTMLElement = useRef<HTMLElement>(null);    
 
-    useEffect(()=>{
-        
-        gsap.registerPlugin(ScrollTrigger);
-        
-        ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
+    useEffect(()=>{        
+        gsap.registerPlugin(ScrollTrigger);        
+        ScrollerRef?.current?.addEventListener('scroll',throttle(ShadowParallaxFiorMiddleSection,100))
+    },[])
+
+
+    function ShadowParallaxFiorMiddleSection() {
+      if (!HTMLElement.current || !ScrollerRef?.current ) return; 
             
-            if (!HTMLElement.current || !ScrollerRef?.current ) return; 
+            const HTMLElementTop = HTMLElement.current.getBoundingClientRect().top;
+            const HTMLElementBottom = HTMLElement.current.getBoundingClientRect().bottom;        
             
-            const MoreWorkTop = HTMLElement.current.getBoundingClientRect().top;
-            const MoreWorkBottom = HTMLElement.current.getBoundingClientRect().bottom;        
+            const Decallage = Math.min(GetVmax(8),100);
     
-            if (MoreWorkTop<=0 && MoreWorkBottom>=0) 
+            if (HTMLElementTop<=Decallage && (HTMLElementBottom-Decallage)>=0) 
             {
               LogoRef.current.style.mixBlendMode = 'unset';
               NavLinksRef.current.style.mixBlendMode = 'unset';  
               
-              if (MoreWorkBottom>=0) {
-                gsap.to(TopShadowRef.current,{
-                  opacity: 1,
-                  duration:.5,
-                  ease: "power3.out",
-                  })        
-              }          
+              gsap.to(TopShadowRef.current,{
+                opacity: 1,
+                duration:.5,
+                ease: "power3.out",
+                })        
             }
             else{
               LogoRef.current.style.mixBlendMode = 'difference';
               NavLinksRef.current.style.mixBlendMode = 'difference';  
+              
               gsap.to(TopShadowRef.current,{
                 opacity: 0,
                 duration:.5,
                 ease: "power3.out",
                 })       
             }
-    
-          },100))
-    },[])
+    }
+
 
 
     const LayoutrefsContext = useContext(layoutRefsContext);
@@ -58,4 +60,10 @@ export default function useShadowHeader() {
     const {ScrollerRef} = wrapperContext;
 
     return HTMLElement;
+}
+
+function GetVmax(value:number) : number
+{
+  let percentage = value / 100;
+  return window.innerWidth > window.innerHeight ? window.innerWidth * percentage  : window.innerHeight * percentage;
 }
