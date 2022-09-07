@@ -11,6 +11,7 @@ export default function LayoutRefsContext({children}:{children:React.ReactNode})
 {    
     const FooterRef = useRef<HTMLElement>(null);
     const RibbonRef = useRef<HTMLLIElement>(null);  
+    const MarqueeRef = useRef<HTMLDivElement>(null);
     const LogoRef = useCursorInteraction('onLink') as React.RefObject<HTMLDivElement>;
     const NavLinksRef = useRef<HTMLElement>(null);
     const homePreladerRef = useRef<HTMLDivElement>(null);
@@ -22,7 +23,7 @@ export default function LayoutRefsContext({children}:{children:React.ReactNode})
     
     return (
     <layoutRefsContext.Provider 
-        value={{FooterRef,RibbonRef,LogoRef,NavLinksRef,homePreladerRef,loaderText,TopShadowRef,pageTransitionRef,ContentRef,MenuButtonRef}}
+        value={{FooterRef,RibbonRef,LogoRef,NavLinksRef,homePreladerRef,loaderText,TopShadowRef,pageTransitionRef,ContentRef,MenuButtonRef,MarqueeRef}}
     >
         {children}
     </layoutRefsContext.Provider>

@@ -3,10 +3,13 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { cursorContext } from '../context/CursorContext'
 import Image from 'next/image'
-import gsap from 'gsap'
+import { gsap } from "gsap";
+import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import InfoLink from './InfoLink'
+import { scrollerWrapperContext } from '../context/ScrollWrapperContext'
+import { layoutRefsContext } from '../context/LayoutRefsContext'
 
-export default function HomeBrands({MarqueeRef}:{MarqueeRef:React.RefObject<HTMLDivElement>}) {
+export default function HomeBrands() {
   
     const HomeBrands = styled.div`
         position: relative;
@@ -51,35 +54,80 @@ export default function HomeBrands({MarqueeRef}:{MarqueeRef:React.RefObject<HTML
             <h2>WE CREATE FOR THE BIGGEST BRANDS IN THE WORLD OF SPORTS.</h2>
             <InfoLink value='more work (6)' link='/work'/>
         </div>
-        <Marquee MarqueeRef={MarqueeRef}/>
+        <Marquee/>
     </HomeBrands>
   )
 }
 
-export function Marquee({MarqueeRef}:{MarqueeRef?:React.RefObject<HTMLDivElement>}) {
+export function Marquee() {
     
     const Marquee = styled.div`
         display: flex;
         padding-bottom: 10vw;
-        overflow: hidden;
+        //overflow: hidden;
         ul
         {
             display: flex;
             gap: 3vw;
             padding-right: 3vw;
-            animation: animateMarquee 17s linear infinite;
-            transform: translateX(-100%);
-        }        
-
-        @keyframes animateMarquee {
-            from{
-                transform: translateX(-100%);
-            }to{
-                transform: translateX(0%);
-            }
-        }
+        }                
     `
     
+    useEffect(()=>{
+        
+        if (!MarqueeRef?.current) return;
+        
+        gsap.registerPlugin(ScrollTrigger);
+
+        let toRight = gsap.fromTo(MarqueeRef.current.querySelectorAll("ul"),
+        {
+            xPercent:-100,
+        },
+        {
+            xPercent:0,
+            duration:15,
+            repeat:-1,
+            ease:"none"
+        }).totalProgress(0.5);
+
+
+        gsap.to(MarqueeRef.current,{
+            scrollTrigger:{
+                trigger:MarqueeRef.current,
+                scroller: "#scroll-wrapper",
+                start:"top bottom",
+                end:"bottom top",
+                scrub:1,
+            },
+            xPercent:-50,
+            duration:10,
+            ease:"none"
+        })
+        
+        let lastSCroll = 0;
+        ScrollerRef?.current?.addEventListener('scroll',()=>{
+            if(!MarqueeRef.current || !ScrollerRef.current) return;
+            
+            const scrollTop = ScrollerRef.current.scrollTop;
+            let delta = scrollTop - lastSCroll;
+            lastSCroll = scrollTop;
+            gsap.to(toRight, {
+                timeScale: delta<0 ? 1 : -1 // -1 will reverse the animation
+              });
+                        
+        })
+    },[])
+    
+
+    const wrapperContext = useContext(scrollerWrapperContext);
+    const LayoutrefsContext = useContext(layoutRefsContext);
+
+    if (!wrapperContext) return null;
+    const {ScrollerRef} = wrapperContext;
+
+    if (!LayoutrefsContext) return null;
+    const {MarqueeRef} = LayoutrefsContext;
+
     return  (
         <Marquee className="marquee" ref={MarqueeRef}>
             <ul>

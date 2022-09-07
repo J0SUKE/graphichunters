@@ -14,7 +14,6 @@ export default function Home({data}:{data:DataInterface,})
 {
     
     const ServicesRef = useRef<HTMLDivElement>(null);
-    const MarqueeRef = useRef<HTMLDivElement>(null);
 
     useEffect(()=>{
         ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
@@ -70,13 +69,13 @@ export default function Home({data}:{data:DataInterface,})
     const {ScrollerRef} = wrapperContext;
 
     if (!LayoutrefsContext) return null;
-    const {LogoRef,NavLinksRef,TopShadowRef,ContentRef} = LayoutrefsContext;
+    const {LogoRef,NavLinksRef,TopShadowRef,ContentRef,MarqueeRef} = LayoutrefsContext;
 
     return (
     <>        
         <Hero  images={data.heroSlideshow.images}/>
         <WorkGrid works={data.allWorks}/>
-        <HomeBrands MarqueeRef={MarqueeRef}/>
+        <HomeBrands/>
         <Services ServicesRef={ServicesRef}/>
     </>
   )
