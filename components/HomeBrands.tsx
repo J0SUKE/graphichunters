@@ -98,24 +98,15 @@ export function Marquee() {
                 start:"top bottom",
                 end:"bottom top",
                 scrub:1,
+                onUpdate: self => {                
+                    toRight.timeScale(-self.direction);                    
+                  },
             },
             xPercent:-50,
             duration:10,
             ease:"none"
         })
         
-        let lastSCroll = 0;
-        ScrollerRef?.current?.addEventListener('scroll',()=>{
-            if(!MarqueeRef.current || !ScrollerRef.current) return;
-            
-            const scrollTop = ScrollerRef.current.scrollTop;
-            let delta = scrollTop - lastSCroll;
-            lastSCroll = scrollTop;
-            gsap.to(toRight, {
-                timeScale: delta<0 ? 1 : -1 // -1 will reverse the animation
-              });
-                        
-        })
     },[])
     
 
