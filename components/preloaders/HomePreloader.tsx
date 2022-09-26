@@ -27,15 +27,11 @@ export default function HomePreloader({homePreladerRef,loaderText}:{homePrelader
         overflow: hidden;
         span{
             display: block;
+            transform: translateY(100%);
         }
         p{
             display: flex;
             gap: 1vw;
-        }
-        p:last-of-type span{
-            font-weight: 500;
-            font-size: 2.8vw;
-            font-family: 'Serif4';
         }
     `
 
@@ -45,42 +41,43 @@ export default function HomePreloader({homePreladerRef,loaderText}:{homePrelader
         
 
         if (!PreloaderContext?.preloadAnimation?.current || !loaderText.current || !homePreladerRef.current) return;
-                
+        
+        
 
         let tl = PreloaderContext?.preloadAnimation?.current;
 
         tl.fromTo(loaderText.current.querySelectorAll('span'),
         {
-            yPercent:100,
+            yPercent:0,
         },  
         {
-            yPercent:0,
+            yPercent:-100,
+            stagger:0.05,
+            delay:.5,
+            duration:.5,            
+        })
+        tl.to([...loaderText.current.querySelectorAll('span')].reverse(),
+        {
+            yPercent:-200,
+            delay:1.5,
             stagger:0.03,
-            delay:1,
             duration:.5,
-            })
-            tl.to([...loaderText.current.querySelectorAll('span')].reverse(),
-            {
-                yPercent:-100,
-                delay:1.5,
-                stagger:0.03,
-                duration:.5,
-                ease: "power3.in",
-                onComplete:()=>{
-                if (!loaderText.current) return;
-                loaderText.current.style.display = 'none';
-                }
-            })
-            tl.fromTo(homePreladerRef.current,
-            {
+            ease: "power3.in",
+            onComplete:()=>{
+            if (!loaderText.current) return;
+            loaderText.current.style.display = 'none';
+            }
+        })
+        tl.fromTo(homePreladerRef.current,
+        {
             yPercent:0,
             rotate: 0,
-            },
-            {
+        },
+        {
             yPercent:-200,
             rotate: -7,
             duration:1
-            },'-=0.3')    
+        },'-=0.3')    
         
 
     },[])
@@ -91,17 +88,10 @@ export default function HomePreloader({homePreladerRef,loaderText}:{homePrelader
         <PreloaderText ref={loaderText}>
             <p>
                 {
-                    'the creative studio'.split(' ').map(letter=>{
+                    'the creative studio focused on sports'.split(' ').map(letter=>{
                         return <span key={Math.random()*1000}>{letter}</span>
                     })
                 }                
-            </p>
-            <p> 
-                {
-                    'focused on sports'.split(' ').map(letter=>{
-                        return <span key={Math.random()*1000}>{letter}</span>
-                    })
-                }
             </p>
         </PreloaderText>
     </>
