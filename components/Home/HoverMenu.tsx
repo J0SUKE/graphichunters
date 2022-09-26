@@ -21,7 +21,7 @@ export default function HoverMenu() {
         position: relative;
         .img-box
         {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 45%;
             z-index: 2;
@@ -70,9 +70,6 @@ export default function HoverMenu() {
             
             mouseOverMenu.current=false;
             ImageBox.current.classList.remove('active');
-
-            const {scrollTop} = document.documentElement;
-            lastSCroll.current = scrollTop;
         })
 
         MenuRef.current.addEventListener('mousemove',throttle((e)=>{
@@ -101,36 +98,32 @@ export default function HoverMenu() {
 
             BoxPosition.current.x = Math.log2(offsetX+40)*4 + 25;
             
-            BoxPosition.current.y = lerp(BoxPosition.current.y,offsetY-Boxheight/2,0.1);
-            
-            ImageBox.current.style.left = `${BoxPosition.current.x}%`;
-            ImageBox.current.style.top = `${BoxPosition.current.y}px`;
+            //BoxPosition.current.y = lerp(BoxPosition.current.y,offsetY-Boxheight/2,0.1);            
 
-            // update the scrollTop
-            const {scrollTop} = ScrollerRef.current;
-            lastSCroll.current = scrollTop;
         },10))
 
 
+        window.addEventListener('mousemove',(e)=>{
+            if(!ImageBox.current) return;
+            const Boxheight = ImageBox.current.getBoundingClientRect().height;            
+            
+            BoxPosition.current.y = e.clientY - Boxheight/2;    
+        })
+
+        function updatePosition() {
+            
+            if(ImageBox.current)
+            {
+                ImageBox.current.style.left = `${BoxPosition.current.x}%`;
+                ImageBox.current.style.top = `${BoxPosition.current.y}px`;
+            }            
+            requestAnimationFrame(updatePosition);
+        }
+
+        updatePosition();
+
     },[])
   
-    useEffect(()=>{
-        ScrollerRef?.current?.addEventListener('scroll',throttle(()=>{
-            if (!ScrollerRef?.current || !mouseOverMenu.current || !MenuRef.current || !ImageBox.current) return;
-
-            // scroll au dessus du menu ==> ajouter la distance scrollée à ImageBox.current.y            
-            const {scrollTop} = ScrollerRef?.current;
-            let deltaScroll = scrollTop - lastSCroll.current ;
-            lastSCroll.current = scrollTop;
-            
-            const Boxheight = ImageBox.current.getBoundingClientRect().height;        
-
-            BoxPosition.current.y += deltaScroll;
-            ImageBox.current.style.top = `${BoxPosition.current.y}px`;
-
-        },10));
-    },[])
-
 
     const wrapperContext = useContext(scrollerWrapperContext);
     if (!wrapperContext) return null;
