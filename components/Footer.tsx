@@ -248,8 +248,8 @@ export default function Footer({FooterRef,white,contact}:{FooterRef:RefObject<HT
       <div  className='footer' ref={FooterContent}>
         <div className="footer-content">
           <div className="email">
-            <span>send me an email</span>    
-            <InfoLink value='jeanmazouni@gmail.com' link='mailto:jeanmazouni@gmail.com' black={white}/>
+            <span>send us an email</span>    
+            <InfoLink value='hello@graphichunters.com' link='mailto:hello@graphichunters.com' black={white}/>
           </div>
           <div className="infos">
             <div className="infos__left">
